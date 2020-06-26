@@ -1,16 +1,15 @@
 # adventures_in
 
-A new Flutter project.
+A Flutter web project for organising collaboration.
 
-## Getting Started
+## Profiles 
 
-This project is a starting point for a Flutter application.
+You can add info about what you're working on, including links to repos. Also some of the skills you have, the type of projects you want to work on and anything you need help with.
 
-A few resources to get you started if this is your first Flutter project:
+## Topics 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+You can select a set of topics you are interested in. 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Project Management 
+
+You can indicate your current goals by selecting issues in your repos. 
