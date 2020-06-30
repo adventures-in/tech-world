@@ -1,49 +1,87 @@
+import 'package:adventures_in/actions/auth/check_auth_state.dart';
+import 'package:adventures_in/actions/auth/redirect_to_github.dart';
+import 'package:adventures_in/enums/auth_state.dart';
+import 'package:adventures_in/models/app/app_state.dart';
 import 'package:flutter/material.dart';
+import 'package:adventures_in/extensions/build_context_extensions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return StoreConnector<AppState, AuthState>(
+      onInit: (store) => store.dispatch(CheckAuthState()),
+      distinct: true,
+      converter: (store) => store.state.authState,
+      builder: (context, authState) {
+        if (authState == AuthState.checking) {
+          return WaitingIndicator('Checking Auth State');
+        } else {
+          return SignInWithGithubButton();
+        }
+      },
+    );
+  }
+}
+
+class SignInWithGithubButton extends StatelessWidget {
+  const SignInWithGithubButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Center(
-          child: Container(
-              width: 210,
-              child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  onPressed: () {
-                    print('Button Clicked.');
-                  },
-                  textColor: Colors.white,
-                  color: Colors.pink,
-                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            color: Colors.pink,
-                            padding: EdgeInsets.fromLTRB(10, 4, 4, 4),
-                            child: Text(
-                              'Button With Right Icon',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
-                            child: Icon(
-                              Icons.backup,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
-                        ],
-                      ))))
-          // MaterialButton(
-          //   child: Text('Sign in with GitHub'),
-          //   onPressed: () {},
-          // ),
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          color: Theme.of(context).primaryColor,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Sign in with GitHub',
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Image.asset(
+                'icons/GitHub-Mark-Light-64px.png',
+                width: 20,
+                height: 20,
+                fit: BoxFit.cover,
+              ),
+            ],
           ),
+          onPressed: () {
+            context.dispatch(RedirectToGithub());
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class WaitingIndicator extends StatelessWidget {
+  final String message;
+  const WaitingIndicator(
+    this.message, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          CircularProgressIndicator(),
+          SizedBox(height: 15),
+          Text(message)
+        ],
+      ),
     );
   }
 }
