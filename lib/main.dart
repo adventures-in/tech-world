@@ -5,7 +5,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,50 +32,31 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      //   elevation: 0,
-      // ),
       body: Row(
         children: <Widget>[
-          Column(
-            children: [
-              Expanded(
-                child: NavigationRail(
-                  selectedIndex: _selectedIndex,
-                  onDestinationSelected: (int index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                  },
-                  labelType: NavigationRailLabelType.selected,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.short_text),
-                      selectedIcon: Icon(Icons.wrap_text),
-                      label: Text('Projects'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.assignment),
-                      selectedIcon: Icon(Icons.assessment),
-                      label: Text('Topics'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Container(),
-                      // selectedIcon: Container(),
-                      label: Text(''),
-                    ),
-                  ],
-                ),
+          NavigationRail(
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            labelType: NavigationRailLabelType.selected,
+            destinations: [
+              NavigationRailDestination(
+                icon: Icon(Icons.short_text),
+                selectedIcon: Icon(Icons.wrap_text),
+                label: Text('Projects'),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                child: IconButton(
-                  icon: Icon(Icons.supervised_user_circle),
-                  onPressed: () => setState(() {
-                    _selectedIndex = 2;
-                  }),
-                ),
+              NavigationRailDestination(
+                icon: Icon(Icons.assignment),
+                selectedIcon: Icon(Icons.assessment),
+                label: Text('Topics'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.supervised_user_circle),
+                selectedIcon: Icon(Icons.verified_user),
+                label: Text('Profile'),
               ),
             ],
           ),
