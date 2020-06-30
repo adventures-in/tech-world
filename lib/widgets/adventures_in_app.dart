@@ -1,9 +1,11 @@
 import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in/enums/auth_state.dart';
 import 'package:adventures_in/enums/nav_bar_selection.dart';
 import 'package:adventures_in/extensions/theme_data_extensions.dart';
 import 'package:adventures_in/extensions/theme_mode_extensions.dart';
 import 'package:adventures_in/models/app/app_state.dart';
 import 'package:adventures_in/models/app/settings.dart';
+import 'package:adventures_in/widgets/auth/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -24,12 +26,19 @@ class AdventuresInApp extends StatelessWidget {
         converter: (store) => store.state.settings,
         builder: (context, settings) {
           return MaterialApp(
-            title: 'Flutter Demo',
-            theme: MakeThemeData.from(settings.lightTheme),
-            darkTheme: MakeThemeData.from(settings.darkTheme),
-            themeMode: MakeThemeMode.from(settings.brightnessMode),
-            home: HomePage(),
-          );
+              title: 'Flutter Demo',
+              theme: MakeThemeData.from(settings.lightTheme),
+              darkTheme: MakeThemeData.from(settings.darkTheme),
+              themeMode: MakeThemeMode.from(settings.brightnessMode),
+              home: StoreConnector<AppState, AuthState>(
+                distinct: true,
+                converter: (store) => store.state.authState,
+                builder: (context, authState) {
+                  return (authState == AuthState.signedIn)
+                      ? HomePage()
+                      : AuthPage();
+                },
+              ));
         },
       ),
     );
@@ -75,7 +84,7 @@ class NavBar extends StatelessWidget {
             selectedIndex: selection.index,
             onDestinationSelected: (int index) {
               context.dispatch(StoreNavBarSelection(
-                (b) => b..selection = NavBarSelection.valueOfIndex(index),
+                selection: NavBarSelection.valueOfIndex(index),
               ));
             },
             labelType: NavigationRailLabelType.selected,

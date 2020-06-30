@@ -1,4 +1,5 @@
 import 'package:adventures_in/models/app/app_state.dart';
+import 'package:adventures_in/reducers/auth_reducers.dart';
 import 'package:adventures_in/reducers/navigation_reducers.dart';
 import 'package:redux/redux.dart';
 
@@ -9,4 +10,5 @@ import 'package:redux/redux.dart';
 final appReducer =
     combineReducers<AppState>(<AppState Function(AppState, dynamic)>[
   ...navigationReducers,
+  ...authReducers,
 ]);
