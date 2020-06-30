@@ -1,11 +1,16 @@
+import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in/enums/auth_state.dart';
 import 'package:adventures_in/enums/nav_bar_selection.dart';
 import 'package:adventures_in/extensions/theme_data_extensions.dart';
 import 'package:adventures_in/extensions/theme_mode_extensions.dart';
 import 'package:adventures_in/models/app/app_state.dart';
 import 'package:adventures_in/models/app/settings.dart';
+import 'package:adventures_in/widgets/auth/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+
+import 'package:adventures_in/extensions/build_context_extensions.dart';
 
 class AdventuresInApp extends StatelessWidget {
   final Store<AppState> store;
@@ -21,12 +26,19 @@ class AdventuresInApp extends StatelessWidget {
         converter: (store) => store.state.settings,
         builder: (context, settings) {
           return MaterialApp(
-            title: 'Flutter Demo',
-            theme: MakeThemeData.from(settings.lightTheme),
-            darkTheme: MakeThemeData.from(settings.darkTheme),
-            themeMode: MakeThemeMode.from(settings.brightnessMode),
-            home: HomePage(title: 'AdventuresIn'),
-          );
+              title: 'Flutter Demo',
+              theme: MakeThemeData.from(settings.lightTheme),
+              darkTheme: MakeThemeData.from(settings.darkTheme),
+              themeMode: MakeThemeMode.from(settings.brightnessMode),
+              home: StoreConnector<AppState, AuthState>(
+                distinct: true,
+                converter: (store) => store.state.authState,
+                builder: (context, authState) {
+                  return (authState == AuthState.signedIn)
+                      ? HomePage()
+                      : AuthPage();
+                },
+              ));
         },
       ),
     );
@@ -34,27 +46,46 @@ class AdventuresInApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: <Widget>[
-          NavigationRail(
-            selectedIndex: _selectedIndex,
+          NavBar(),
+          VerticalDivider(thickness: 1, width: 1),
+          StoreConnector<AppState, NavBarSelection>(
+            distinct: true,
+            converter: (store) => store.state.navBarSelection,
+            builder: (context, vm) => vm.widget,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class NavBar extends StatelessWidget {
+  const NavBar({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, NavBarSelection>(
+        distinct: true,
+        converter: (store) => store.state.navBarSelection,
+        builder: (context, selection) {
+          return NavigationRail(
+            selectedIndex: selection.index,
             onDestinationSelected: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
+              context.dispatch(StoreNavBarSelection(
+                selection: NavBarSelection.valueOfIndex(index),
+              ));
             },
             labelType: NavigationRailLabelType.selected,
             destinations: [
@@ -74,15 +105,7 @@ class _HomePageState extends State<HomePage> {
                 label: Text('Profile'),
               ),
             ],
-          ),
-          VerticalDivider(thickness: 1, width: 1),
-          StoreConnector<AppState, NavBarSelection>(
-            distinct: true,
-            converter: (store) => store.state.navBarSelection,
-            builder: (context, vm) => vm.widget,
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }

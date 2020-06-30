@@ -17,7 +17,10 @@ abstract class StoreNavBarSelection extends Object
   StoreNavBarSelection._();
   NavBarSelection get selection;
 
-  factory StoreNavBarSelection(
+  factory StoreNavBarSelection({NavBarSelection selection}) =
+      _$StoreNavBarSelection._;
+
+  factory StoreNavBarSelection.by(
           [void Function(StoreNavBarSelectionBuilder) updates]) =
       _$StoreNavBarSelection;
 

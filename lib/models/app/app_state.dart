@@ -2,6 +2,7 @@ library app_state;
 
 import 'dart:convert';
 
+import 'package:adventures_in/enums/auth_state.dart';
 import 'package:adventures_in/enums/nav_bar_selection.dart';
 import 'package:adventures_in/models/app/problem.dart';
 import 'package:adventures_in/models/app/serializers.dart';
@@ -16,6 +17,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltList<Problem> get problems;
   bool get displayingProblem;
   Settings get settings;
+  AuthState get authState;
   NavBarSelection get navBarSelection;
 
   AppState._();
@@ -23,6 +25,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
     ..settings = Settings.initBuilder()
+    ..authState = AuthState.checking
     ..navBarSelection = NavBarSelection.projects);
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

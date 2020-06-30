@@ -28,6 +28,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(Settings)),
+      'authState',
+      serializers.serialize(object.authState,
+          specifiedType: const FullType(AuthState)),
       'navBarSelection',
       serializers.serialize(object.navBarSelection,
           specifiedType: const FullType(NavBarSelection)),
@@ -61,6 +64,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(Settings)) as Settings);
           break;
+        case 'authState':
+          result.authState = serializers.deserialize(value,
+              specifiedType: const FullType(AuthState)) as AuthState;
+          break;
         case 'navBarSelection':
           result.navBarSelection = serializers.deserialize(value,
                   specifiedType: const FullType(NavBarSelection))
@@ -81,6 +88,8 @@ class _$AppState extends AppState {
   @override
   final Settings settings;
   @override
+  final AuthState authState;
+  @override
   final NavBarSelection navBarSelection;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
@@ -90,6 +99,7 @@ class _$AppState extends AppState {
       {this.problems,
       this.displayingProblem,
       this.settings,
+      this.authState,
       this.navBarSelection})
       : super._() {
     if (problems == null) {
@@ -100,6 +110,9 @@ class _$AppState extends AppState {
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('AppState', 'settings');
+    }
+    if (authState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'authState');
     }
     if (navBarSelection == null) {
       throw new BuiltValueNullFieldError('AppState', 'navBarSelection');
@@ -120,14 +133,17 @@ class _$AppState extends AppState {
         problems == other.problems &&
         displayingProblem == other.displayingProblem &&
         settings == other.settings &&
+        authState == other.authState &&
         navBarSelection == other.navBarSelection;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, problems.hashCode), displayingProblem.hashCode),
-            settings.hashCode),
+        $jc(
+            $jc($jc($jc(0, problems.hashCode), displayingProblem.hashCode),
+                settings.hashCode),
+            authState.hashCode),
         navBarSelection.hashCode));
   }
 
@@ -137,6 +153,7 @@ class _$AppState extends AppState {
           ..add('problems', problems)
           ..add('displayingProblem', displayingProblem)
           ..add('settings', settings)
+          ..add('authState', authState)
           ..add('navBarSelection', navBarSelection))
         .toString();
   }
@@ -159,6 +176,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   SettingsBuilder get settings => _$this._settings ??= new SettingsBuilder();
   set settings(SettingsBuilder settings) => _$this._settings = settings;
 
+  AuthState _authState;
+  AuthState get authState => _$this._authState;
+  set authState(AuthState authState) => _$this._authState = authState;
+
   NavBarSelection _navBarSelection;
   NavBarSelection get navBarSelection => _$this._navBarSelection;
   set navBarSelection(NavBarSelection navBarSelection) =>
@@ -171,6 +192,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _problems = _$v.problems?.toBuilder();
       _displayingProblem = _$v.displayingProblem;
       _settings = _$v.settings?.toBuilder();
+      _authState = _$v.authState;
       _navBarSelection = _$v.navBarSelection;
       _$v = null;
     }
@@ -199,6 +221,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               problems: problems.build(),
               displayingProblem: displayingProblem,
               settings: settings.build(),
+              authState: authState,
               navBarSelection: navBarSelection);
     } catch (_) {
       String _$failedField;
