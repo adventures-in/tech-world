@@ -1,0 +1,1 @@
+const localhost = 'ws://localhost:8080';
