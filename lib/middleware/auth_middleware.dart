@@ -4,11 +4,6 @@ import 'package:adventures_in/models/app/app_state.dart';
 import 'package:adventures_in/services/auth_service.dart';
 import 'package:redux/redux.dart';
 
-typedef CheckAuthStateMiddleware = void Function(
-    Store<AppState> store, CheckAuthState action, NextDispatcher next);
-typedef SignOutMiddleware = void Function(
-    Store<AppState> store, SignOut action, NextDispatcher next);
-
 /// Middleware is used for a variety of things:
 /// - Logging
 /// - Async calls (database, network)
@@ -29,16 +24,16 @@ List<Middleware<AppState>> createAuthMiddleware({AuthService authService}) {
   ];
 }
 
-CheckAuthStateMiddleware _checkAuthState(AuthService authService) =>
-    (store, action, next) async {
+Middleware _checkAuthState(AuthService authService) =>
+    (store, dynamic action, next) async {
       next(action);
 
       final reaction = await authService.checkAuthState();
       store.dispatch(reaction);
     };
 
-SignOutMiddleware _signOutUser(AuthService authService) =>
-    (store, action, next) async {
+Middleware _signOutUser(AuthService authService) =>
+    (store, dynamic action, next) async {
       next(action);
 
       // sign out and dispatch the resulting problem if there is one
