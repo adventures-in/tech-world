@@ -19,5 +19,5 @@ void main() {
         authService: authService, platformService: platformService)
   ]);
 
-  runApp(AdventuresInApp(store));
+  runApp(AdventuresInApp(store, Uri.base.queryParameters));
 }
