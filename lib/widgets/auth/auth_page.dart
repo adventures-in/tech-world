@@ -31,34 +31,32 @@ class SignInWithGithubButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: MaterialButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          color: Theme.of(context).primaryColor,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Sign in with GitHub',
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Image.asset(
-                'icons/GitHub-Mark-Light-64px.png',
-                width: 20,
-                height: 20,
-                fit: BoxFit.cover,
-              ),
-            ],
-          ),
-          onPressed: () {
-            context.dispatch(AuthWithGitHub());
-          },
+    return Center(
+      child: MaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        color: Theme.of(context).primaryColor,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Sign in with GitHub',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Image.asset(
+              'icons/GitHub-Mark-Light-64px.png',
+              width: 20,
+              height: 20,
+              fit: BoxFit.cover,
+            ),
+          ],
         ),
+        onPressed: () {
+          context.dispatch(AuthWithGitHub());
+        },
       ),
     );
   }

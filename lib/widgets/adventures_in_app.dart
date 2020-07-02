@@ -1,3 +1,4 @@
+import 'package:adventures_in/actions/auth/deal_with_auth_code.dart';
 import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in/enums/auth_state.dart';
 import 'package:adventures_in/enums/nav_bar_selection.dart';
@@ -13,32 +14,39 @@ import 'package:redux/redux.dart';
 import 'package:adventures_in/extensions/build_context_extensions.dart';
 
 class AdventuresInApp extends StatelessWidget {
+  /// The redux store
   final Store<AppState> store;
 
-  AdventuresInApp(this.store);
+  /// If there is a code in the queryParameters we use it to get an auth token
+  final Map<String, String> queryParameters;
+
+  AdventuresInApp(this.store, this.queryParameters);
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
       child: StoreConnector<AppState, Settings>(
+        onInit: (store) =>
+            store.dispatch(DealWithAuthCode(queryParameters: queryParameters)),
         distinct: true,
         converter: (store) => store.state.settings,
         builder: (context, settings) {
           return MaterialApp(
-              title: 'Flutter Demo',
-              theme: MakeThemeData.from(settings.lightTheme),
-              darkTheme: MakeThemeData.from(settings.darkTheme),
-              themeMode: MakeThemeMode.from(settings.brightnessMode),
-              home: StoreConnector<AppState, AuthState>(
-                distinct: true,
-                converter: (store) => store.state.authState,
-                builder: (context, authState) {
-                  return (authState == AuthState.signedIn)
-                      ? HomePage()
-                      : AuthPage();
-                },
-              ));
+            title: 'AdventuresIn',
+            theme: MakeThemeData.from(settings.lightTheme),
+            darkTheme: MakeThemeData.from(settings.darkTheme),
+            themeMode: MakeThemeMode.from(settings.brightnessMode),
+            home: StoreConnector<AppState, AuthState>(
+              distinct: true,
+              converter: (store) => store.state.authState,
+              builder: (context, authState) {
+                return (authState == AuthState.signedIn)
+                    ? HomePage()
+                    : AuthPage();
+              },
+            ),
+          );
         },
       ),
     );

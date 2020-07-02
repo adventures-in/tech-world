@@ -18,6 +18,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get displayingProblem;
   Settings get settings;
   AuthState get authState;
+  @nullable
+  String get authToken;
   NavBarSelection get navBarSelection;
 
   AppState._();
