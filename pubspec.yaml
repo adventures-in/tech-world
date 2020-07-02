@@ -12,10 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
   
+  # redux 
   built_value:
   built_collection:
   redux:
   flutter_redux:
+
+  oauth2:
+  url_launcher:
 
   # remove before app store / play store submission 
   redux_remote_devtools:

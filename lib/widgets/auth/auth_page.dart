@@ -1,5 +1,5 @@
 import 'package:adventures_in/actions/auth/check_auth_state.dart';
-import 'package:adventures_in/actions/auth/redirect_to_github.dart';
+import 'package:adventures_in/actions/auth/auth_with_git_hub.dart';
 import 'package:adventures_in/enums/auth_state.dart';
 import 'package:adventures_in/models/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class SignInWithGithubButton extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            context.dispatch(RedirectToGithub());
+            context.dispatch(AuthWithGitHub());
           },
         ),
       ),
