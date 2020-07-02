@@ -2,26 +2,41 @@ import 'package:adventures_in/actions/auth/store_auth_state.dart';
 import 'package:adventures_in/actions/auth/store_auth_token.dart';
 import 'package:adventures_in/actions/redux_action.dart';
 import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/utils/git_hub_redirect.dart';
-import 'package:http/http.dart' as http;
+import 'package:adventures_in/utils/credentials.dart' as credentials;
+import 'package:oauth2/oauth2.dart';
 
 class AuthService {
-  final gitHubRedirect = GitHubRedirect();
+  // used to generate the authorization url
+  AuthorizationCodeGrant _grant;
+
+  // Credentials
+  final String _githubClientId = credentials.githubClientId;
+
+  // OAuth scopes for repository and user information
+  final List<String> _githubScopes = ['repo', 'read:org'];
+
+  // Endpoints
+  final _tokenEndpoint =
+      Uri.parse('https://github.com/login/oauth/access_token');
+  final _authorizationEndpoint =
+      Uri.parse('https://github.com/login/oauth/authorize');
+  final Uri _redirectUri = Uri.parse('http://localhost/');
+
+  AuthService() {
+    // create the grant used to generate the authorization url
+    _grant = AuthorizationCodeGrant(
+      _githubClientId,
+      _authorizationEndpoint,
+      _tokenEndpoint,
+    );
+  }
 
   Future<ReduxAction> checkAuthState() async {
     return Future.value(StoreAuthState(state: AuthState.redirectedAndWaiting));
   }
 
-  Uri get githubRedirectUri => gitHubRedirect.uri;
-
-  Future<ReduxAction> exchangeCodeForToken(
-      Map<String, String> queryParameters) async {
-    final token = await http.read(
-        'https://us-central1-flutter-github-desktop.cloudfunctions.net/getToken',
-        headers: queryParameters);
-
-    return StoreAuthToken(token: token);
-  }
+  Uri get githubRedirectUri =>
+      _grant.getAuthorizationUrl(_redirectUri, scopes: _githubScopes);
 
   Future<ReduxAction> signOut() async {
     // try {
