@@ -45,6 +45,9 @@ app.*.map.json
 
 ### My extra ignores 
 
+# Firebase project settings 
+.firebaserc
+
 # Built value generated files 
 *.g.dart
 
