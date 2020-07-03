@@ -17,7 +17,7 @@ class AuthService {
   Future<ReduxAction> exchangeCodeForToken(
       Map<String, String> queryParameters) async {
     final token = await http.read(
-        'https://us-central1-flutter-github-desktop.cloudfunctions.net/getToken',
+        'https://us-central1-adventures-in-tech-world.cloudfunctions.net/getAuthTokenFromGitHub',
         headers: queryParameters);
 
     return StoreAuthToken(token: token);
