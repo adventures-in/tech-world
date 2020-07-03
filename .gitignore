@@ -47,6 +47,7 @@ app.*.map.json
 
 # Firebase project settings 
 .firebaserc
+.firebase/
 
 # Built value generated files 
 *.g.dart

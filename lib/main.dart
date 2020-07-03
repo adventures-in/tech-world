@@ -6,6 +6,7 @@ import 'package:adventures_in/services/platform_service.dart';
 import 'package:adventures_in/widgets/adventures_in_app.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
 
 void main() {
   /// Create services
@@ -16,7 +17,8 @@ void main() {
   final store =
       Store<AppState>(appReducer, initialState: AppState.init(), middleware: [
     ...createAppMiddleware(
-        authService: authService, platformService: platformService)
+        authService: authService, platformService: platformService),
+    LoggingMiddleware<dynamic>.printer()
   ]);
 
   runApp(AdventuresInApp(store, Uri.base.queryParameters));

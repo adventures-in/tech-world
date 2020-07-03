@@ -9,7 +9,7 @@ class AuthService {
   final gitHubRedirect = GitHubRedirect();
 
   Future<ReduxAction> checkAuthState() async {
-    return Future.value(StoreAuthState(state: AuthState.redirectedAndWaiting));
+    return Future.value(StoreAuthState(state: AuthState.waitingAfterRedirect));
   }
 
   Uri get githubRedirectUri => gitHubRedirect.uri;

@@ -19,49 +19,49 @@ import 'package:redux/redux.dart';
 List<Middleware<AppState>> createAuthMiddleware(
     {AuthService authService, PlatformService platformService}) {
   return [
-    TypedMiddleware<AppState, CheckAuthState>(
-      _checkAuthState(authService),
-    ),
-    TypedMiddleware<AppState, AuthWithGitHub>(
-      _authWithGitHub(authService, platformService),
-    ),
-    TypedMiddleware<AppState, SignOut>(
-      _signOutUser(authService),
-    ),
-    // TypedMiddleware<AppState, DealWithAuthCode>(
-    //   _dealWithAuthCode(authService),
-    // ),
+    CheckAuthStateMiddleware(authService),
+    AuthWithGitHubMiddleware(platformService, authService),
+    SignOutMiddleware(authService),
     DealWithAuthCodeMiddleware(authService),
   ];
 }
 
-Middleware _checkAuthState(AuthService authService) =>
-    (store, dynamic action, next) async {
-      next(action);
+class CheckAuthStateMiddleware
+    extends TypedMiddleware<AppState, CheckAuthState> {
+  CheckAuthStateMiddleware(AuthService authService)
+      : super((store, action, next) async {
+          next(action);
 
-      final reaction = await authService.checkAuthState();
-      store.dispatch(reaction);
-    };
+          // check the auth state and dispatch the resulting action
+          final reaction = await authService.checkAuthState();
+          store.dispatch(reaction);
+        });
+}
 
-Middleware _authWithGitHub(
-        AuthService authService, PlatformService platformService) =>
-    (store, dynamic action, next) async {
-      next(action);
+class AuthWithGitHubMiddleware
+    extends TypedMiddleware<AppState, AuthWithGitHub> {
+  AuthWithGitHubMiddleware(
+      PlatformService platformService, AuthService authService)
+      : super((store, action, next) async {
+          next(action);
 
-      await platformService.redirect(authService.githubRedirectUri);
-    };
+          await platformService.redirect(authService.githubRedirectUri);
+        });
+}
 
-Middleware _signOutUser(AuthService authService) =>
-    (store, dynamic action, next) async {
-      next(action);
+class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
+  SignOutMiddleware(AuthService service)
+      : super((store, action, next) async {
+          next(action);
 
-      // sign out and dispatch the resulting problem if there is one
-      final actionAfterSignout = await authService.signOut();
+          // sign out and dispatch the resulting problem if there is one
+          final actionAfterSignout = await service.signOut();
 
-      if (actionAfterSignout != null) {
-        store.dispatch(actionAfterSignout);
-      }
-    };
+          if (actionAfterSignout != null) {
+            store.dispatch(actionAfterSignout);
+          }
+        });
+}
 
 // DealWithAuthCodeMiddleware _dealWithAuthCode(AuthService authService) =>
 //     (store, action, next) async {
@@ -96,6 +96,9 @@ class DealWithAuthCodeMiddleware
   DealWithAuthCodeMiddleware(AuthService authService)
       : super((store, action, next) async {
           next(action);
+
+          // if there is no auth code in the parameters, just return
+          if (action.queryParameters['code'] == null) return;
 
           final reaction =
               await authService.exchangeCodeForToken(action.queryParameters);

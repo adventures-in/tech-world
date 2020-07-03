@@ -23,7 +23,7 @@ class NavBarSelection extends EnumClass {
   };
 
   static const Map<NavBarSelection, Widget> _$widgetMap = {
-    projects: const ProjectsPage(),
+    projects: ProjectsPage(),
     topics: TopicsPage(),
     profile: ProfilePage(),
   };
