@@ -23,7 +23,6 @@ dependencies:
 
   # remove before app store / play store submission 
   redux_remote_devtools:
-  redux_logging:
 
 dev_dependencies:
   flutter_test:
