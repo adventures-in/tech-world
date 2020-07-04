@@ -1,5 +1,5 @@
 import 'package:oauth2/oauth2.dart';
-import 'package:adventures_in/utils/credentials.dart' as credentials;
+import 'package:adventures_in_tech_world/utils/credentials.dart' as credentials;
 
 class GitHubRedirect {
   // used to generate the authorization url

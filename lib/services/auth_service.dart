@@ -1,16 +1,13 @@
-import 'package:adventures_in/actions/auth/store_auth_state.dart';
-import 'package:adventures_in/actions/auth/store_auth_token.dart';
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/utils/git_hub_redirect.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
+import 'package:adventures_in_tech_world/utils/git_hub_redirect.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   final gitHubRedirect = GitHubRedirect();
-
-  Future<ReduxAction> checkAuthState() async {
-    return Future.value(StoreAuthState(state: AuthState.waitingAfterRedirect));
-  }
 
   Uri get githubRedirectUri => gitHubRedirect.uri;
 
@@ -21,6 +18,15 @@ class AuthService {
         headers: queryParameters);
 
     return StoreAuthToken(token: token);
+  }
+
+  Future<Adventurer> signInWithFirebase(String token) async {
+    final credential = GithubAuthProvider.getCredential(token: token);
+
+    final authResult =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    return authResult.user.toAdventurer();
   }
 
   Future<ReduxAction> signOut() async {

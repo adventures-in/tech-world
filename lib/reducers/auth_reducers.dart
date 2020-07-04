@@ -1,6 +1,6 @@
-import 'package:adventures_in/actions/auth/store_auth_state.dart';
-import 'package:adventures_in/actions/auth/store_auth_token.dart';
-import 'package:adventures_in/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
 /// Reducers specify how the application's state changes in response to actions

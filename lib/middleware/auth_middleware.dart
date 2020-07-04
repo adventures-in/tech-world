@@ -1,10 +1,16 @@
-import 'package:adventures_in/actions/auth/auth_with_git_hub.dart';
-import 'package:adventures_in/actions/auth/check_auth_state.dart';
-import 'package:adventures_in/actions/auth/deal_with_auth_code.dart';
-import 'package:adventures_in/actions/auth/sign_out.dart';
-import 'package:adventures_in/models/app/app_state.dart';
-import 'package:adventures_in/services/auth_service.dart';
-import 'package:adventures_in/services/platform_service.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/auth/auth_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:redux/redux.dart';
 
 /// Middleware is used for a variety of things:
@@ -19,22 +25,47 @@ import 'package:redux/redux.dart';
 List<Middleware<AppState>> createAuthMiddleware(
     {AuthService authService, PlatformService platformService}) {
   return [
-    CheckAuthStateMiddleware(authService),
+    DealWithAuthCodeMiddleware(authService),
+    CheckAuthStateMiddleware(authService, platformService),
     AuthWithGitHubMiddleware(platformService, authService),
     SignOutMiddleware(authService),
-    DealWithAuthCodeMiddleware(authService),
   ];
+}
+
+class DealWithAuthCodeMiddleware
+    extends TypedMiddleware<AppState, DealWithAuthCode> {
+  DealWithAuthCodeMiddleware(AuthService authService)
+      : super((store, action, next) async {
+          next(action);
+
+          // if there is no auth code in the parameters, we just carry on and
+          // the regular auth check will go about it's business
+          if (action.queryParameters['code'] == null) return;
+
+          final reaction =
+              await authService.exchangeCodeForToken(action.queryParameters);
+          store.dispatch(reaction);
+        });
 }
 
 class CheckAuthStateMiddleware
     extends TypedMiddleware<AppState, CheckAuthState> {
-  CheckAuthStateMiddleware(AuthService authService)
+  CheckAuthStateMiddleware(
+      AuthService authService, PlatformService platformService)
       : super((store, action, next) async {
           next(action);
 
-          // check the auth state and dispatch the resulting action
-          final reaction = await authService.checkAuthState();
-          store.dispatch(reaction);
+          /// Check if the user is aready signed and set the auth state
+          final token = await platformService.getStoredGitHubToken();
+          if (token == null) {
+            store.dispatch(StoreAuthState(state: AuthState.notSignedIn));
+            store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+          } else {
+            store.dispatch(StoreAuthToken(token: token));
+            final adventurer = await authService.signInWithFirebase(token);
+            store.dispatch(StoreAdventurer(adventurer: adventurer));
+            store.dispatch(StoreAuthState(state: AuthState.signedIn));
+          }
         });
 }
 
@@ -44,6 +75,8 @@ class AuthWithGitHubMiddleware
       PlatformService platformService, AuthService authService)
       : super((store, action, next) async {
           next(action);
+
+          store.dispatch(StoreAuthStep(step: AuthStep.signingIn));
 
           await platformService.redirect(authService.githubRedirectUri);
         });
@@ -60,48 +93,5 @@ class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
           if (actionAfterSignout != null) {
             store.dispatch(actionAfterSignout);
           }
-        });
-}
-
-// DealWithAuthCodeMiddleware _dealWithAuthCode(AuthService authService) =>
-//     (store, action, next) async {
-//       next(action);
-
-//       final reaction = await authService.exchangeCodeForToken(action.code);
-//       store.dispatch(reaction);
-//     };
-
-// class DealWithAuthCodeMiddleware implements MiddlewareClass<AppState> {
-//   DealWithAuthCodeMiddleware(this.authService);
-
-//   AuthService authService;
-
-//   dynamic _middleware(Store<AppState> store, DealWithAuthCode action,
-//       NextDispatcher next) async {
-//     next(action);
-
-//     final reaction = await authService.exchangeCodeForToken(action.code);
-//     store.dispatch(reaction);
-//   }
-
-//   @override
-//   dynamic call(Store<AppState> store, dynamic action, NextDispatcher next) =>
-//       (action is DealWithAuthCode)
-//           ? _middleware(store, action, next)
-//           : next(action);
-// }
-
-class DealWithAuthCodeMiddleware
-    extends TypedMiddleware<AppState, DealWithAuthCode> {
-  DealWithAuthCodeMiddleware(AuthService authService)
-      : super((store, action, next) async {
-          next(action);
-
-          // if there is no auth code in the parameters, just return
-          if (action.queryParameters['code'] == null) return;
-
-          final reaction =
-              await authService.exchangeCodeForToken(action.queryParameters);
-          store.dispatch(reaction);
         });
 }

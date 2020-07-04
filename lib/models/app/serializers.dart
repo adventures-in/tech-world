@@ -1,5 +1,5 @@
-import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
-import 'package:adventures_in/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';

@@ -1,7 +1,7 @@
-import 'package:adventures_in/middleware/auth_middleware.dart';
-import 'package:adventures_in/models/app/app_state.dart';
-import 'package:adventures_in/services/auth_service.dart';
-import 'package:adventures_in/services/platform_service.dart';
+import 'package:adventures_in_tech_world/middleware/auth_middleware.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:redux/redux.dart';
 
 /// Middleware is used for a variety of things:

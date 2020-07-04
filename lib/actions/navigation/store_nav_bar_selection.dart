@@ -2,12 +2,12 @@ library store_nav_bar_selection;
 
 import 'dart:convert';
 
-import 'package:adventures_in/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/models/app/serializers.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
 
 part 'store_nav_bar_selection.g.dart';
 

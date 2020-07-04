@@ -1,17 +1,17 @@
-import 'package:adventures_in/actions/auth/deal_with_auth_code.dart';
-import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/enums/nav_bar_selection.dart';
-import 'package:adventures_in/extensions/theme_data_extensions.dart';
-import 'package:adventures_in/extensions/theme_mode_extensions.dart';
-import 'package:adventures_in/models/app/app_state.dart';
-import 'package:adventures_in/models/app/settings.dart';
-import 'package:adventures_in/widgets/auth/auth_page.dart';
+import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/models/app/settings.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'package:adventures_in/extensions/build_context_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 
 class AdventuresInApp extends StatelessWidget {
   /// The redux store
