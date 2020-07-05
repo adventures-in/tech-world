@@ -3,30 +3,29 @@ library problem;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:meta/meta.dart';
 
 part 'problem.g.dart';
 
 abstract class Problem implements Built<Problem, ProblemBuilder> {
   ProblemType get type;
-
-  String get message;
-
+  Object get error; // built_value won't allow dynamic
+  StackTrace get trace;
   BuiltMap<String, Object> get info;
-
-  @nullable
-  String get trace;
-
-  @nullable
-  AppState get state;
 
   Problem._();
 
-  factory Problem([void Function(ProblemBuilder) updates]) = _$Problem;
+  factory Problem(
+      {@required ProblemType type,
+      @required Object error,
+      @required StackTrace trace,
+      BuiltMap<String, Object> info}) = _$Problem._;
+
+  factory Problem.by([void Function(ProblemBuilder) updates]) = _$Problem;
 
   Object toJson() => serializers.serializeWith(Problem.serializer, this);
 

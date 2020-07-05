@@ -42,9 +42,9 @@ class DealWithAuthCodeMiddleware
           // the regular auth check will go about it's business
           if (action.queryParameters['code'] == null) return;
 
-          final reaction =
-              await authService.exchangeCodeForToken(action.queryParameters);
-          store.dispatch(reaction);
+          authService
+              .exchangeCodeForToken(action.queryParameters)
+              .listen(store.dispatch);
         });
 }
 

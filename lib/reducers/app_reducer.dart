@@ -2,6 +2,7 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/adventurers_reducers.dart';
 import 'package:adventures_in_tech_world/reducers/auth_reducers.dart';
 import 'package:adventures_in_tech_world/reducers/navigation_reducers.dart';
+import 'package:adventures_in_tech_world/reducers/problems_reducers.dart';
 import 'package:redux/redux.dart';
 
 /// Reducers specify how the application"s state changes in response to actions
@@ -13,4 +14,5 @@ final appReducer =
   ...navigationReducers,
   ...authReducers,
   ...adventuresReducers,
+  ...problemsReducers,
 ]);

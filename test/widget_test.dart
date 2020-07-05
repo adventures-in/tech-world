@@ -14,10 +14,9 @@ import 'package:redux/redux.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     Store<AppState> store;
-    final queryParameters = <String, String>{};
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(AdventuresInApp(store, queryParameters));
+    await tester.pumpWidget(AdventuresInApp(store));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

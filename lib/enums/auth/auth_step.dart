@@ -9,13 +9,17 @@ class AuthStep extends EnumClass {
   static Serializer<AuthStep> get serializer => _$authStepSerializer;
   static const AuthStep checking = _$checking;
   static const AuthStep waitingForInput = _$waitingForInput;
+  static const AuthStep exchangingCode = _$exchangingCode;
+  static const AuthStep exchangedCode = _$exchangedCode;
   static const AuthStep signingIn = _$signingIn;
   static const AuthStep signedIn = _$signedIn;
   static const Map<AuthStep, int> _$indexMap = {
     checking: 0,
     waitingForInput: 1,
-    signingIn: 2,
-    signedIn: 3
+    exchangingCode: 2,
+    exchangedCode: 3,
+    signingIn: 4,
+    signedIn: 5
   };
 
   const AuthStep._(String name) : super(name);

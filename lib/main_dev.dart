@@ -35,5 +35,5 @@ void main() async {
     print(e);
   }
 
-  runApp(AdventuresInApp(store, Uri.base.queryParameters));
+  runApp(AdventuresInApp(store));
 }
