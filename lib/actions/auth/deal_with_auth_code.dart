@@ -2,6 +2,7 @@ library deal_with_auth_code;
 
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -13,11 +14,11 @@ part 'deal_with_auth_code.g.dart';
 abstract class DealWithAuthCode extends Object
     with ReduxAction
     implements Built<DealWithAuthCode, DealWithAuthCodeBuilder> {
-  Map<String, String> get queryParameters;
+  BuiltMap<String, String> get queryParameters;
 
   DealWithAuthCode._();
 
-  factory DealWithAuthCode({Map<String, String> queryParameters}) =
+  factory DealWithAuthCode({BuiltMap<String, String> queryParameters}) =
       _$DealWithAuthCode._;
 
   factory DealWithAuthCode.by(
