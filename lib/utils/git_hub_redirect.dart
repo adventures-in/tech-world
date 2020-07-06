@@ -17,7 +17,7 @@ class GitHubRedirect {
   final _authorizationEndpoint =
       Uri.parse('https://github.com/login/oauth/authorize');
   final Uri _redirectUri =
-      Uri.parse('https://adventures-in-tech-world.web.app/#/');
+      Uri.parse('https://adventures-in-tech-world.web.app/github/');
   // final Uri _redirectUri =
   // Uri.parse('https://adventures-in-tech-world.web.app/');
 
