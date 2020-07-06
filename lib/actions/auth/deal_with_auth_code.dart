@@ -35,5 +35,5 @@ abstract class DealWithAuthCode extends Object
 
   @override
   String toString() =>
-      'DEAL_WITH_AUTH_CODE ${(queryParameters['code'] == null) ? '(none)' : ''}';
+      'DEAL_WITH_AUTH_CODE ${queryParameters['code'] ?? '(none)'}';
 }
