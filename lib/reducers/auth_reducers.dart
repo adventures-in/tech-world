@@ -1,3 +1,4 @@
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
@@ -12,6 +13,7 @@ final authReducers = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, StoreAuthState>(_storeAuthState),
   TypedReducer<AppState, StoreAuthStep>(_storeAuthStep),
   TypedReducer<AppState, StoreAuthToken>(_storeAuthToken),
+  TypedReducer<AppState, StoreAnonymousId>(_storeAnonymousId),
 ];
 
 AppState _storeAuthState(AppState state, StoreAuthState action) {
@@ -24,4 +26,8 @@ AppState _storeAuthStep(AppState state, StoreAuthStep action) {
 
 AppState _storeAuthToken(AppState state, StoreAuthToken action) {
   return state.rebuild((b) => b..authToken = action.token);
+}
+
+AppState _storeAnonymousId(AppState state, StoreAnonymousId action) {
+  return state.rebuild((b) => b..anonymousId = action.id);
 }

@@ -28,9 +28,9 @@ List<Middleware<AppState>> createAuthMiddleware(
   return [
     DealWithAuthCodeMiddleware(authService),
     CheckAuthStateMiddleware(authService, platformService),
+    SignInAnonymouslyMiddleware(authService),
     SignInWithGitHubMiddleware(platformService, authService),
     SignOutMiddleware(authService),
-    SignInAnonymouslyMiddleware(authService),
   ];
 }
 
@@ -73,6 +73,20 @@ class CheckAuthStateMiddleware
         });
 }
 
+class SignInAnonymouslyMiddleware
+    extends TypedMiddleware<AppState, SignInAnonymously> {
+  SignInAnonymouslyMiddleware(AuthService service)
+      : super((store, action, next) async {
+          next(action);
+
+          final storeIdOrAddProblem = await service.signInAnonymously();
+          store.dispatch(storeIdOrAddProblem);
+
+          // reset the UI
+          store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+        });
+}
+
 class SignInWithGitHubMiddleware
     extends TypedMiddleware<AppState, SignInWithGitHub> {
   SignInWithGitHubMiddleware(
@@ -82,7 +96,8 @@ class SignInWithGitHubMiddleware
 
           store.dispatch(StoreAuthStep(step: AuthStep.signingInWithGitHub));
 
-          await platformService.redirect(authService.githubRedirectUri);
+          await platformService
+              .redirect(authService.githubRedirectUri(store.state.anonymousId));
         });
 }
 
@@ -97,19 +112,5 @@ class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
           if (actionAfterSignout != null) {
             store.dispatch(actionAfterSignout);
           }
-        });
-}
-
-class SignInAnonymouslyMiddleware
-    extends TypedMiddleware<AppState, SignInAnonymously> {
-  SignInAnonymouslyMiddleware(AuthService service)
-      : super((store, action, next) async {
-          next(action);
-
-          final reaction = await service.signInAnonymously();
-          store.dispatch(reaction);
-
-          // reset the UI
-          store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
         });
 }

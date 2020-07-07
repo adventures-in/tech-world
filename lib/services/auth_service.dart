@@ -1,3 +1,4 @@
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
@@ -14,7 +15,7 @@ import 'package:http/http.dart' as http;
 class AuthService {
   final gitHubRedirect = GitHubRedirect();
 
-  Uri get githubRedirectUri => gitHubRedirect.uri;
+  Uri githubRedirectUri(String state) => gitHubRedirect.uriWith(state: state);
 
   /// Uses the code sent in url parameters by a redirect to get an auth token
   /// by making a call to our cloud function (that has the secret needed to
@@ -50,6 +51,7 @@ class AuthService {
   Future<ReduxAction> signInAnonymously() async {
     try {
       final authResult = await FirebaseAuth.instance.signInAnonymously();
+      return StoreAnonymousId(id: authResult.user.uid);
     } catch (error, trace) {
       return AddProblem(
           errorString: error.toString(),

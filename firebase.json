@@ -8,6 +8,7 @@
   },
   "hosting": {
     "public": "build/web",
+    "predeploy": "flutter build web -t lib/main.dart",
     "ignore": [
       "firebase.json",
       "**/.*",

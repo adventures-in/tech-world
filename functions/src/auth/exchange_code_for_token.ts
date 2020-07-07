@@ -23,7 +23,11 @@ export const exchangeCodeWithGitHub = express();
 const exchangeCodeForToken = async (req: any, res: any) => {
   try {
     const auth_token = await retrieveToken(req.query.code);
-    return res.send(auth_token);
+    const result: any = {}; 
+    result.auth_token = auth_token;
+    result.state = req.query.state;
+    console.log('state: '+req.query.state);
+    return res.send(result);
   } catch(error) {
     console.error(error);
     return res.status(500).send('Something went wrong while exchanging the code.');

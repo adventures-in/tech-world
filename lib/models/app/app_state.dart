@@ -24,6 +24,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   String get authToken;
   @nullable
+  String get anonymousId;
+  @nullable
   Adventurer get adventurer;
   NavBarSelection get navBarSelection;
 

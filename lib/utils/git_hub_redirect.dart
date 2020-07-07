@@ -1,5 +1,6 @@
 import 'package:oauth2/oauth2.dart';
 import 'package:adventures_in_tech_world/utils/credentials.dart' as credentials;
+import 'package:meta/meta.dart';
 
 class GitHubRedirect {
   // used to generate the authorization url
@@ -18,8 +19,6 @@ class GitHubRedirect {
       Uri.parse('https://github.com/login/oauth/authorize');
   final Uri _redirectUri =
       Uri.parse('https://adventures-in-tech-world.web.app/github/');
-  // final Uri _redirectUri =
-  // Uri.parse('https://adventures-in-tech-world.web.app/');
 
   GitHubRedirect() {
     // create the grant used to generate the authorization url
@@ -30,6 +29,6 @@ class GitHubRedirect {
     );
   }
 
-  Uri get uri =>
-      _grant.getAuthorizationUrl(_redirectUri, scopes: _githubScopes);
+  Uri uriWith({@required String state}) => _grant
+      .getAuthorizationUrl(_redirectUri, scopes: _githubScopes, state: state);
 }
