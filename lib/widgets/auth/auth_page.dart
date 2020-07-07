@@ -54,7 +54,7 @@ class SignInWithGithubButton extends StatelessWidget {
               width: 10,
             ),
             Image.asset(
-              'icons/GitHub-Mark-Light-64px.png',
+              'assets/GitHub-Mark-Light-64px.png',
               width: 20,
               height: 20,
               fit: BoxFit.cover,
