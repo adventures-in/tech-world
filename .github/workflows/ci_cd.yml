@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    name: CI
+    runs-on: macOS-latest
+    
+    steps:
+
+    # output the build number used in this job
+    - name: Output Run Info
+      run: echo "build-number=$GITHUB_RUN_NUMBER, event = ${{ github.event_name }}, branch = ${{ github.ref }}, target = ${{ github.base_ref }}"
+
+    # several actions use checkout
+    - name: Install checkout
+      uses: actions/checkout@v2
+    
+    ##############################################
+    # flutter-action
+    ##############################################
+    # the flutter-action action seems to need java
+    - name: Install Java for Flutter tool
+      uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    # use flutter-action configured with flutter channel
+    - name: Install Flutter tool
+      uses: subosito/flutter-action@v1
+      with:
+        channel: 'dev' # or: 'stable' or 'beta'
+
+    ############################################
+    # build ios app and android app
+    ############################################
+    - run: flutter pub get
+    - run: flutter pub run build_runner build
+    - run: flutter test
+    - run: flutter build web -t lib/main.dart
