@@ -2,11 +2,13 @@ library app_state;
 
 import 'dart:convert';
 
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/enums/nav_bar_selection.dart';
-import 'package:adventures_in/models/app/problem.dart';
-import 'package:adventures_in/models/app/serializers.dart';
-import 'package:adventures_in/models/app/settings.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
+import 'package:adventures_in_tech_world/models/app/settings.dart';
+import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -18,8 +20,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get displayingProblem;
   Settings get settings;
   AuthState get authState;
+  AuthStep get authStep;
   @nullable
   String get authToken;
+  @nullable
+  String get anonymousId;
+  @nullable
+  Adventurer get adventurer;
   NavBarSelection get navBarSelection;
 
   AppState._();
@@ -27,7 +34,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
     ..settings = Settings.initBuilder()
-    ..authState = AuthState.checking
+    ..authState = AuthState.unknown
+    ..authStep = AuthStep.checking
     ..navBarSelection = NavBarSelection.projects);
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

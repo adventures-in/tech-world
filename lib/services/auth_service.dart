@@ -1,38 +1,37 @@
-import 'package:adventures_in/actions/auth/store_auth_state.dart';
-import 'package:adventures_in/actions/auth/store_auth_token.dart';
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/utils/credentials.dart' as credentials;
-import 'package:oauth2/oauth2.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
+import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
+import 'package:adventures_in_tech_world/utils/git_hub_redirect.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   // used to generate the authorization url
   AuthorizationCodeGrant _grant;
 
-  // Credentials
-  final String _githubClientId = credentials.githubClientId;
+  Uri githubRedirectUri(String state) => gitHubRedirect.uriWith(state: state);
 
-  // OAuth scopes for repository and user information
-  final List<String> _githubScopes = ['repo', 'read:org'];
-
-  // Endpoints
-  final _tokenEndpoint =
-      Uri.parse('https://github.com/login/oauth/access_token');
-  final _authorizationEndpoint =
-      Uri.parse('https://github.com/login/oauth/authorize');
-  final Uri _redirectUri = Uri.parse('http://localhost/');
-
-  AuthService() {
-    // create the grant used to generate the authorization url
-    _grant = AuthorizationCodeGrant(
-      _githubClientId,
-      _authorizationEndpoint,
-      _tokenEndpoint,
-    );
+  Future<ReduxAction> signInAnonymously() async {
+    try {
+      final authResult = await FirebaseAuth.instance.signInAnonymously();
+      return StoreAnonymousId(id: authResult.user.uid);
+    } catch (error, trace) {
+      return AddProblem(
+          errorString: error.toString(),
+          traceString: trace.toString(),
+          type: ProblemType.signInAnonymously);
+    }
   }
 
-  Future<ReduxAction> checkAuthState() async {
-    return Future.value(StoreAuthState(state: AuthState.redirectedAndWaiting));
+  Future<Adventurer> signInWithFirebase(String token) async {
+    final credential = GithubAuthProvider.getCredential(token: token);
+
+    final authResult =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    return authResult.user.toAdventurer();
   }
 
   Uri get githubRedirectUri =>

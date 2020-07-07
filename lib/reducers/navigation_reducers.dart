@@ -1,5 +1,5 @@
-import 'package:adventures_in/actions/navigation/store_nav_bar_selection.dart';
-import 'package:adventures_in/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
 /// Reducers specify how the application's state changes in response to actions

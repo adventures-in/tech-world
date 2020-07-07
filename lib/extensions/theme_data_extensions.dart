@@ -1,5 +1,5 @@
-import 'package:adventures_in/enums/themes/theme_brightness.dart';
-import 'package:adventures_in/models/themes/theme_set.dart';
+import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
+import 'package:adventures_in_tech_world/models/themes/theme_set.dart';
 import 'package:flutter/material.dart';
 
 // Static functions must be called on the extension name, ie. NewThemeData
