@@ -1,4 +1,4 @@
-import 'package:adventures_in/enums/themes/brightness_mode.dart';
+import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
 import 'package:flutter/material.dart';
 
 extension MakeThemeMode on ThemeMode {

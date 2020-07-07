@@ -1,26 +1,36 @@
-import 'package:adventures_in/actions/auth/store_auth_state.dart';
-import 'package:adventures_in/actions/auth/store_auth_token.dart';
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/utils/git_hub_redirect.dart';
-import 'package:http/http.dart' as http;
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
+import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
+import 'package:adventures_in_tech_world/utils/git_hub_redirect.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final gitHubRedirect = GitHubRedirect();
 
-  Future<ReduxAction> checkAuthState() async {
-    return Future.value(StoreAuthState(state: AuthState.redirectedAndWaiting));
+  Uri githubRedirectUri(String state) => gitHubRedirect.uriWith(state: state);
+
+  Future<ReduxAction> signInAnonymously() async {
+    try {
+      final authResult = await FirebaseAuth.instance.signInAnonymously();
+      return StoreAnonymousId(id: authResult.user.uid);
+    } catch (error, trace) {
+      return AddProblem(
+          errorString: error.toString(),
+          traceString: trace.toString(),
+          type: ProblemType.signInAnonymously);
+    }
   }
 
-  Uri get githubRedirectUri => gitHubRedirect.uri;
+  Future<Adventurer> signInWithFirebase(String token) async {
+    final credential = GithubAuthProvider.getCredential(token: token);
 
-  Future<ReduxAction> exchangeCodeForToken(
-      Map<String, String> queryParameters) async {
-    final token = await http.read(
-        'https://us-central1-flutter-github-desktop.cloudfunctions.net/getToken',
-        headers: queryParameters);
+    final authResult =
+        await FirebaseAuth.instance.signInWithCredential(credential);
 
-    return StoreAuthToken(token: token);
+    return authResult.user.toAdventurer();
   }
 
   Future<ReduxAction> signOut() async {

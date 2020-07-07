@@ -2,9 +2,9 @@ library theme_set;
 
 import 'dart:convert';
 
-import 'package:adventures_in/enums/themes/theme_brightness.dart';
-import 'package:adventures_in/models/app/serializers.dart';
-import 'package:adventures_in/models/themes/theme_colors.dart';
+import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
+import 'package:adventures_in_tech_world/models/themes/theme_colors.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

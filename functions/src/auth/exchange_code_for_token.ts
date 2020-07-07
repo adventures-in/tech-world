@@ -16,22 +16,32 @@ import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as rp from 'request-promise';
+import * as database from './database';
 
 export const exchangeCodeWithGitHub = express();
 
 // get the code from the request, call retrieveAuthToken and return the response
-const exchangeCodeForToken = async (req: any, resp: any) => {
+const exchangeCodeForToken = async (req: any, res: any) => {
   try {
-    const auth_token = await retrieveAuthToken(req.get('code'));
-    return resp.send(auth_token);
+
+    const auth_token = await retrieveToken(req.query.code);
+
+    const dbEntry = new database.GitHubToken(req.query.state, auth_token);
+    await dbEntry.save();
+
+    return res.send(`
+      <script>
+        window.close();
+      </script>
+    `);
   } catch(error) {
     console.error(error);
-    return resp.status(500).send('Something went wrong while exchanging the code.');
+    return res.status(500).send('Something went wrong while exchanging the code.');
   }
 };
 
 // Exchange the code from github (plus a secret) for an auth token 
-function retrieveAuthToken(code: string = '') {
+function retrieveToken(code: string = '') {
   return rp({
     method: 'POST',
     uri: 'https://github.com/login/oauth/access_token',

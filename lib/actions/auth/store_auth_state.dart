@@ -2,9 +2,9 @@ library store_auth_state;
 
 import 'dart:convert';
 
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/enums/auth_state.dart';
-import 'package:adventures_in/models/app/serializers.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';

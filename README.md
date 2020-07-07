@@ -1,6 +1,6 @@
-# adventures_in
+# Adventures In Tech World
 
-A Flutter web project for organising collaboration.
+A web app for organising collaboration, built with Flutter. 
 
 ## Profiles 
 
@@ -13,3 +13,13 @@ You can select a set of topics you are interested in.
 ## Project Management 
 
 You can indicate your current goals by selecting issues in your repos. 
+
+# Common Commands 
+
+```sh
+remotedev --port 8000
+flutter pub run build_runner watch --delete-conflicting-outputs
+firebase deploy --only functions
+firebase deploy --only hosting:adventures-in-tech-world
+firebase deploy --only firestore:rules
+```

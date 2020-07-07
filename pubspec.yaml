@@ -1,4 +1,4 @@
-name: adventures_in
+name: adventures_in_tech_world
 description: Assisting learning and collaboration.
 
 publish_to: 'none' 
@@ -12,16 +12,24 @@ dependencies:
   flutter:
     sdk: flutter
   
+  # auth 
+  oauth2:
+  firebase_auth:
+
+  # database 
+  cloud_firestore:
+
+  # platform tools 
+  url_launcher:
+  shared_preferences:
+
   # redux 
   built_value:
   built_collection:
   redux:
   flutter_redux:
 
-  oauth2:
-  url_launcher:
-
-  # remove before app store / play store submission 
+  # used in prototyping, will not be in release 
   redux_remote_devtools:
 
 dev_dependencies:

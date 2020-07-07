@@ -1,5 +1,5 @@
-import 'package:adventures_in/actions/redux_action.dart';
-import 'package:adventures_in/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

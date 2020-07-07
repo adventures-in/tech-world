@@ -1,7 +1,7 @@
-import 'package:adventures_in/models/app/serializers.dart';
-import 'package:adventures_in/widgets/profile/profile_page.dart';
-import 'package:adventures_in/widgets/projects/projects_page.dart';
-import 'package:adventures_in/widgets/topics/topics_page.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
+import 'package:adventures_in_tech_world/widgets/profile/profile_page.dart';
+import 'package:adventures_in_tech_world/widgets/projects/projects_page.dart';
+import 'package:adventures_in_tech_world/widgets/topics/topics_page.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -23,7 +23,7 @@ class NavBarSelection extends EnumClass {
   };
 
   static const Map<NavBarSelection, Widget> _$widgetMap = {
-    projects: const ProjectsPage(),
+    projects: ProjectsPage(),
     topics: TopicsPage(),
     profile: ProfilePage(),
   };
