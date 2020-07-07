@@ -54,3 +54,6 @@ app.*.map.json
 
 # Credentials for (eg.) github oauth app 
 lib/utils/credentials.dart
+
+# Replace relevant part of index.html for running locally
+web/cdns_config.html

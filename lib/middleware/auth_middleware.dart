@@ -1,5 +1,6 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/actions/auth/auth_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
@@ -27,8 +28,9 @@ List<Middleware<AppState>> createAuthMiddleware(
   return [
     DealWithAuthCodeMiddleware(authService),
     CheckAuthStateMiddleware(authService, platformService),
-    AuthWithGitHubMiddleware(platformService, authService),
+    SignInWithGitHubMiddleware(platformService, authService),
     SignOutMiddleware(authService),
+    SignInAnonymouslyMiddleware(authService),
   ];
 }
 
@@ -58,25 +60,27 @@ class CheckAuthStateMiddleware
           /// Check if the user is aready signed and set the auth state
           final token = await platformService.getStoredGitHubToken();
           if (token == null) {
-            store.dispatch(StoreAuthState(state: AuthState.notSignedIn));
+            store.dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
+            store.dispatch(SignInAnonymously());
             store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
           } else {
             store.dispatch(StoreAuthToken(token: token));
             final adventurer = await authService.signInWithFirebase(token);
             store.dispatch(StoreAdventurer(adventurer: adventurer));
-            store.dispatch(StoreAuthState(state: AuthState.signedIn));
+            store.dispatch(
+                StoreAuthState(state: AuthState.signedInWithFirebase));
           }
         });
 }
 
-class AuthWithGitHubMiddleware
-    extends TypedMiddleware<AppState, AuthWithGitHub> {
-  AuthWithGitHubMiddleware(
+class SignInWithGitHubMiddleware
+    extends TypedMiddleware<AppState, SignInWithGitHub> {
+  SignInWithGitHubMiddleware(
       PlatformService platformService, AuthService authService)
       : super((store, action, next) async {
           next(action);
 
-          store.dispatch(StoreAuthStep(step: AuthStep.signingIn));
+          store.dispatch(StoreAuthStep(step: AuthStep.signingInWithGitHub));
 
           await platformService.redirect(authService.githubRedirectUri);
         });
@@ -93,5 +97,19 @@ class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
           if (actionAfterSignout != null) {
             store.dispatch(actionAfterSignout);
           }
+        });
+}
+
+class SignInAnonymouslyMiddleware
+    extends TypedMiddleware<AppState, SignInAnonymously> {
+  SignInAnonymouslyMiddleware(AuthService service)
+      : super((store, action, next) async {
+          next(action);
+
+          final reaction = await service.signInAnonymously();
+          store.dispatch(reaction);
+
+          // reset the UI
+          store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
         });
 }

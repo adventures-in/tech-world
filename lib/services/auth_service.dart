@@ -39,11 +39,22 @@ class AuthService {
       // if an exception was thrown add a problem to the store
       yield AddProblem(
           type: ProblemType.exchangeGitHubCodeForToken,
-          error: error,
-          trace: trace);
+          errorString: error.toString(),
+          traceString: trace?.toString());
 
       // reset the UI
       yield StoreAuthStep(step: AuthStep.waitingForInput);
+    }
+  }
+
+  Future<ReduxAction> signInAnonymously() async {
+    try {
+      final authResult = await FirebaseAuth.instance.signInAnonymously();
+    } catch (error, trace) {
+      return AddProblem(
+          errorString: error.toString(),
+          traceString: trace.toString(),
+          type: ProblemType.signInAnonymously);
     }
   }
 

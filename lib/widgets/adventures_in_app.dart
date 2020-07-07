@@ -35,7 +35,7 @@ class AdventuresInApp extends StatelessWidget {
               distinct: true,
               converter: (store) => store.state.authState,
               builder: (context, authState) {
-                return (authState == AuthState.signedIn)
+                return (authState == AuthState.signedInWithFirebase)
                     ? HomePage()
                     : AuthPage();
               },

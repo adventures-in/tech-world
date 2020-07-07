@@ -1,5 +1,5 @@
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/auth_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,10 @@ class AuthPage extends StatelessWidget {
         switch (authStep) {
           case AuthStep.checking:
             return WaitingIndicator('Checking Auth State');
-          case AuthStep.signingIn:
-            return WaitingIndicator('Signing In');
+          case AuthStep.signingInAnonymously:
+            return WaitingIndicator('Signing In Anonymously');
+          case AuthStep.signingInWithGitHub:
+            return WaitingIndicator('Signing In With GitHub');
           case AuthStep.waitingForInput:
             return SignInWithGithubButton();
           default:
@@ -60,7 +62,7 @@ class SignInWithGithubButton extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          context.dispatch(AuthWithGitHub());
+          context.dispatch(SignInWithGitHub());
         },
       ),
     );

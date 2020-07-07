@@ -15,8 +15,8 @@ AppState _addProblem(AppState state, AddProblem action) {
   // create a problem from the action
   final problem = Problem(
       type: action.type,
-      error: action.error,
-      trace: action.trace,
+      errorString: action.errorString,
+      traceString: action.traceString,
       info: action.info);
 
   // add the problem to the store

@@ -16,16 +16,18 @@ abstract class AddProblem extends Object
     with ReduxAction
     implements Built<AddProblem, AddProblemBuilder> {
   ProblemType get type;
-  Object get error; // built_value won't allow dynamic
-  StackTrace get trace;
+  String get errorString; // built_value won't allow dynamic
+  @nullable
+  String get traceString;
+  @nullable
   BuiltMap<String, Object> get info;
 
   AddProblem._();
 
   factory AddProblem(
       {@required ProblemType type,
-      @required Object error,
-      @required StackTrace trace,
+      @required String errorString,
+      String traceString,
       BuiltMap<String, Object> info}) = _$AddProblem._;
 
   factory AddProblem.by([void Function(AddProblemBuilder) updates]) =

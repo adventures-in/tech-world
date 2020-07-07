@@ -20,18 +20,18 @@ import * as rp from 'request-promise';
 export const exchangeCodeWithGitHub = express();
 
 // get the code from the request, call retrieveAuthToken and return the response
-const exchangeCodeForToken = async (req: any, resp: any) => {
+const exchangeCodeForToken = async (req: any, res: any) => {
   try {
-    const auth_token = await retrieveAuthToken(req.get('code'));
-    return resp.send(auth_token);
+    const auth_token = await retrieveToken(req.query.code);
+    return res.send(auth_token);
   } catch(error) {
     console.error(error);
-    return resp.status(500).send('Something went wrong while exchanging the code.');
+    return res.status(500).send('Something went wrong while exchanging the code.');
   }
 };
 
 // Exchange the code from github (plus a secret) for an auth token 
-function retrieveAuthToken(code: string = '') {
+function retrieveToken(code: string = '') {
   return rp({
     method: 'POST',
     uri: 'https://github.com/login/oauth/access_token',

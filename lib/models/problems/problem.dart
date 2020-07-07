@@ -13,16 +13,18 @@ part 'problem.g.dart';
 
 abstract class Problem implements Built<Problem, ProblemBuilder> {
   ProblemType get type;
-  Object get error; // built_value won't allow dynamic
-  StackTrace get trace;
+  String get errorString; // built_value won't allow dynamic
+  @nullable
+  String get traceString;
+  @nullable
   BuiltMap<String, Object> get info;
 
   Problem._();
 
   factory Problem(
       {@required ProblemType type,
-      @required Object error,
-      @required StackTrace trace,
+      @required String errorString,
+      String traceString,
       BuiltMap<String, Object> info}) = _$Problem._;
 
   factory Problem.by([void Function(ProblemBuilder) updates]) = _$Problem;

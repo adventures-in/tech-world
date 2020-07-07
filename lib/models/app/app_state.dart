@@ -32,7 +32,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
     ..settings = Settings.initBuilder()
-    ..authState = AuthState.notSignedIn
+    ..authState = AuthState.unknown
     ..authStep = AuthStep.checking
     ..navBarSelection = NavBarSelection.projects);
 

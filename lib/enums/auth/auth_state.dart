@@ -8,11 +8,16 @@ part 'auth_state.g.dart';
 
 class AuthState extends EnumClass {
   static Serializer<AuthState> get serializer => _$authStateSerializer;
+  static const AuthState unknown = _$unknown;
   static const AuthState notSignedIn = _$notSignedIn;
-  static const AuthState signedIn = _$signedIn;
+  static const AuthState signedInAnonymously = _$signedInAnonymously;
+  static const AuthState signedInWithGitHub = _$signedInWithGitHub;
+  static const AuthState signedInWithFirebase = _$signedInWithFirebase;
   static const Map<AuthState, int> _$indexMap = {
-    notSignedIn: 0,
-    signedIn: 1,
+    unknown: 0,
+    notSignedIn: 1,
+    signedInAnonymously: 2,
+    signedInWithGitHub: 3,
   };
 
   const AuthState._(String name) : super(name);

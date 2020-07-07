@@ -1,5 +1,6 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/actions/auth/auth_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
@@ -35,7 +36,7 @@ part 'serializers.g.dart';
   StoreNavBarSelection,
   AddProblem,
   AppState,
-  AuthWithGitHub,
+  SignInWithGitHub,
   CheckAuthState,
   DealWithAuthCode,
   SignOut,
@@ -44,6 +45,7 @@ part 'serializers.g.dart';
   StoreAuthStep,
   StoreAuthToken,
   StoreNavBarSelection,
+  SignInAnonymously,
   // RemoveProblem,
   // ObserveAuthState,
 ])
