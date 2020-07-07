@@ -1,52 +1,16 @@
 import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/utils/git_hub_redirect.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
 
 class AuthService {
   final gitHubRedirect = GitHubRedirect();
 
   Uri githubRedirectUri(String state) => gitHubRedirect.uriWith(state: state);
-
-  /// Uses the code sent in url parameters by a redirect to get an auth token
-  /// by making a call to our cloud function (that has the secret needed to
-  /// exchange the code with github for a token).
-  Stream<ReduxAction> exchangeCodeForToken(
-      BuiltMap<String, String> queryParameters) async* {
-    try {
-      // change the auth step so UI can indicate job has begun
-      yield StoreAuthStep(step: AuthStep.exchangingCode);
-
-      // make a call to our cloud function which will use the code to get a token
-      final token = await http.read(
-          'https://us-central1-adventures-in-tech-world.cloudfunctions.net/getAuthTokenFromGitHub',
-          headers: queryParameters.toMap());
-
-      // put the token in our store
-      yield StoreAuthToken(token: token);
-
-      // change the auth step so UI can indicate job done
-      yield StoreAuthStep(step: AuthStep.exchangedCode);
-    } catch (error, trace) {
-      // if an exception was thrown add a problem to the store
-      yield AddProblem(
-          type: ProblemType.exchangeGitHubCodeForToken,
-          errorString: error.toString(),
-          traceString: trace?.toString());
-
-      // reset the UI
-      yield StoreAuthStep(step: AuthStep.waitingForInput);
-    }
-  }
 
   Future<ReduxAction> signInAnonymously() async {
     try {

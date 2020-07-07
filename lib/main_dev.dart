@@ -4,6 +4,7 @@ import 'package:adventures_in_tech_world/middleware/app_middleware.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
 import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:adventures_in_tech_world/services/database_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ void main() async {
 
   /// Create services
   final authService = AuthService();
+  final databaseService = DatabaseService();
   final platformService = PlatformService();
 
   /// Create the redux store
@@ -22,7 +24,9 @@ void main() async {
       Store<AppState>(appReducer, initialState: AppState.init(), middleware: [
     remoteDevtools,
     ...createAppMiddleware(
-        authService: authService, platformService: platformService)
+        authService: authService,
+        databaseService: databaseService,
+        platformService: platformService)
   ]);
 
   // give RDT access to the store

@@ -20,6 +20,6 @@ You can indicate your current goals by selecting issues in your repos.
 remotedev --port 8000
 flutter pub run build_runner watch --delete-conflicting-outputs
 firebase deploy --only functions
-flutter build web -t lib/main.dart
 firebase deploy --only hosting:adventures-in-tech-world
+firebase deploy --only firestore:rules
 ```

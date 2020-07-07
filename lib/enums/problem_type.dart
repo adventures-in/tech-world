@@ -13,6 +13,10 @@ class ProblemType extends EnumClass {
   static const ProblemType exchangeGitHubCodeForToken =
       _$exchangeGitHubCodeForToken;
   static const ProblemType signInAnonymously = _$signInAnonymously;
+  static const ProblemType observeAuthToken = _$observeAuthToken;
+  static const ProblemType connectToAuthToken = _$connectToAuthToken;
+  static const ProblemType plumbDatabaseStreamMiddleware =
+      _$plumbDatabaseStreamMiddleware;
 
   const ProblemType._(String name) : super(name);
 

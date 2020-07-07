@@ -2,7 +2,6 @@ import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.da
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
@@ -38,7 +37,6 @@ part 'serializers.g.dart';
   AppState,
   SignInWithGitHub,
   CheckAuthState,
-  DealWithAuthCode,
   SignOut,
   StoreAdventurer,
   StoreAuthState,

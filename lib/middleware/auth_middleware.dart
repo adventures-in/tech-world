@@ -1,17 +1,21 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_database_stream.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:adventures_in_tech_world/services/database_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
+import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
 
 /// Middleware is used for a variety of things:
@@ -24,29 +28,35 @@ import 'package:redux/redux.dart';
 /// The output of an action can perform another action using the [NextDispatcher]
 ///
 List<Middleware<AppState>> createAuthMiddleware(
-    {AuthService authService, PlatformService platformService}) {
+    {AuthService authService,
+    DatabaseService databaseService,
+    PlatformService platformService}) {
   return [
-    DealWithAuthCodeMiddleware(authService),
+    PlumbDatabaseStreamMiddleware(databaseService),
     CheckAuthStateMiddleware(authService, platformService),
     SignInAnonymouslyMiddleware(authService),
+    ObserveAuthTokenMiddleware(databaseService),
     SignInWithGitHubMiddleware(platformService, authService),
     SignOutMiddleware(authService),
   ];
 }
 
-class DealWithAuthCodeMiddleware
-    extends TypedMiddleware<AppState, DealWithAuthCode> {
-  DealWithAuthCodeMiddleware(AuthService authService)
+class PlumbDatabaseStreamMiddleware
+    extends TypedMiddleware<AppState, PlumbDatabaseStream> {
+  PlumbDatabaseStreamMiddleware(DatabaseService service)
       : super((store, action, next) async {
           next(action);
 
-          // if there is no auth code in the parameters, we just carry on and
-          // the regular auth check will go about it's business
-          if (action.queryParameters['code'] == null) return;
+          final handleProblem = generateProblemHandler(
+              ProblemType.plumbDatabaseStreamMiddleware, store.dispatch);
 
-          authService
-              .exchangeCodeForToken(action.queryParameters)
-              .listen(store.dispatch);
+          /// We don't manage the subscription as the stream is expected
+          /// to stay open for the whole lifetime of the app
+          try {
+            service.storeStream.listen(store.dispatch, onError: handleProblem);
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 
@@ -75,15 +85,27 @@ class CheckAuthStateMiddleware
 
 class SignInAnonymouslyMiddleware
     extends TypedMiddleware<AppState, SignInAnonymously> {
-  SignInAnonymouslyMiddleware(AuthService service)
+  SignInAnonymouslyMiddleware(AuthService authService)
       : super((store, action, next) async {
           next(action);
 
-          final storeIdOrAddProblem = await service.signInAnonymously();
+          final storeIdOrAddProblem = await authService.signInAnonymously();
           store.dispatch(storeIdOrAddProblem);
 
           // reset the UI
           store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+        });
+}
+
+/// Observe the auth token in the [Database] and update the [AppState] to
+/// reflect changes
+class ObserveAuthTokenMiddleware
+    extends TypedMiddleware<AppState, StoreAnonymousId> {
+  ObserveAuthTokenMiddleware(DatabaseService databaseService)
+      : super((store, action, next) async {
+          next(action);
+
+          databaseService.observeAuthToken(uid: action.id);
         });
 }
 
@@ -102,12 +124,12 @@ class SignInWithGitHubMiddleware
 }
 
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
-  SignOutMiddleware(AuthService service)
+  SignOutMiddleware(AuthService authService)
       : super((store, action, next) async {
           next(action);
 
           // sign out and dispatch the resulting problem if there is one
-          final actionAfterSignout = await service.signOut();
+          final actionAfterSignout = await authService.signOut();
 
           if (actionAfterSignout != null) {
             store.dispatch(actionAfterSignout);

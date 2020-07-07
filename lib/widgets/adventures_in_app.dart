@@ -1,13 +1,11 @@
-import 'package:adventures_in_tech_world/actions/auth/deal_with_auth_code.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_database_stream.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
 import 'package:adventures_in_tech_world/widgets/auth/auth_page.dart';
-import 'package:adventures_in_tech_world/widgets/auth/git_hub_code_page.dart';
 import 'package:adventures_in_tech_world/widgets/home/home_page.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -23,6 +21,7 @@ class AdventuresInApp extends StatelessWidget {
     return StoreProvider<AppState>(
       store: store,
       child: StoreConnector<AppState, Settings>(
+        onInit: (store) => store.dispatch(PlumbDatabaseStream()),
         distinct: true,
         converter: (store) => store.state.settings,
         builder: (context, settings) {
@@ -40,41 +39,6 @@ class AdventuresInApp extends StatelessWidget {
                     : AuthPage();
               },
             ),
-            onGenerateRoute: (settings) {
-              print(settings);
-              print(settings.name);
-              final uri = Uri.parse(settings.name);
-
-              // eg. http://localhost:53521/#/github?code=234
-              if (uri.pathSegments.first == 'github') {
-                store.dispatch(DealWithAuthCode(
-                    queryParameters: BuiltMap(uri.queryParameters)));
-                return MaterialPageRoute<dynamic>(
-                  builder: (context) => GitHubCodePage(),
-                );
-              }
-
-              return MaterialPageRoute<dynamic>(
-                  builder: (context) => HomePage());
-
-              // If you push the PassArguments route
-              // if (settings.name == ) {
-              //   // Cast the arguments to the correct type: ScreenArguments.
-              //   final ScreenArguments args = settings.arguments;
-
-              //   // Then, extract the required data from the arguments and
-              //   // pass the data to the correct screen.
-              //   return MaterialPageRoute(
-              //     builder: (context) {
-              //       return PassArgumentsScreen(
-              //         title: args.title,
-              //         message: args.message,
-              //       );
-              //     },
-              //   );
-              // }
-            },
-            // routes: {'github': (context) => HomePage()},
           );
         },
       ),

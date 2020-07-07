@@ -16,6 +16,9 @@ dependencies:
   oauth2:
   firebase_auth:
 
+  # database 
+  cloud_firestore:
+
   # platform tools 
   url_launcher:
   shared_preferences:
