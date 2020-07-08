@@ -1,13 +1,18 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_database_stream.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
@@ -32,9 +37,12 @@ part 'serializers.g.dart';
 ///
 /// Collection of generated serializers for the AdventuresIn app
 @SerializersFor([
-  StoreNavBarSelection,
-  AddProblem,
   AppState,
+  AddProblem,
+  StoreDisplayingProblem,
+  DisplayProblem,
+  RemoveProblem,
+  StoreNavBarSelection,
   SignInWithGitHub,
   CheckAuthState,
   SignOut,
@@ -44,6 +52,8 @@ part 'serializers.g.dart';
   StoreAuthToken,
   StoreNavBarSelection,
   SignInAnonymously,
+  PlumbDatabaseStream,
+  StoreAnonymousId,
   // RemoveProblem,
   // ObserveAuthState,
 ])

@@ -5,6 +5,7 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
 import 'package:adventures_in_tech_world/services/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database_service.dart';
+import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,14 @@ import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 void main() async {
   final remoteDevtools = RemoteDevToolsMiddleware('localhost:8000');
 
+  /// we use a [GlobalKey] to allow navigation from a service
+  final navKey = GlobalKey<NavigatorState>();
+
   /// Create services
   final authService = AuthService();
   final databaseService = DatabaseService();
   final platformService = PlatformService();
+  final navigationService = NavigationService(navKey);
 
   /// Create the redux store
   final store =
@@ -26,7 +31,8 @@ void main() async {
     ...createAppMiddleware(
         authService: authService,
         databaseService: databaseService,
-        platformService: platformService)
+        platformService: platformService,
+        navigationService: navigationService)
   ]);
 
   // give RDT access to the store
@@ -39,5 +45,5 @@ void main() async {
     print(e);
   }
 
-  runApp(AdventuresInApp(store));
+  runApp(AdventuresInApp(store, navKey));
 }
