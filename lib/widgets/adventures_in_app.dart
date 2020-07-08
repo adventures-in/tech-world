@@ -14,7 +14,10 @@ class AdventuresInApp extends StatelessWidget {
   /// The redux store
   final Store<AppState> store;
 
-  AdventuresInApp(this.store);
+  /// The [GlobalKey] used by the [NavigationService]
+  final GlobalKey<NavigatorState> navKey;
+
+  AdventuresInApp(this.store, this.navKey);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class AdventuresInApp extends StatelessWidget {
         builder: (context, settings) {
           return MaterialApp(
             title: 'AdventuresIn',
+            navigatorKey: navKey,
             theme: MakeThemeData.from(settings.lightTheme),
             darkTheme: MakeThemeData.from(settings.darkTheme),
             themeMode: MakeThemeMode.from(settings.brightnessMode),
