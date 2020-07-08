@@ -1,13 +1,11 @@
 import 'package:oauth2/oauth2.dart';
-import 'package:adventures_in_tech_world/utils/credentials.dart' as credentials;
+import 'package:adventures_in_tech_world/utils/public_credentials.dart'
+    as public_credentials;
 import 'package:meta/meta.dart';
 
 class GitHubRedirect {
   // used to generate the authorization url
   AuthorizationCodeGrant _grant;
-
-  // Credentials
-  final String _githubClientId = credentials.githubClientId;
 
   // OAuth scopes for repository and user information
   final List<String> _githubScopes = ['repo', 'read:org'];
@@ -23,7 +21,7 @@ class GitHubRedirect {
   GitHubRedirect() {
     // create the grant used to generate the authorization url
     _grant = AuthorizationCodeGrant(
-      _githubClientId,
+      public_credentials.githubClientId,
       _authorizationEndpoint,
       _tokenEndpoint,
     );
