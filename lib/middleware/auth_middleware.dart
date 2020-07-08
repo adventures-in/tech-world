@@ -73,7 +73,6 @@ class CheckAuthStateMiddleware
           if (token == null) {
             store.dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
             store.dispatch(SignInAnonymously());
-            store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
           } else {
             store.dispatch(StoreAuthToken(token: token));
             final adventurer = await authService.signInWithFirebase(token);
@@ -94,7 +93,7 @@ class SignInAnonymouslyMiddleware
           store.dispatch(storeIdOrAddProblem);
 
           // reset the UI
-          store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+          store.dispatch(StoreAuthState(state: AuthState.signedInAnonymously));
         });
 }
 
