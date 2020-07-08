@@ -17,6 +17,7 @@ import 'package:redux/redux.dart';
 List<Middleware<AppState>> createProblemsMiddleware(
     {NavigationService navigationService}) {
   return [
+    AddProblemMiddleware(),
     DisplayProblemMiddleware(navigationService),
   ];
 }
@@ -24,7 +25,7 @@ List<Middleware<AppState>> createProblemsMiddleware(
 /// This middleware just dispatches a [DisplayProblem] action for each
 /// [AddProblem] action that comes through.
 class AddProblemMiddleware extends TypedMiddleware<AppState, AddProblem> {
-  AddProblemMiddleware(NavigationService navigationService)
+  AddProblemMiddleware()
       : super((store, action, next) async {
           next(action);
 

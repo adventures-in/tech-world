@@ -16,7 +16,7 @@ void main() {
     Store<AppState> store;
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(AdventuresInApp(store));
+    await tester.pumpWidget(AdventuresInApp(store, null));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -3,16 +3,26 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
 import 'package:adventures_in_tech_world/services/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database_service.dart';
+import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 void main() {
+  /// we use a [GlobalKey] to allow navigation from a service
+  /// ie. the key supplies a [BuildContext]
+  ///
+  /// The [GlobalKey] is created here and passed to the [NavigationService] as
+  /// well as passed in to the [AdventuresInApp] widget so it can be used by the
+  /// [MaterialApp] widget
+  final navKey = GlobalKey<NavigatorState>();
+
   /// Create services
   final authService = AuthService();
   final databaseService = DatabaseService();
   final platformService = PlatformService();
+  final navigationService = NavigationService(navKey);
 
   /// Create the redux store
   final store =
@@ -20,8 +30,9 @@ void main() {
     ...createAppMiddleware(
         authService: authService,
         databaseService: databaseService,
-        platformService: platformService),
+        platformService: platformService,
+        navigationService: navigationService),
   ]);
 
-  runApp(AdventuresInApp(store));
+  runApp(AdventuresInApp(store, navKey));
 }

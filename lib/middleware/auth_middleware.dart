@@ -8,6 +8,7 @@ import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
@@ -27,10 +28,11 @@ import 'package:redux/redux.dart';
 ///
 /// The output of an action can perform another action using the [NextDispatcher]
 ///
-List<Middleware<AppState>> createAuthMiddleware(
-    {AuthService authService,
-    DatabaseService databaseService,
-    PlatformService platformService}) {
+List<Middleware<AppState>> createAuthMiddleware({
+  AuthService authService,
+  DatabaseService databaseService,
+  PlatformService platformService,
+}) {
   return [
     PlumbDatabaseStreamMiddleware(databaseService),
     CheckAuthStateMiddleware(authService, platformService),

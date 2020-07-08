@@ -10,6 +10,9 @@ import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
@@ -34,9 +37,12 @@ part 'serializers.g.dart';
 ///
 /// Collection of generated serializers for the AdventuresIn app
 @SerializersFor([
-  StoreNavBarSelection,
-  AddProblem,
   AppState,
+  AddProblem,
+  StoreDisplayingProblem,
+  DisplayProblem,
+  RemoveProblem,
+  StoreNavBarSelection,
   SignInWithGitHub,
   CheckAuthState,
   SignOut,

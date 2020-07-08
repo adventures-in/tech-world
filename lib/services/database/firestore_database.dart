@@ -38,10 +38,6 @@ class FirestoreDatabase implements Database {
       // connect the database to the store and keep the subscription
       subscriptions[DatabaseSection.authToken] =
           _firestore.connectToAuthToken(uid, _storeController);
-
-      // TODO: remove after testing
-      _storeController
-          .add(AddProblem(errorString: 'hello', type: ProblemType.appleSignIn));
     } catch (error, trace) {
       _storeController.add(AddProblem(
           errorString: error.toString(),
