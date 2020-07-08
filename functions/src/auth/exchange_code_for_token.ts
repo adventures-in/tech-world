@@ -20,15 +20,22 @@ import * as database from './database';
 
 export const exchangeCodeWithGitHub = express();
 
-// get the code from the request, call retrieveAuthToken and return the response
+// Get the code from the request, call retrieveAuthToken and return the response
 const exchangeCodeForToken = async (req: any, res: any) => {
   try {
 
+    // If we can't get a code and state from the request it's probably an error message, just send back the original url
+    if(req.query.code === null || req.query.code === undefined || req.query.state === null || req.query.state === undefined) {
+      return res.send(req.originalUrl);
+    }
+    
     const auth_token = await retrieveToken(req.query.code);
 
+    // Save the token to a document named as the user id
     const dbEntry = new database.GitHubToken(req.query.state, auth_token);
     await dbEntry.save();
 
+    // Close the github auth window, the entry in database will update the UI of the original window 
     return res.send(`
       <script>
         window.close();
