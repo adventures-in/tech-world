@@ -53,9 +53,10 @@ class FirebaseAuthService implements AuthService {
 
   // We don't do anything with the result as we are connected to the auth state
   @override
-  Future<void> signInWithGithub(String token) async {
+  Future<void> linkGithub(String token) async {
     final credential = GithubAuthProvider.getCredential(token: token);
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    final firebaseUser = await _firebaseAuth.currentUser();
+    await firebaseUser.linkWithCredential(credential);
   }
 
   /// The stream of auth state is connected to the store so the app state will

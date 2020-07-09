@@ -1,7 +1,7 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
@@ -36,7 +36,8 @@ List<Middleware<AppState>> createAuthMiddleware({
     ConnectAuthStateMiddleware(authService),
     StoreUserDataMiddleware(authService, databaseService),
     ObserveGitHubTokenMiddleware(databaseService),
-    SignInWithGitHubMiddleware(platformService),
+    RequestGitHubAuthMiddleware(platformService),
+    StoreGitHubTokenMiddleware(authService),
     SignOutMiddleware(authService),
   ];
 }
@@ -122,13 +123,11 @@ class StoreGitHubTokenMiddleware
           final handleProblem = generateProblemHandler(
               ProblemType.storeGitHubTokenMiddleware, store.dispatch);
 
+          // If we aren't already signed in with github do so
           try {
-            // if we aren't already signed in with github (as in with firebase),
-            // do so
-            if (store.state.userData.providers
-                .where((provider) => provider.providerId == 'github.com')
-                .isEmpty) {
-              await authService.signInWithGithub(action.token);
+            if (!store.state.userData.hasGitHub) {
+              store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
+              await authService.linkGithub(action.token);
             }
           } catch (error, trace) {
             handleProblem(error, trace);
@@ -136,13 +135,13 @@ class StoreGitHubTokenMiddleware
         });
 }
 
-class SignInWithGitHubMiddleware
-    extends TypedMiddleware<AppState, SignInWithGitHub> {
-  SignInWithGitHubMiddleware(PlatformService platformService)
+class RequestGitHubAuthMiddleware
+    extends TypedMiddleware<AppState, RequestGitHubAuth> {
+  RequestGitHubAuthMiddleware(PlatformService platformService)
       : super((store, action, next) async {
           next(action);
 
-          store.dispatch(StoreAuthStep(step: AuthStep.signingInWithGitHub));
+          store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
           await platformService.redirectWithState(store.state.userData.uid);
         });
 }

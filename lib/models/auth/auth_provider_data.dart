@@ -20,15 +20,19 @@ abstract class AuthProviderData extends Object
   String get uid;
 
   /// The name of the user.
+  @nullable
   String get displayName;
 
   /// The URL of the user’s profile photo.
+  @nullable
   String get photoUrl;
 
   /// The user’s email address.
+  @nullable
   String get email;
 
   /// The user's phone number.
+  @nullable
   String get phoneNumber;
 
   AuthProviderData._();

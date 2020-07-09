@@ -3,7 +3,7 @@ import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
+import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
@@ -49,7 +49,7 @@ part 'serializers.g.dart';
   PlumbServices,
   RemoveProblem,
   SignInAnonymously,
-  SignInWithGitHub,
+  RequestGitHubAuth,
   SignOut,
   StoreAdventurer,
   StoreAuthState,

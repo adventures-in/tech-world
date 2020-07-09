@@ -34,6 +34,12 @@ abstract class UserData extends Object
   bool get isEmailVerified;
   BuiltList<AuthProviderData> get providers;
 
+  bool get hasGitHub =>
+      providerId == 'github.com' ||
+      providers
+          .where((provider) => provider.providerId == 'github.com')
+          .isNotEmpty;
+
   UserData._();
 
   factory UserData({

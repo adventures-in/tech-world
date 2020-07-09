@@ -8,6 +8,6 @@ abstract class AuthService {
   void connectAuthState();
   void disconnectAuthState();
   Future<void> signInAnonymously();
-  Future<void> signInWithGithub(String token);
+  Future<void> linkGithub(String token);
   Future<void> signOut();
 }

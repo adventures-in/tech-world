@@ -11,9 +11,10 @@ class AuthStep extends EnumClass {
   static const AuthStep signingInAnonymously = _$signingInAnonymously;
   static const AuthStep checkingForGitHubToken = _$checkingForGitHubToken;
   static const AuthStep waitingForInput = _$waitingForInput;
+  static const AuthStep requestingGitHubAuth = _$requestingGitHubAuth;
   static const AuthStep exchangingCode = _$exchangingCode;
   static const AuthStep exchangedCode = _$exchangedCode;
-  static const AuthStep signingInWithGitHub = _$signingInWithGitHub;
+  static const AuthStep linkingGitHub = _$linkingGitHub;
   static const AuthStep signingInWithFirebase = _$signingInWithFirebase;
 
   static const Map<AuthStep, int> _$indexMap = {
@@ -21,10 +22,11 @@ class AuthStep extends EnumClass {
     signingInAnonymously: 1,
     checkingForGitHubToken: 2,
     waitingForInput: 3,
-    exchangingCode: 4,
-    exchangedCode: 5,
-    signingInWithGitHub: 6,
-    signingInWithFirebase: 7,
+    requestingGitHubAuth: 4,
+    exchangingCode: 5,
+    exchangedCode: 6,
+    linkingGitHub: 7,
+    signingInWithFirebase: 8,
   };
 
   const AuthStep._(String name) : super(name);
