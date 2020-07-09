@@ -1,7 +1,7 @@
-import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -12,8 +12,8 @@ import 'package:redux/redux.dart';
 final authReducers = <AppState Function(AppState, dynamic)>[
   TypedReducer<AppState, StoreAuthState>(_storeAuthState),
   TypedReducer<AppState, StoreAuthStep>(_storeAuthStep),
-  TypedReducer<AppState, StoreAuthToken>(_storeAuthToken),
-  TypedReducer<AppState, StoreAnonymousId>(_storeAnonymousId),
+  TypedReducer<AppState, StoreGitHubToken>(_storeGitHubToken),
+  TypedReducer<AppState, StoreUserData>(_storeUserData),
 ];
 
 AppState _storeAuthState(AppState state, StoreAuthState action) {
@@ -24,10 +24,10 @@ AppState _storeAuthStep(AppState state, StoreAuthStep action) {
   return state.rebuild((b) => b..authStep = action.step);
 }
 
-AppState _storeAuthToken(AppState state, StoreAuthToken action) {
-  return state.rebuild((b) => b..authToken = action.token);
+AppState _storeGitHubToken(AppState state, StoreGitHubToken action) {
+  return state.rebuild((b) => b..gitHubToken = action.token);
 }
 
-AppState _storeAnonymousId(AppState state, StoreAnonymousId action) {
-  return state.rebuild((b) => b..anonymousId = action.id);
+AppState _storeUserData(AppState state, StoreUserData action) {
+  return state.rebuild((b) => b..userData.replace(action.userData));
 }

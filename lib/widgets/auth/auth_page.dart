@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -10,7 +10,7 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AuthStep>(
-      onInit: (store) => store.dispatch(CheckAuthState()),
+      onInit: (store) => store.dispatch(ConnectAuthState()),
       distinct: true,
       converter: (store) => store.state.authStep,
       builder: (context, authStep) {
