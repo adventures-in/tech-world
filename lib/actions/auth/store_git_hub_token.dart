@@ -13,6 +13,7 @@ part 'store_git_hub_token.g.dart';
 abstract class StoreGitHubToken extends Object
     with ReduxAction
     implements Built<StoreGitHubToken, StoreGitHubTokenBuilder> {
+  @nullable
   String get token;
 
   StoreGitHubToken._();
@@ -32,5 +33,5 @@ abstract class StoreGitHubToken extends Object
       _$storeGitHubTokenSerializer;
 
   @override
-  String toString() => 'STORE_GIT_HUB_TOKEN';
+  String toString() => 'STORE_GIT_HUB_TOKEN: $token';
 }

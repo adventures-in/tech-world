@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,7 +24,7 @@ extension ConnectAndConvert on Firestore {
           final token = githubMap['access_token'] as String;
           controller.add(StoreGitHubToken(token: token));
         } else {
-          controller.add(StoreAuthStep(step: AuthStep.waitingForInput));
+          controller.add(StoreGitHubToken(token: null));
         }
       } catch (error, trace) {
         handleProblem(error, trace);

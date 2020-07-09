@@ -34,7 +34,7 @@ List<Middleware<AppState>> createAuthMiddleware({
   return [
     PlumbServicesMiddleware(authService, databaseService),
     ConnectAuthStateMiddleware(authService),
-    StoreUserDataMiddleware(authService),
+    StoreUserDataMiddleware(authService, databaseService),
     ObserveGitHubTokenMiddleware(databaseService),
     SignInWithGitHubMiddleware(platformService),
     SignOutMiddleware(authService),
@@ -74,7 +74,8 @@ class ConnectAuthStateMiddleware
 }
 
 class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
-  StoreUserDataMiddleware(AuthService authService)
+  StoreUserDataMiddleware(
+      AuthService authService, DatabaseService databaseService)
       : super((store, action, next) async {
           next(action);
 
@@ -87,8 +88,9 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
             } else if (action.userData.isAnonymous) {
-              // the reducer sets the auth step which will display the signin
-              // button
+              store.dispatch(
+                  StoreAuthStep(step: AuthStep.checkingForGitHubToken));
+              databaseService.connectTokensDoc(uid: action.userData.uid);
             } else {
               store.dispatch(
                   StoreAuthState(state: AuthState.signedInWithGitHub));

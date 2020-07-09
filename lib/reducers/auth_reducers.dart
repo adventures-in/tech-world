@@ -12,22 +12,42 @@ import 'package:redux/redux.dart';
 ///
 /// Each reducer returns a new [AppState].
 final authReducers = <AppState Function(AppState, dynamic)>[
-  TypedReducer<AppState, StoreAuthState>(_storeAuthState),
-  TypedReducer<AppState, StoreAuthStep>(_storeAuthStep),
-  TypedReducer<AppState, StoreGitHubToken>(_storeGitHubToken),
+  StoreAuthStateReducer(),
+  StoreAuthStepReducer(),
+  StoreGitHubTokenReducer(),
   StoreUserDataReducer(),
 ];
 
-AppState _storeAuthState(AppState state, StoreAuthState action) {
-  return state.rebuild((b) => b..authState = action.state);
+class StoreAuthStateReducer extends TypedReducer<AppState, StoreAuthState> {
+  StoreAuthStateReducer()
+      : super((state, action) =>
+            state.rebuild((b) => b..authState = action.state));
 }
 
-AppState _storeAuthStep(AppState state, StoreAuthStep action) {
-  return state.rebuild((b) => b..authStep = action.step);
+class StoreAuthStepReducer extends TypedReducer<AppState, StoreAuthStep> {
+  StoreAuthStepReducer()
+      : super(
+            (state, action) => state.rebuild((b) => b..authStep = action.step));
 }
 
-AppState _storeGitHubToken(AppState state, StoreGitHubToken action) {
-  return state.rebuild((b) => b..gitHubToken = action.token);
+class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
+  StoreGitHubTokenReducer()
+      : super((state, action) {
+          // set the auth state and auth step based on whether we have
+          // a github token
+          var _authState = state.authState;
+          var _authStep = state.authStep;
+          if (action.token == null) {
+            _authStep = AuthStep.waitingForInput;
+          } else {
+            _authState = AuthState.signedInWithGitHub;
+          }
+
+          return state.rebuild((b) => b
+            ..gitHubToken = action.token
+            ..authStep = _authStep
+            ..authState = _authState);
+        });
 }
 
 class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
