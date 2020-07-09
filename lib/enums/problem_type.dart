@@ -12,7 +12,6 @@ class ProblemType extends EnumClass {
   static const ProblemType appleSignIn = _$appleSignIn;
   static const ProblemType exchangeGitHubCodeForToken =
       _$exchangeGitHubCodeForToken;
-  static const ProblemType signInAnonymously = _$signInAnonymously;
   static const ProblemType observeGitHubToken = _$observeGitHubToken;
   static const ProblemType connectToAuthToken = _$connectToAuthToken;
   static const ProblemType plumbServicesMiddleware = _$plumbServicesMiddleware;
@@ -23,6 +22,7 @@ class ProblemType extends EnumClass {
   static const ProblemType storeGitHubTokenMiddleware =
       _$storeGitHubTokenMiddleware;
   static const ProblemType signOutMiddleware = _$signOutMiddleware;
+  static const ProblemType storeUserDataMiddleware = _$storeUserDataMiddleware;
 
   const ProblemType._(String name) : super(name);
 

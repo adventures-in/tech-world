@@ -1,4 +1,6 @@
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
+import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -7,10 +9,26 @@ import 'package:redux/redux.dart';
 ///
 /// Each reducer returns a new [AppState].
 final problemsReducers = <AppState Function(AppState, dynamic)>[
-  TypedReducer<AppState, AddProblem>(_addProblem),
+  AddProblemReducer(),
+  RemoveProblemReducer(),
+  StoreDisplayingProblemReducer(),
 ];
 
-AppState _addProblem(AppState state, AddProblem action) {
-  // add the problem to the store
-  return state.rebuild((b) => b..problems.add(action.problem));
+class AddProblemReducer extends TypedReducer<AppState, AddProblem> {
+  AddProblemReducer()
+      : super((state, action) =>
+            state.rebuild((b) => b..problems.add(action.problem)));
+}
+
+class RemoveProblemReducer extends TypedReducer<AppState, RemoveProblem> {
+  RemoveProblemReducer()
+      : super((state, action) =>
+            state.rebuild((b) => b..problems.remove(action.problem)));
+}
+
+class StoreDisplayingProblemReducer
+    extends TypedReducer<AppState, StoreDisplayingProblem> {
+  StoreDisplayingProblemReducer()
+      : super((state, action) =>
+            state.rebuild((b) => b..displayingProblem = action.value));
 }

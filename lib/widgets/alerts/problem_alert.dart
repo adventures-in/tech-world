@@ -16,6 +16,13 @@ class ProblemAlert extends StatelessWidget {
             Text('Looks like there was a problem.'),
             SizedBox(height: 20),
             Text(problem.errorString),
+            SizedBox(height: 20),
+            RichText(
+              text: TextSpan(
+                text: problem.traceString,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            )
           ],
         ),
       ),

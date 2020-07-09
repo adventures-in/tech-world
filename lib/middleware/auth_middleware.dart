@@ -1,7 +1,6 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
-import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
@@ -36,7 +35,6 @@ List<Middleware<AppState>> createAuthMiddleware({
     PlumbServicesMiddleware(authService, databaseService),
     ConnectAuthStateMiddleware(authService),
     StoreUserDataMiddleware(authService),
-    SignInAnonymouslyMiddleware(authService),
     ObserveGitHubTokenMiddleware(databaseService),
     SignInWithGitHubMiddleware(platformService),
     SignOutMiddleware(authService),
@@ -80,29 +78,21 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
       : super((store, action, next) async {
           next(action);
 
-          if (action.userData == null || action.userData.uid == null) {
-            store.dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
-            store.dispatch(SignInAnonymously());
-          } else if (action.userData.isAnonymous) {
-            store
-                .dispatch(StoreAuthState(state: AuthState.signedInAnonymously));
-          } else {
-            store.dispatch(StoreAuthState(state: AuthState.signedInWithGitHub));
-          }
-        });
-}
-
-class SignInAnonymouslyMiddleware
-    extends TypedMiddleware<AppState, SignInAnonymously> {
-  SignInAnonymouslyMiddleware(AuthService authService)
-      : super((store, action, next) async {
-          next(action);
-
           final handleProblem = generateProblemHandler(
-              ProblemType.signInAnonymously, store.dispatch);
+              ProblemType.storeUserDataMiddleware, store.dispatch);
 
           try {
-            await authService.signInAnonymously();
+            if (action.userData == null || action.userData.uid == null) {
+              store
+                  .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
+              await authService.signInAnonymously();
+            } else if (action.userData.isAnonymous) {
+              // the reducer sets the auth step which will display the signin
+              // button
+            } else {
+              store.dispatch(
+                  StoreAuthState(state: AuthState.signedInWithGitHub));
+            }
           } catch (error, trace) {
             handleProblem(error, trace);
           }
@@ -151,7 +141,6 @@ class SignInWithGitHubMiddleware
           next(action);
 
           store.dispatch(StoreAuthStep(step: AuthStep.signingInWithGitHub));
-
           await platformService.redirectWithState(store.state.userData.uid);
         });
 }
