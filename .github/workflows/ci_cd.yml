@@ -35,11 +35,23 @@ jobs:
         channel: 'dev' # or: 'stable' or 'beta'
 
     ############################################
-    # build ios app and android app
+    # get dependencies, generate code and run tests
     ############################################
     - run: flutter pub get
     - run: flutter pub run build_runner build
-    - run: flutter test
+    - run: flutter test --coverage
+
+    ############################################
+    # send test coverage to coveralls
+    ############################################
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    
+    ############################################
+    # build web app
+    ############################################
     - run: flutter config --enable-web
     - run: flutter build web -t lib/main.dart
     
