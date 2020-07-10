@@ -2,6 +2,7 @@
 
 A web app for organising collaboration, built with Flutter. 
 
+[![Coverage Status](https://coveralls.io/repos/github/Adventures-In/Tech-World/badge.svg?branch=dev)](https://coveralls.io/github/Adventures-In/Tech-World?branch=dev)
 ![CI](https://github.com/Adventures-In/Tech-World/workflows/CI/badge.svg)
 
 ## Profiles 
