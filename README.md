@@ -2,6 +2,8 @@
 
 A web app for organising collaboration, built with Flutter. 
 
+![CI](https://github.com/Adventures-In/Tech-World/workflows/CI/badge.svg)
+
 ## Profiles 
 
 You can add info about what you're working on, including links to repos. Also some of the skills you have, the type of projects you want to work on and anything you need help with.
