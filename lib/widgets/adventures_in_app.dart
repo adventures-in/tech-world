@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/app/plumb_database_stream.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
@@ -24,7 +24,7 @@ class AdventuresInApp extends StatelessWidget {
     return StoreProvider<AppState>(
       store: store,
       child: StoreConnector<AppState, Settings>(
-        onInit: (store) => store.dispatch(PlumbDatabaseStream()),
+        onInit: (store) => store.dispatch(PlumbServices()),
         distinct: true,
         converter: (store) => store.state.settings,
         builder: (context, settings) {
@@ -38,7 +38,7 @@ class AdventuresInApp extends StatelessWidget {
               distinct: true,
               converter: (store) => store.state.authState,
               builder: (context, authState) {
-                return (authState == AuthState.signedInWithFirebase)
+                return (authState == AuthState.signedInWithGitHub)
                     ? HomePage()
                     : AuthPage();
               },

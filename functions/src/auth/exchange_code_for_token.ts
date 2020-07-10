@@ -29,10 +29,10 @@ const exchangeCodeForToken = async (req: any, res: any) => {
       return res.send(req.originalUrl);
     }
     
-    const auth_token = await retrieveToken(req.query.code);
+    const token_response = await retrieveToken(req.query.code);
 
     // Save the token to a document named as the user id
-    const dbEntry = new database.GitHubToken(req.query.state, auth_token);
+    const dbEntry = new database.GitHubToken(req.query.state, token_response);
     await dbEntry.save();
 
     // Close the github auth window, the entry in database will update the UI of the original window 

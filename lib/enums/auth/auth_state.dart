@@ -12,7 +12,6 @@ class AuthState extends EnumClass {
   static const AuthState notSignedIn = _$notSignedIn;
   static const AuthState signedInAnonymously = _$signedInAnonymously;
   static const AuthState signedInWithGitHub = _$signedInWithGitHub;
-  static const AuthState signedInWithFirebase = _$signedInWithFirebase;
   static const Map<AuthState, int> _$indexMap = {
     unknown: 0,
     notSignedIn: 1,

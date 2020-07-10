@@ -32,5 +32,5 @@ abstract class StoreAuthState extends Object
       _$storeAuthStateSerializer;
 
   @override
-  String toString() => 'STORE_AUTH_STATE';
+  String toString() => 'STORE_AUTH_STATE: $state';
 }

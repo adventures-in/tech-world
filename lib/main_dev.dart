@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:adventures_in_tech_world/middleware/app_middleware.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
-import 'package:adventures_in_tech_world/services/database_service.dart';
+import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
+import 'package:adventures_in_tech_world/services/database/firestore_service.dart';
 import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
@@ -19,8 +21,8 @@ void main() async {
   final navKey = GlobalKey<NavigatorState>();
 
   /// Create services
-  final authService = AuthService();
-  final databaseService = DatabaseService();
+  final authService = FirebaseAuthService(FirebaseAuth.instance);
+  final databaseService = FirestoreService(Firestore.instance);
   final platformService = PlatformService();
   final navigationService = NavigationService(navKey);
 

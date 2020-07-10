@@ -6,7 +6,7 @@ class GitHubCodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, String>(
         distinct: true,
-        converter: (store) => store.state.authToken,
+        converter: (store) => store.state.gitHubToken,
         builder: (context, token) => Material(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

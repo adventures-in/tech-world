@@ -1,13 +1,14 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/actions/app/plumb_database_stream.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
+import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_git_hub.dart';
-import 'package:adventures_in_tech_world/actions/auth/check_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_anonymous_id.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_token.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
@@ -22,6 +23,8 @@ import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
+import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_set.dart';
@@ -37,25 +40,25 @@ part 'serializers.g.dart';
 ///
 /// Collection of generated serializers for the AdventuresIn app
 @SerializersFor([
-  AppState,
   AddProblem,
-  StoreDisplayingProblem,
+  AppState,
+  AuthProviderData,
   DisplayProblem,
+  ConnectAuthState,
+  ObserveGitHubToken,
+  PlumbServices,
   RemoveProblem,
-  StoreNavBarSelection,
-  SignInWithGitHub,
-  CheckAuthState,
+  SignInAnonymously,
+  RequestGitHubAuth,
   SignOut,
   StoreAdventurer,
   StoreAuthState,
   StoreAuthStep,
-  StoreAuthToken,
+  StoreDisplayingProblem,
+  StoreGitHubToken,
   StoreNavBarSelection,
-  SignInAnonymously,
-  PlumbDatabaseStream,
-  StoreAnonymousId,
-  // RemoveProblem,
-  // ObserveAuthState,
+  StoreUserData,
+  UserData,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..addPlugin(StandardJsonPlugin())
