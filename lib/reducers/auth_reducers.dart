@@ -4,6 +4,7 @@ import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -66,12 +67,19 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
             _authStep = AuthStep.waitingForInput;
           }
 
-          // if (action.userData.providerId == 'github.com') {
-          //   _authState = AuthState.signedInAnonymously;
-          // }
+          var _adventurer = state.adventurer;
+          if (action.userData.providers.isNotEmpty) {
+            // we take the first of the providers for now
+            final providerData = action.userData.providers.first;
+            _adventurer = Adventurer(
+                id: action.userData.uid,
+                displayName: providerData.displayName,
+                photoURL: providerData.photoUrl);
+          }
 
           return state.rebuild((b) => b
-            ..userData.replace(action.userData)
+            ..adventurer = _adventurer?.toBuilder()
+            ..userData = action.userData?.toBuilder()
             ..authState = _authState
             ..authStep = _authStep);
         });

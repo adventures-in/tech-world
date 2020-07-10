@@ -123,11 +123,11 @@ class StoreGitHubTokenMiddleware
           final handleProblem = generateProblemHandler(
               ProblemType.storeGitHubTokenMiddleware, store.dispatch);
 
-          // If we aren't already signed in with github do so
           try {
-            if (!store.state.userData.hasGitHub) {
+            // If we got a token and aren't already signed in with github do so
+            if (action.token != null && !store.state.userData.hasGitHub) {
               store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-              await authService.linkGithub(action.token);
+              await authService.signInWithGithub(action.token);
             }
           } catch (error, trace) {
             handleProblem(error, trace);
