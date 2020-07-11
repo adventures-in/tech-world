@@ -22,6 +22,10 @@ dependencies:
   # github graphql client
   github_graphql_client:
     git: https://github.com/Adventures-In/github_graphql_client.git
+    # path: /Users/nick/git/adventures_in/github_graphql_client
+    
+  gql_link:
+  gql_http_link:
 
   # platform tools 
   url_launcher:

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:github_graphql_client/github_graphql_client.dart';
+import 'package:gql_http_link/gql_http_link.dart';
+import 'package:gql_link/gql_link.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -57,13 +60,4 @@ Future<$ViewerDetail$viewer> viewerDetail(Link link) async {
     throw QueryException(result.errors);
   }
   return $ViewerDetail(result.data).viewer;
-}
-
-class QueryException implements Exception {
-  QueryException(this.errors);
-  List<GraphQLError> errors;
-  @override
-  String toString() {
-    return 'Query Exception: ${errors.map((err) => '$err').join(',')}';
-  }
 }

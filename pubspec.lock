@@ -287,7 +287,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "63ce6f768f93ab4121f009b87c5501469a3cccec"
+      resolved-ref: a3ed8a7be1f8b4875f1f4d9a2d790dfa6850aa37
       url: "https://github.com/Adventures-In/github_graphql_client.git"
     source: git
     version: "1.0.0+1"
@@ -313,14 +313,14 @@ packages:
     source: hosted
     version: "0.2.4"
   gql_http_link:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: gql_http_link
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.9"
   gql_link:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: gql_link
       url: "https://pub.dartlang.org"
