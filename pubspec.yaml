@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  dio:
   
   # auth 
   oauth2:

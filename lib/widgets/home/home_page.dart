@@ -3,6 +3,7 @@ import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/utils/authenticated_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttericon/octicons_icons.dart';
@@ -19,58 +20,61 @@ class GitHubSummary extends StatefulWidget {
 
 class _GitHubSummaryState extends State<GitHubSummary> {
   int _selectedIndex = 0;
-  HttpLink _link;
-
-  @override
-  void initState() {
-    super.initState();
-    final _client = http.Client();
-    _link = HttpLink(
-      'https://api.github.com/graphql',
-      httpClient: _client,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        NavigationRail(
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          labelType: NavigationRailLabelType.selected,
-          destinations: [
-            NavigationRailDestination(
-              icon: Icon(Octicons.repo),
-              label: Text('Repositories'),
-            ),
-            NavigationRailDestination(
-              icon: Icon(Octicons.issue_opened),
-              label: Text('Assigned Issues'),
-            ),
-            NavigationRailDestination(
-              icon: Icon(Octicons.git_pull_request),
-              label: Text('Pull Requests'),
-            ),
-          ],
-        ),
-        VerticalDivider(thickness: 1, width: 1),
-        // This is the main content.
-        Expanded(
-          child: IndexedStack(
-            index: _selectedIndex,
+    return StoreConnector<AppState, String>(
+      distinct: true,
+      converter: (store) => store.state.gitHubToken,
+      builder: (context, token) {
+        if (token == null) return Container();
+        final _client = AuthenticatedClient(token, http.Client());
+        final _link = HttpLink(
+          'https://api.github.com/graphql',
+          httpClient: _client,
+        );
+        return Material(
+          child: Row(
             children: [
-              RepositoriesList(link: _link),
-              AssignedIssuesList(link: _link),
-              PullRequestsList(link: _link),
+              NavigationRail(
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: (int index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+                labelType: NavigationRailLabelType.selected,
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Octicons.repo),
+                    label: Text('Repositories'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Octicons.issue_opened),
+                    label: Text('Assigned Issues'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Octicons.git_pull_request),
+                    label: Text('Pull Requests'),
+                  ),
+                ],
+              ),
+              VerticalDivider(thickness: 1, width: 1),
+              // This is the main content.
+              Expanded(
+                child: IndexedStack(
+                  index: _selectedIndex,
+                  children: [
+                    RepositoriesList(link: _link),
+                    AssignedIssuesList(link: _link),
+                    PullRequestsList(link: _link),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
