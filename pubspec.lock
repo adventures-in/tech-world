@@ -282,15 +282,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttericon:
+    dependency: "direct main"
+    description:
+      name: fluttericon
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   github_graphql_client:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a3ed8a7be1f8b4875f1f4d9a2d790dfa6850aa37
+      resolved-ref: "399b9ebde5d41ce5e1d4a104c52d241831759ee0"
       url: "https://github.com/Adventures-In/github_graphql_client.git"
     source: git
-    version: "1.0.0+1"
+    version: "1.0.0+2"
   glob:
     dependency: transitive
     description:
@@ -313,14 +320,14 @@ packages:
     source: hosted
     version: "0.2.4"
   gql_http_link:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: gql_http_link
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.9"
   gql_link:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: gql_link
       url: "https://pub.dartlang.org"

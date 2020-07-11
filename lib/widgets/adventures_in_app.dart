@@ -39,7 +39,7 @@ class AdventuresInApp extends StatelessWidget {
               converter: (store) => store.state.authState,
               builder: (context, authState) {
                 return (authState == AuthState.signedInWithGitHub)
-                    ? HomePage()
+                    ? GitHubSummary()
                     : AuthPage();
               },
             ),

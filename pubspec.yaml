@@ -22,10 +22,6 @@ dependencies:
   # github graphql client
   github_graphql_client:
     git: https://github.com/Adventures-In/github_graphql_client.git
-    # path: /Users/nick/git/adventures_in/github_graphql_client
-    
-  gql_link:
-  gql_http_link:
 
   # platform tools 
   url_launcher:
@@ -39,6 +35,7 @@ dependencies:
 
   # used in prototyping, will not be in release 
   redux_remote_devtools:
+  fluttericon:
 
 dev_dependencies:
   flutter_test:
