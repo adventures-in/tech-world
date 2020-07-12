@@ -1,4 +1,5 @@
 import 'package:adventures_in_tech_world/middleware/auth_middleware.dart';
+import 'package:adventures_in_tech_world/middleware/git_hub_middleware.dart';
 import 'package:adventures_in_tech_world/middleware/problems_middleware.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
@@ -31,6 +32,7 @@ List<Middleware<AppState>> createAppMiddleware({
       databaseService: databaseService,
       platformService: platformService,
     ),
-    ...createProblemsMiddleware(navigationService: navigationService)
+    ...createProblemsMiddleware(navigationService: navigationService),
+    ...createGitHubMiddleware(gitHubService: gitHubService)
   ];
 }

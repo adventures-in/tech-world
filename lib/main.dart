@@ -8,7 +8,6 @@ import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
@@ -27,7 +26,7 @@ void main() {
   final databaseService = FirestoreService(Firestore.instance);
   final platformService = PlatformService();
   final navigationService = NavigationService(navKey);
-  final gitHubService = GitHubService(Dio());
+  final gitHubService = GitHubService();
 
   /// Create the redux store
   final store =

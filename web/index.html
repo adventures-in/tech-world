@@ -18,13 +18,34 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCsbaSneGfswemgSTj1sLF6EQp36ApF-pw",
+    authDomain: "adventures-in-tech-world.firebaseapp.com",
+    databaseURL: "https://adventures-in-tech-world.firebaseio.com",
+    projectId: "adventures-in-tech-world",
+    storageBucket: "adventures-in-tech-world.appspot.com",
+    messagingSenderId: "1049121274985",
+    appId: "1:1049121274985:web:357ee9ca7a46d085ce36f8"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="/__/firebase/7.15.5/firebase-app.js"></script>
+  <!-- <script src="/__/firebase/7.15.5/firebase-app.js"></script>
   <script src="/__/firebase/7.15.5/firebase-auth.js"></script> 
   <script src="/__/firebase/7.15.5/firebase-firestore.js"></script> 
-
-  <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
+  <script src="/__/firebase/init.js"></script> -->
 
   <script src="main.dart.js" type="application/javascript"></script>
 </body>

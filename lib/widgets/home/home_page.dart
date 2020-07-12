@@ -1,9 +1,12 @@
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/utils/authenticated_http.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttericon/octicons_icons.dart';
@@ -28,11 +31,6 @@ class _GitHubSummaryState extends State<GitHubSummary> {
       converter: (store) => store.state.gitHubToken,
       builder: (context, token) {
         if (token == null) return Container();
-        final _client = AuthenticatedClient(token, http.Client());
-        final _link = HttpLink(
-          'https://api.github.com/graphql',
-          httpClient: _client,
-        );
         return Material(
           child: Row(
             children: [
@@ -65,9 +63,9 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                 child: IndexedStack(
                   index: _selectedIndex,
                   children: [
-                    RepositoriesList(link: _link),
-                    AssignedIssuesList(link: _link),
-                    PullRequestsList(link: _link),
+                    RepositoriesList(),
+                    AssignedIssuesList(link: null),
+                    PullRequestsList(link: null),
                   ],
                 ),
               ),
@@ -79,54 +77,30 @@ class _GitHubSummaryState extends State<GitHubSummary> {
   }
 }
 
-class RepositoriesList extends StatefulWidget {
-  const RepositoriesList({@required this.link});
-  final Link link;
+class RepositoriesList extends StatelessWidget {
   @override
-  _RepositoriesListState createState() => _RepositoriesListState(link: link);
-}
-
-class _RepositoriesListState extends State<RepositoriesList> {
-  _RepositoriesListState({@required Link link}) {
-    _repositories = _retreiveRespositories(link);
-  }
-  Future<List<$Repositories$viewer$repositories$nodes>> _repositories;
-
-  Future<List<$Repositories$viewer$repositories$nodes>> _retreiveRespositories(
-      Link link) async {
-    var result = await link.request(Repositories((b) => b..count = 100)).first;
-    if (result.errors != null && result.errors.isNotEmpty) {
-      throw QueryException(result.errors);
-    }
-    return $Repositories(result.data).viewer.repositories.nodes;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<$Repositories$viewer$repositories$nodes>>(
-      future: _repositories,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('${snapshot.error}'));
-        }
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        var repositories = snapshot.data;
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            var repository = repositories[index];
-            return ListTile(
-              title: Text('${repository.owner.login}/${repository.name}'),
-              subtitle: Text(repository.description ?? 'No description'),
-              onTap: () => _launchUrl(context, repository.url.value),
-            );
-          },
-          itemCount: repositories.length,
-        );
-      },
-    );
-  }
+  Widget build(BuildContext context) =>
+      StoreConnector<AppState, BuiltList<GitHubRepository>>(
+        onInit: (store) => store.dispatch(RetrieveGitHubRepositories()),
+        distinct: true,
+        converter: (store) => store.state.gitHubRepositories,
+        builder: (context, repositories) {
+          if (repositories.isEmpty) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              var repository = repositories[index];
+              return ListTile(
+                title: Text('${repository.owner.login}/${repository.name}'),
+                subtitle: Text(repository.description ?? 'No description'),
+                onTap: () => _launchUrl(context, repository.url),
+              );
+            },
+            itemCount: repositories.length,
+          );
+        },
+      );
 }
 
 class AssignedIssuesList extends StatefulWidget {

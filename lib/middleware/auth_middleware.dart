@@ -130,22 +130,17 @@ class StoreGitHubTokenMiddleware
       : super((store, action, next) async {
           next(action);
 
-          // gitHubService.token = action.token;
-          // final result = await gitHubService.test();
-          // print(result);
-
-          // final client = AuthenticatedClient(action.token, http.Client());
-          // final result = await client.get('https://api.github.com/user/issues');
-          // print(result.body);
-
           final handleProblem = generateProblemHandler(
               ProblemType.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
-            // If we got a token and aren't already signed in with github do so
-            if (action.token != null && !store.state.userData.hasGitHub) {
-              store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-              await authService.signInWithGithub(action.token);
+            if (action.token != null) {
+              gitHubService.token = action.token;
+              // If we got a token and aren't already signed in with github do so
+              if (!store.state.userData.hasGitHub) {
+                store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
+                await authService.signInWithGithub(action.token);
+              }
             }
           } catch (error, trace) {
             handleProblem(error, trace);
