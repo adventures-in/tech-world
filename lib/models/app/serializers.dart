@@ -9,7 +9,9 @@ import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
@@ -27,8 +29,10 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_owner.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_set.dart';
@@ -49,12 +53,15 @@ part 'serializers.g.dart';
   AuthProviderData,
   ConnectAuthState,
   DisplayProblem,
-  GitHubOwner,
+  GitHubIssue,
+  GitHubLabel,
   GitHubRepository,
+  GitHubUser,
   ObserveGitHubToken,
   PlumbServices,
   RequestGitHubAuth,
   RemoveProblem,
+  RetrieveGitHubAssignedIssues,
   RetrieveGitHubRepositories,
   SignInAnonymously,
   SignOut,
@@ -62,6 +69,7 @@ part 'serializers.g.dart';
   StoreAuthState,
   StoreAuthStep,
   StoreDisplayingProblem,
+  StoreGitHubAssignedIssues,
   StoreGitHubRepositories,
   StoreGitHubToken,
   StoreNavBarSelection,

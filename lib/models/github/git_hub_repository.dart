@@ -3,7 +3,7 @@ library git_hub_repository;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_owner.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
@@ -20,7 +20,7 @@ abstract class GitHubRepository
   int get stargazers;
   String get url;
   int get issues;
-  GitHubOwner get owner;
+  GitHubUser get owner;
 
   GitHubRepository._();
 
@@ -32,7 +32,7 @@ abstract class GitHubRepository
       @required int stargazers,
       @required String url,
       @required int issues,
-      @required GitHubOwner owner}) = _$GitHubRepository._;
+      @required GitHubUser owner}) = _$GitHubRepository._;
 
   factory GitHubRepository.by(
       [void Function(GitHubRepositoryBuilder) updates]) = _$GitHubRepository;

@@ -9,6 +9,7 @@ import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:built_collection/built_collection.dart';
@@ -35,6 +36,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @nullable
   String get gitHubToken;
   BuiltList<GitHubRepository> get gitHubRepositories;
+  BuiltList<GitHubIssue> get gitHubAssignedIssues;
 
   /// Adventurers
   @nullable

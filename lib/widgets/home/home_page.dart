@@ -1,18 +1,17 @@
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
-import 'package:adventures_in_tech_world/utils/authenticated_http.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_graphql_client/github_graphql_client.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 class GitHubSummary extends StatefulWidget {
@@ -51,10 +50,10 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                     icon: Icon(Octicons.issue_opened),
                     label: Text('Assigned Issues'),
                   ),
-                  NavigationRailDestination(
-                    icon: Icon(Octicons.git_pull_request),
-                    label: Text('Pull Requests'),
-                  ),
+                  // NavigationRailDestination(
+                  //   icon: Icon(Octicons.git_pull_request),
+                  //   label: Text('Pull Requests'),
+                  // ),
                 ],
               ),
               VerticalDivider(thickness: 1, width: 1),
@@ -64,8 +63,8 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                   index: _selectedIndex,
                   children: [
                     RepositoriesList(),
-                    AssignedIssuesList(link: null),
-                    PullRequestsList(link: null),
+                    AssignedIssuesList(),
+                    // PullRequestsList(link: null),
                   ],
                 ),
               ),
@@ -103,69 +102,29 @@ class RepositoriesList extends StatelessWidget {
       );
 }
 
-class AssignedIssuesList extends StatefulWidget {
-  const AssignedIssuesList({@required this.link});
-  final Link link;
-  @override
-  _AssignedIssuesListState createState() =>
-      _AssignedIssuesListState(link: link);
-}
-
-class _AssignedIssuesListState extends State<AssignedIssuesList> {
-  _AssignedIssuesListState({@required Link link}) {
-    _assignedIssues = _retrieveAssignedIssues(link);
-  }
-
-  Future<List<$AssignedIssues$search$edges$node$asIssue>> _assignedIssues;
-
-  Future<List<$AssignedIssues$search$edges$node$asIssue>>
-      _retrieveAssignedIssues(Link link) async {
-    var result = await link.request(ViewerDetail((b) => b)).first;
-    if (result.errors != null && result.errors.isNotEmpty) {
-      throw QueryException(result.errors);
-    }
-    var _viewer = $ViewerDetail(result.data).viewer;
-
-    result = await link
-        .request(AssignedIssues((b) => b
-          ..count = 100
-          ..query = 'is:open assignee:${_viewer.login} archived:false'))
-        .first;
-    if (result.errors != null && result.errors.isNotEmpty) {
-      throw QueryException(result.errors);
-    }
-    return $AssignedIssues(result.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$AssignedIssues$search$edges$node$asIssue>()
-        .toList();
-  }
-
+class AssignedIssuesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<$AssignedIssues$search$edges$node$asIssue>>(
-      future: _assignedIssues,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('${snapshot.error}'));
-        }
-        if (!snapshot.hasData) {
+    return StoreConnector<AppState, BuiltList<GitHubIssue>>(
+      onInit: (store) => store.dispatch(RetrieveGitHubAssignedIssues()),
+      distinct: true,
+      converter: (store) => store.state.gitHubAssignedIssues,
+      builder: (context, issues) {
+        if (issues.isEmpty) {
           return Center(child: CircularProgressIndicator());
         }
-        var assignedIssues = snapshot.data;
         return ListView.builder(
           itemBuilder: (context, index) {
-            var assignedIssue = assignedIssues[index];
+            var issue = issues[index];
             return ListTile(
-              title: Text('${assignedIssue.title}'),
-              subtitle: Text('${assignedIssue.repository.nameWithOwner} '
-                  'Issue #${assignedIssue.number} '
-                  'opened by ${assignedIssue.author.login}'),
-              onTap: () => _launchUrl(context, assignedIssue.url.value),
+              title: Text('${issue.title}'),
+              subtitle: Text('${issue.repoOwner.login} '
+                  'Issue #${issue.number} '
+                  'opened by ${issue.author.login}'),
+              onTap: () => _launchUrl(context, issue.url),
             );
           },
-          itemCount: assignedIssues.length,
+          itemCount: issues.length,
         );
       },
     );

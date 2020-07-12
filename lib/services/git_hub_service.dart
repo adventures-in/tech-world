@@ -1,4 +1,5 @@
 import 'package:adventures_in_tech_world/extensions/gql_extensions.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/models/problems/git_hub_exceptions.dart';
 import 'package:adventures_in_tech_world/utils/authenticated_http.dart';
@@ -46,14 +47,49 @@ class GitHubService {
       throw GitHubTokenException(
           'You tried to use the GitHubService before the token was set');
     }
+
+    // make the request
     var result = await _link.request(Repositories((b) => b..count = 100)).first;
     if (result.errors != null && result.errors.isNotEmpty) {
       throw QueryException(result.errors);
     }
+
+    // convert the result to models
     return $Repositories(result.data)
         .viewer
         .repositories
         .nodes
         .toGitHubRepositories();
+  }
+
+  Future<List<GitHubIssue>> retrieveAssignedIssues() async {
+    // check the token has been set
+    if (_token == null) {
+      throw GitHubTokenException(
+          'You tried to use the GitHubService before the token was set');
+    }
+
+    // make the request
+    var result = await _link.request(ViewerDetail((b) => b)).first;
+    if (result.errors != null && result.errors.isNotEmpty) {
+      throw QueryException(result.errors);
+    }
+    var _viewer = $ViewerDetail(result.data).viewer;
+
+    result = await _link
+        .request(AssignedIssues((b) => b
+          ..count = 100
+          ..query = 'is:open assignee:${_viewer.login} archived:false'))
+        .first;
+    if (result.errors != null && result.errors.isNotEmpty) {
+      throw QueryException(result.errors);
+    }
+    return $AssignedIssues(result.data)
+        .search
+        .edges
+        .map((e) => e.node)
+        .whereType<$AssignedIssues$search$edges$node$asIssue>()
+        .toList()
+        .toGitHubIssues();
   }
 }
