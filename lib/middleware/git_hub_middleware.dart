@@ -22,6 +22,7 @@ List<Middleware<AppState>> createGitHubMiddleware({
 }) {
   return [
     RetrieveGitHubRepositoriesMiddleware(gitHubService),
+    RetrieveGitHubAssignedIssuesMiddleware(gitHubService),
   ];
 }
 

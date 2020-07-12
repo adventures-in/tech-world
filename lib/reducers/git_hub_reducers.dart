@@ -9,6 +9,7 @@ import 'package:redux/redux.dart';
 /// Each reducer returns a new [AppState].
 final gitHubReducers = <AppState Function(AppState, dynamic)>[
   StoreGitHubRepositoriesReducer(),
+  StoreGitHubAssignedIssuesReducer(),
 ];
 
 class StoreGitHubRepositoriesReducer
