@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -22,7 +23,7 @@ abstract class GitHubIssue extends Object
   String get url;
   String get title;
   GitHubUser get author;
-  List<GitHubLabel> get labels;
+  BuiltList<GitHubLabel> get labels;
   int get comments;
 
   GitHubIssue._();
@@ -33,7 +34,7 @@ abstract class GitHubIssue extends Object
     @required String url,
     @required String title,
     @required GitHubUser author,
-    @required List<GitHubLabel> labels,
+    @required BuiltList<GitHubLabel> labels,
     @required int comments,
   }) = _$GitHubIssue._;
 

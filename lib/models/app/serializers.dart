@@ -10,9 +10,12 @@ import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
@@ -20,6 +23,7 @@ import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
@@ -31,6 +35,7 @@ import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
@@ -55,13 +60,17 @@ part 'serializers.g.dart';
   DisplayProblem,
   GitHubIssue,
   GitHubLabel,
+  GitHubPullRequest,
   GitHubRepository,
   GitHubUser,
+  LaunchURL,
   ObserveGitHubToken,
   PlumbServices,
+  PullRequestState,
   RequestGitHubAuth,
   RemoveProblem,
   RetrieveGitHubAssignedIssues,
+  RetrieveGitHubPullRequests,
   RetrieveGitHubRepositories,
   SignInAnonymously,
   SignOut,
@@ -70,6 +79,7 @@ part 'serializers.g.dart';
   StoreAuthStep,
   StoreDisplayingProblem,
   StoreGitHubAssignedIssues,
+  StoreGitHubPullRequests,
   StoreGitHubRepositories,
   StoreGitHubToken,
   StoreNavBarSelection,

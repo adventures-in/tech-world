@@ -1,5 +1,6 @@
 import 'package:adventures_in_tech_world/extensions/gql_extensions.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/models/problems/git_hub_exceptions.dart';
 import 'package:adventures_in_tech_world/utils/authenticated_http.dart';
@@ -91,5 +92,19 @@ class GitHubService {
         .whereType<$AssignedIssues$search$edges$node$asIssue>()
         .toList()
         .toGitHubIssues();
+  }
+
+  Future<List<GitHubPullRequest>> retrievePullRequests() async {
+    var result = await _link.request(PullRequests((b) => b..count = 100)).first;
+    if (result.errors != null && result.errors.isNotEmpty) {
+      throw QueryException(result.errors);
+    }
+    return $PullRequests(result.data)
+        .viewer
+        .pullRequests
+        .edges
+        .map((e) => e.node)
+        .toList()
+        .toGitHubPullRequests();
   }
 }

@@ -1,8 +1,10 @@
+import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:github_graphql_client/src/github_gql/github_queries.data.gql.dart';
 
 extension ListOfGitHubRepositoryExt
@@ -41,7 +43,7 @@ extension GitHubAssignedIssuesExt
           author: GitHubUser(
               login: gqlIssue.author.login,
               avatarUrl: gqlIssue.author.url.value),
-          labels: gqlIssue.labels.toGitHubLabels(),
+          labels: BuiltList(gqlIssue.labels.toGitHubLabels()),
           comments: gqlIssue.comments.totalCount);
       list.add(ghIssue);
     }
@@ -63,6 +65,24 @@ extension ListOfPullRequests
     on List<$PullRequests$viewer$pullRequests$edges$node> {
   List<GitHubPullRequest> toGitHubPullRequests() {
     final list = <GitHubPullRequest>[];
-    for (final node in this) {}
+    for (final node in this) {
+      final pr = GitHubPullRequest(
+          repositoryOwner: GitHubUser(
+              login: node.repository.nameWithOwner,
+              avatarUrl: node.repository.url.value),
+          author:
+              GitHubUser(login: node.author.login, avatarUrl: node.url.value),
+          number: node.number,
+          url: node.url.value,
+          title: node.title,
+          updatedAt: DateTime.parse(node.updatedAt.value),
+          state: PullRequestState.valueOfToLowerCase(node.state.value),
+          isDraft: node.isDraft,
+          comments: node.comments.totalCount,
+          files: node.files.totalCount);
+
+      list.add(pr);
+    }
+    return list;
   }
 }

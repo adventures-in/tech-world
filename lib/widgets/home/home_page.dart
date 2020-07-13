@@ -1,18 +1,19 @@
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
+import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttericon/octicons_icons.dart';
-import 'package:github_graphql_client/github_graphql_client.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class GitHubSummary extends StatefulWidget {
   GitHubSummary();
@@ -50,10 +51,10 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                     icon: Icon(Octicons.issue_opened),
                     label: Text('Assigned Issues'),
                   ),
-                  // NavigationRailDestination(
-                  //   icon: Icon(Octicons.git_pull_request),
-                  //   label: Text('Pull Requests'),
-                  // ),
+                  NavigationRailDestination(
+                    icon: Icon(Octicons.git_pull_request),
+                    label: Text('Pull Requests'),
+                  ),
                 ],
               ),
               VerticalDivider(thickness: 1, width: 1),
@@ -64,7 +65,7 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                   children: [
                     RepositoriesList(),
                     AssignedIssuesList(),
-                    // PullRequestsList(link: null),
+                    PullRequestsList(),
                   ],
                 ),
               ),
@@ -93,7 +94,9 @@ class RepositoriesList extends StatelessWidget {
               return ListTile(
                 title: Text('${repository.owner.login}/${repository.name}'),
                 subtitle: Text(repository.description ?? 'No description'),
-                onTap: () => _launchUrl(context, repository.url),
+                onTap: () => context.dispatch(
+                  LaunchURL(url: repository.url),
+                ),
               );
             },
             itemCount: repositories.length,
@@ -121,7 +124,9 @@ class AssignedIssuesList extends StatelessWidget {
               subtitle: Text('${issue.repoOwner.login} '
                   'Issue #${issue.number} '
                   'opened by ${issue.author.login}'),
-              onTap: () => _launchUrl(context, issue.url),
+              onTap: () => context.dispatch(
+                LaunchURL(url: issue.url),
+              ),
             );
           },
           itemCount: issues.length,
@@ -131,91 +136,34 @@ class AssignedIssuesList extends StatelessWidget {
   }
 }
 
-class PullRequestsList extends StatefulWidget {
-  const PullRequestsList({@required this.link});
-  final Link link;
-  @override
-  _PullRequestsListState createState() => _PullRequestsListState(link: link);
-}
-
-class _PullRequestsListState extends State<PullRequestsList> {
-  _PullRequestsListState({@required Link link}) {
-    _pullRequests = _retrievePullRequests(link);
-  }
-  Future<List<$PullRequests$viewer$pullRequests$edges$node>> _pullRequests;
-
-  Future<List<$PullRequests$viewer$pullRequests$edges$node>>
-      _retrievePullRequests(Link link) async {
-    var result = await link.request(PullRequests((b) => b..count = 100)).first;
-    if (result.errors != null && result.errors.isNotEmpty) {
-      throw QueryException(result.errors);
-    }
-    return $PullRequests(result.data)
-        .viewer
-        .pullRequests
-        .edges
-        .map((e) => e.node)
-        .toList();
-  }
-
+class PullRequestsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<$PullRequests$viewer$pullRequests$edges$node>>(
-      future: _pullRequests,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('${snapshot.error}'));
-        }
-        if (!snapshot.hasData) {
+    return StoreConnector<AppState, BuiltList<GitHubPullRequest>>(
+      onInit: (store) => store.dispatch(RetrieveGitHubPullRequests()),
+      distinct: true,
+      converter: (store) => store.state.gitHubPullRequests,
+      builder: (context, pullRequests) {
+        if (pullRequests.isEmpty) {
           return Center(child: CircularProgressIndicator());
         }
-        var pullRequests = snapshot.data;
         return ListView.builder(
           itemBuilder: (context, index) {
             var pullRequest = pullRequests[index];
             return ListTile(
               title: Text('${pullRequest.title}'),
-              subtitle: Text('${pullRequest.repository.nameWithOwner} '
+              subtitle: Text('${pullRequest.repositoryOwner.login} '
                   'PR #${pullRequest.number} '
                   'opened by ${pullRequest.author.login} '
-                  '(${pullRequest.state.value.toLowerCase()})'),
-              onTap: () => _launchUrl(context, pullRequest.url.value),
+                  '(${pullRequest.state})'),
+              onTap: () => context.dispatch(
+                LaunchURL(url: pullRequest.url),
+              ),
             );
           },
           itemCount: pullRequests.length,
         );
       },
-    );
-  }
-}
-
-class QueryException implements Exception {
-  QueryException(this.errors);
-  List<GraphQLError> errors;
-  @override
-  String toString() {
-    return 'Query Exception: ${errors.map((err) => '$err').join(',')}';
-  }
-}
-
-Future<void> _launchUrl(BuildContext context, String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Navigation error'),
-        content: Text('Could not launch $url'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Close'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
     );
   }
 }

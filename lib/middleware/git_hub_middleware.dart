@@ -1,6 +1,8 @@
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
@@ -23,6 +25,7 @@ List<Middleware<AppState>> createGitHubMiddleware({
   return [
     RetrieveGitHubRepositoriesMiddleware(gitHubService),
     RetrieveGitHubAssignedIssuesMiddleware(gitHubService),
+    RetrieveGitHubPullRequestsMiddleware(gitHubService),
   ];
 }
 
@@ -47,5 +50,16 @@ class RetrieveGitHubAssignedIssuesMiddleware
 
           final issues = await gitHubService.retrieveAssignedIssues();
           store.dispatch(StoreGitHubAssignedIssues(issues: BuiltList(issues)));
+        });
+}
+
+class RetrieveGitHubPullRequestsMiddleware
+    extends TypedMiddleware<AppState, RetrieveGitHubPullRequests> {
+  RetrieveGitHubPullRequestsMiddleware(GitHubService githubService)
+      : super((store, action, next) async {
+          next(action);
+
+          final prs = await githubService.retrievePullRequests();
+          store.dispatch(StoreGitHubPullRequests(prs: BuiltList(prs)));
         });
 }

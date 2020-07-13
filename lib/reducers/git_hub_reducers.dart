@@ -1,4 +1,5 @@
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
@@ -10,6 +11,7 @@ import 'package:redux/redux.dart';
 final gitHubReducers = <AppState Function(AppState, dynamic)>[
   StoreGitHubRepositoriesReducer(),
   StoreGitHubAssignedIssuesReducer(),
+  StoreGitHubPullRequestsReducer(),
 ];
 
 class StoreGitHubRepositoriesReducer
@@ -24,4 +26,11 @@ class StoreGitHubAssignedIssuesReducer
   StoreGitHubAssignedIssuesReducer()
       : super((state, action) => state
             .rebuild((b) => b..gitHubAssignedIssues.replace(action.issues)));
+}
+
+class StoreGitHubPullRequestsReducer
+    extends TypedReducer<AppState, StoreGitHubPullRequests> {
+  StoreGitHubPullRequestsReducer()
+      : super((state, action) =>
+            state.rebuild((b) => b..gitHubPullRequests.replace(action.prs)));
 }
