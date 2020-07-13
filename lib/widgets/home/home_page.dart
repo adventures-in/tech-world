@@ -10,10 +10,10 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/utils/icons/octo_icons_icons.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttericon/octicons_icons.dart';
 
 class GitHubSummary extends StatefulWidget {
   GitHubSummary();
@@ -44,15 +44,15 @@ class _GitHubSummaryState extends State<GitHubSummary> {
                 labelType: NavigationRailLabelType.selected,
                 destinations: [
                   NavigationRailDestination(
-                    icon: Icon(Octicons.repo),
+                    icon: Icon(OctoIcons.repo),
                     label: Text('Repositories'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Octicons.issue_opened),
+                    icon: Icon(OctoIcons.issue_opened),
                     label: Text('Assigned Issues'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Octicons.git_pull_request),
+                    icon: Icon(OctoIcons.git_pull_request),
                     label: Text('Pull Requests'),
                   ),
                 ],

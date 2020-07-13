@@ -37,7 +37,6 @@ dependencies:
 
   # used in prototyping, will not be in release 
   redux_remote_devtools:
-  fluttericon:
 
 dev_dependencies:
   flutter_test:
@@ -52,3 +51,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+   - family:  OctoIcons
+     fonts:
+      - asset: fonts/OctoIcons.ttf
