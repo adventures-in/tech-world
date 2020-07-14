@@ -19,6 +19,7 @@ class PullRequestsList extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         return ListView.builder(
+          shrinkWrap: true,
           itemBuilder: (context, index) {
             var pullRequest = pullRequests[index];
             return ListTile(

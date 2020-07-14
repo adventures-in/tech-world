@@ -11,10 +11,13 @@ class ProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: ProjectsTabSelection.values.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Tabbed AppBar'),
-          bottom: TabBar(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TabBar(
+            indicatorColor: Colors.amber,
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
             isScrollable: true,
             tabs: [
               Tab(text: 'Repositories', icon: Icon(OctoIcons.repo)),
@@ -24,12 +27,14 @@ class ProjectsPage extends StatelessWidget {
                   icon: Icon(OctoIcons.git_pull_request)),
             ],
           ),
-        ),
-        body: TabBarView(children: [
-          RepositoriesList(),
-          AssignedIssuesList(),
-          PullRequestsList()
-        ]),
+          TabBarView(
+            children: [
+              RepositoriesList(),
+              AssignedIssuesList(),
+              PullRequestsList()
+            ],
+          ),
+        ],
       ),
     );
   }

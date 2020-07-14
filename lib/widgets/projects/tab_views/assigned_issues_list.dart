@@ -19,6 +19,7 @@ class AssignedIssuesList extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         return ListView.builder(
+          shrinkWrap: true,
           itemBuilder: (context, index) {
             var issue = issues[index];
             return ListTile(
