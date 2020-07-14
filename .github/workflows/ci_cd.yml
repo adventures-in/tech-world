@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - dev
+      - release
 
 jobs:
   build:
@@ -52,9 +53,31 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
     
+    ##############################################
+    # setup-gcloud
+    ##############################################
+    - name: Setup gcloud
+      if: github.ref == 'release'
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        service_account_email: ${{ secrets.GCS_EMAIL }}
+        service_account_key: ${{ secrets.GCS_KEY }}
+
+    ############################################
+    # download credential files 
+    ############################################
+    - name: Download credential files
+      if: github.ref == 'release'
+      run: gsutil cp gs://ci-credentials/index.html web/index.html
+
     ############################################
     # build web app
     ############################################
-    - run: flutter config --enable-web
-    - run: flutter build web -t lib/main.dart
+    - name: Configure Flutter for Web
+      if: github.ref == 'release'
+      run: flutter config --enable-web
+    - name: Build for Web
+      if: github.ref == 'release'
+      run: flutter build web -t lib/main.dart
     
