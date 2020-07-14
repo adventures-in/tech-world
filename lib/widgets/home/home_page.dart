@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
           StoreConnector<AppState, NavBarSelection>(
             distinct: true,
             converter: (store) => store.state.navBarSelection,
-            builder: (context, vm) => vm.widget,
+            builder: (context, selection) => selection.widget,
           )
         ],
       ),

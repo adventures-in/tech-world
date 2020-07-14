@@ -5,6 +5,7 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
 import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/firestore_service.dart';
+import 'package:adventures_in_tech_world/services/git_hub_service.dart';
 import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
@@ -25,6 +26,7 @@ void main() async {
   final databaseService = FirestoreService(Firestore.instance);
   final platformService = PlatformService();
   final navigationService = NavigationService(navKey);
+  final gitHubService = GitHubService();
 
   /// Create the redux store
   final store =
@@ -32,6 +34,7 @@ void main() async {
     remoteDevtools,
     ...createAppMiddleware(
         authService: authService,
+        gitHubService: gitHubService,
         databaseService: databaseService,
         platformService: platformService,
         navigationService: navigationService)

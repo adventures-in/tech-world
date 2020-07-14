@@ -52,5 +52,10 @@ app.*.map.json
 # Built value generated files 
 *.g.dart
 
-# Replace relevant part of index.html for running locally
-web/cdns_config.html
+# credentials and mocks for local debugging
+lib/utils/private_credentials.dart
+lib/utils/mocks/
+
+# different versions for easy swapping back and forth for local debugging
+web/index_release.html
+web/index_debug.html
