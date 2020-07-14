@@ -41,7 +41,7 @@ class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
           if (action.token == null) {
             _authStep = AuthStep.waitingForInput;
           } else {
-            _authState = AuthState.signedInWithGitHub;
+            _authState = AuthState.signedInAndGitHubToken;
           }
 
           return state.rebuild((b) => b

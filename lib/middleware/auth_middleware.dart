@@ -13,6 +13,7 @@ import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
+import 'package:adventures_in_tech_world/services/git_hub_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
@@ -28,6 +29,7 @@ import 'package:redux/redux.dart';
 ///
 List<Middleware<AppState>> createAuthMiddleware({
   AuthService authService,
+  GitHubService gitHubService,
   DatabaseService databaseService,
   PlatformService platformService,
 }) {
@@ -37,7 +39,7 @@ List<Middleware<AppState>> createAuthMiddleware({
     StoreUserDataMiddleware(authService, databaseService),
     ObserveGitHubTokenMiddleware(databaseService),
     RequestGitHubAuthMiddleware(platformService),
-    StoreGitHubTokenMiddleware(authService),
+    StoreGitHubTokenMiddleware(authService, gitHubService),
     SignOutMiddleware(authService),
   ];
 }
@@ -88,13 +90,20 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               store
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
-            } else if (action.userData.isAnonymous) {
+            } else {
+              // set the relevant auth state
+              if (action.userData.isAnonymous) {
+                store.dispatch(
+                    StoreAuthState(state: AuthState.signedInAnonymously));
+              } else {
+                store.dispatch(StoreAuthState(state: AuthState.signedIn));
+              }
+
+              // whether we're signed in anonymously or with github we need to
+              // get the token from the database
               store.dispatch(
                   StoreAuthStep(step: AuthStep.checkingForGitHubToken));
               databaseService.connectTokensDoc(uid: action.userData.uid);
-            } else {
-              store.dispatch(
-                  StoreAuthState(state: AuthState.signedInWithGitHub));
             }
           } catch (error, trace) {
             handleProblem(error, trace);
@@ -116,7 +125,8 @@ class ObserveGitHubTokenMiddleware
 
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
-  StoreGitHubTokenMiddleware(AuthService authService)
+  StoreGitHubTokenMiddleware(
+      AuthService authService, GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 
@@ -124,10 +134,13 @@ class StoreGitHubTokenMiddleware
               ProblemType.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
-            // If we got a token and aren't already signed in with github do so
-            if (action.token != null && !store.state.userData.hasGitHub) {
-              store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-              await authService.signInWithGithub(action.token);
+            if (action.token != null) {
+              gitHubService.token = action.token;
+              // If we got a token and aren't already signed in with github do so
+              if (!store.state.userData.hasGitHub) {
+                store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
+                await authService.signInWithGithub(action.token);
+              }
             }
           } catch (error, trace) {
             handleProblem(error, trace);
