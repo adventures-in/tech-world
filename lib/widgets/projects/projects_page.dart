@@ -9,33 +9,34 @@ class ProjectsPage extends StatelessWidget {
   const ProjectsPage();
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: ProjectsTabSelection.values.length,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          TabBar(
-            indicatorColor: Colors.amber,
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
-            isScrollable: true,
-            tabs: [
-              Tab(text: 'Repositories', icon: Icon(OctoIcons.repo)),
-              Tab(text: 'Issues', icon: Icon(OctoIcons.issue_opened)),
-              Tab(
-                  text: 'Pull Requests',
-                  icon: Icon(OctoIcons.git_pull_request)),
-            ],
-          ),
-          TabBarView(
-            children: [
-              RepositoriesList(),
-              AssignedIssuesList(),
-              PullRequestsList()
-            ],
-          ),
-        ],
-      ),
-    );
+    return Expanded(
+        child: DefaultTabController(
+            length: ProjectsTabSelection.values.length,
+            child: Column(
+              children: [
+                TabBar(
+                  indicatorColor: Theme.of(context).colorScheme.secondary,
+                  labelColor: Theme.of(context).colorScheme.primary,
+                  unselectedLabelColor: Colors.grey,
+                  isScrollable: true,
+                  tabs: [
+                    Tab(text: 'Repositories', icon: Icon(OctoIcons.repo)),
+                    Tab(text: 'Issues', icon: Icon(OctoIcons.issue_opened)),
+                    Tab(
+                        text: 'Pull Requests',
+                        icon: Icon(OctoIcons.git_pull_request)),
+                  ],
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      RepositoriesList(),
+                      AssignedIssuesList(),
+                      PullRequestsList()
+                    ],
+                  ),
+                ),
+              ],
+            )));
   }
 }
