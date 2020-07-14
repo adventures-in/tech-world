@@ -57,7 +57,7 @@ jobs:
     # setup-gcloud
     ##############################################
     - name: Setup gcloud
-      if: github.ref == 'release'
+      if: github.ref == 'refs/heads/release'
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
@@ -68,16 +68,16 @@ jobs:
     # download credential files 
     ############################################
     - name: Download credential files
-      if: github.ref == 'release'
+      if: github.ref == 'refs/heads/release'
       run: gsutil cp gs://ci-credentials/index.html web/index.html
 
     ############################################
     # build web app
     ############################################
     - name: Configure Flutter for Web
-      if: github.ref == 'release'
+      if: github.ref == 'refs/heads/release'
       run: flutter config --enable-web
     - name: Build for Web
-      if: github.ref == 'release'
+      if: github.ref == 'refs/heads/release'
       run: flutter build web -t lib/main.dart
     
