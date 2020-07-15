@@ -62,3 +62,4 @@ web/index.html
 # different versions for easy swapping back and forth for local debugging
 web/index_release.html
 web/index_debug.html
+macos/Runner/GoogleService-Info.plist
