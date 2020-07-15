@@ -67,9 +67,12 @@ jobs:
     ############################################
     # download credential files 
     ############################################
-    - name: Download credential files
+    - name: Download index.html 
       if: github.ref == 'refs/heads/release'
       run: gsutil cp gs://ci-credentials/index.html web/index.html
+    - name: Download .firebaserc
+      if: github.ref == 'refs/heads/release'
+      run: gsutil cp gs://ci-credentials/.firebaserc .firebaserc
 
     ############################################
     # build web app
@@ -80,4 +83,13 @@ jobs:
     - name: Build for Web
       if: github.ref == 'refs/heads/release'
       run: flutter build web -t lib/main.dart
-    
+
+    ############################################
+    # deploy to firebase hosting
+    ############################################
+    - name: Deploy to Firebase Hosting
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
