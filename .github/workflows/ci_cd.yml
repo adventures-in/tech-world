@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: CI
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     
     steps:
 
@@ -88,6 +88,7 @@ jobs:
     # deploy to firebase hosting
     ############################################
     - name: Deploy to Firebase Hosting
+      if: github.ref == 'refs/heads/release'
       uses: w9jds/firebase-action@master
       with:
         args: deploy --only hosting
