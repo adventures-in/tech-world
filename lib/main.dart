@@ -13,6 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 void main() {
+  // A plugin accesses ServicesBinding.defaultBinaryMessenger before binding
+  // is initialized.
+  WidgetsFlutterBinding.ensureInitialized();
+
   /// we use a [GlobalKey] to allow navigation from a service
   /// ie. the key supplies a [BuildContext]
   ///

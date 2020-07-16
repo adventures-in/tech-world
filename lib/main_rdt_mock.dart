@@ -14,6 +14,10 @@ import 'package:redux/redux.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
 void main() async {
+  // A plugin accesses ServicesBinding.defaultBinaryMessenger before binding
+  // is initialized.
+  WidgetsFlutterBinding.ensureInitialized();
+
   final remoteDevtools = RemoteDevToolsMiddleware('localhost:8000');
 
   /// we use a [GlobalKey] to allow navigation from a service
