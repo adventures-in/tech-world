@@ -16,7 +16,7 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_i
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
-import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
@@ -24,7 +24,7 @@ import 'package:adventures_in_tech_world/actions/problems/store_displaying_probl
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
-import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_selection.dart';
 import 'package:adventures_in_tech_world/enums/problem_type.dart';
 import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
 import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
@@ -82,7 +82,7 @@ part 'serializers.g.dart';
   StoreGitHubPullRequests,
   StoreGitHubRepositories,
   StoreGitHubToken,
-  StoreNavBarSelection,
+  StoreNavSelection,
   StoreUserData,
   UserData,
 ])
