@@ -1,3 +1,4 @@
+import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
 import 'package:adventures_in_tech_world/enums/nav_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
@@ -77,19 +78,41 @@ class NavRail extends StatelessWidget {
                 builder: (context, adventurer) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Color(0xffFDCF09),
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundImage: NetworkImage(adventurer.photoURL),
-                      ),
-                    ),
+                    child: ProfileAvatar(adventurer.photoURL),
                   );
                 },
               ),
             ],
           );
         });
+  }
+}
+
+class ProfileAvatar extends StatelessWidget {
+  final String photoURL;
+  const ProfileAvatar(
+    this.photoURL, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: () {
+        context.dispatch(NavigateToProfile());
+      },
+      elevation: 0.0,
+      fillColor: Colors.white,
+      child: CircleAvatar(
+        radius: 17,
+        backgroundColor: Color(0xffFDCF09),
+        child: CircleAvatar(
+          radius: 15,
+          backgroundImage: NetworkImage(photoURL),
+        ),
+      ),
+      padding: EdgeInsets.all(5.0),
+      shape: CircleBorder(),
+    );
   }
 }
