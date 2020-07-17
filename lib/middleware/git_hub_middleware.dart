@@ -4,7 +4,7 @@ import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_reposit
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
@@ -38,7 +38,7 @@ class RetrieveGitHubRepositoriesMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.retrieveGitHubRepositories, store.dispatch);
+              ProblemLocation.retrieveGitHubRepositories, store.dispatch);
 
           try {
             final repositories = await gitHubService.retrieveRespositories();
@@ -57,7 +57,7 @@ class RetrieveGitHubAssignedIssuesMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.retrieveGitHubAssignedIssues, store.dispatch);
+              ProblemLocation.retrieveGitHubAssignedIssues, store.dispatch);
 
           try {
             final issues = await gitHubService.retrieveAssignedIssues();
@@ -76,7 +76,7 @@ class RetrieveGitHubPullRequestsMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.retrieveGitHubPullRequests, store.dispatch);
+              ProblemLocation.retrieveGitHubPullRequests, store.dispatch);
 
           try {
             final prs = await githubService.retrievePullRequests();

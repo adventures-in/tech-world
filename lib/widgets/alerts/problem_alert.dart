@@ -18,7 +18,9 @@ class ProblemAlert extends StatelessWidget {
           children: <Widget>[
             Text('Looks like there was A problem.'),
             SizedBox(height: 20),
-            Text(problem.errorString),
+            Text('location: ${problem.location}'),
+            SizedBox(height: 20),
+            Text('error: ${problem.errorString}'),
             SizedBox(height: 20),
             Text(problem.traceString),
             // RichText(

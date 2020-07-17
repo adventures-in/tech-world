@@ -9,7 +9,7 @@ import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
@@ -51,7 +51,7 @@ class PlumbServicesMiddleware extends TypedMiddleware<AppState, PlumbServices> {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.plumbServicesMiddleware, store.dispatch);
+              ProblemLocation.plumbServicesMiddleware, store.dispatch);
 
           /// We don't manage the subscription as the streams are expected
           /// to stay open for the whole lifetime of the app
@@ -83,7 +83,7 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.storeUserDataMiddleware, store.dispatch);
+              ProblemLocation.storeUserDataMiddleware, store.dispatch);
 
           try {
             if (action.userData == null || action.userData.uid == null) {
@@ -131,7 +131,7 @@ class StoreGitHubTokenMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.storeGitHubTokenMiddleware, store.dispatch);
+              ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
             if (action.token != null) {
@@ -165,7 +165,7 @@ class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.signOutMiddleware, store.dispatch);
+              ProblemLocation.signOutMiddleware, store.dispatch);
 
           try {
             await authService.signOut();
