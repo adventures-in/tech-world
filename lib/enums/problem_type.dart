@@ -24,6 +24,13 @@ class ProblemType extends EnumClass {
   static const ProblemType signOutMiddleware = _$signOutMiddleware;
   static const ProblemType storeUserDataMiddleware = _$storeUserDataMiddleware;
 
+  static const ProblemType retrieveGitHubRepositories =
+      _$retrieveGitHubRepositories;
+  static const ProblemType retrieveGitHubAssignedIssues =
+      _$retrieveGitHubAssignedIssues;
+  static const ProblemType retrieveGitHubPullRequests =
+      _$retrieveGitHubPullRequests;
+
   const ProblemType._(String name) : super(name);
 
   static BuiltSet<ProblemType> get values => _$values;

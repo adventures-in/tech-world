@@ -11,6 +11,12 @@
             "program": "lib/main.dart",
         },
         {
+            "name": "Debug - RDT",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_rdt.dart",
+        },
+        {
             "name": "Debug - RDT/Mocks",
             "type": "dart",
             "request": "launch",
