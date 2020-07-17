@@ -16,6 +16,7 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_i
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
+import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
@@ -64,6 +65,7 @@ part 'serializers.g.dart';
   GitHubRepository,
   GitHubUser,
   LaunchURL,
+  NavigateToProfile,
   ObserveGitHubToken,
   PlumbServices,
   PullRequestState,

@@ -35,6 +35,7 @@ List<Middleware<AppState>> createAppMiddleware({
     ),
     ...createProblemsMiddleware(navigationService: navigationService),
     ...createGitHubMiddleware(gitHubService: gitHubService),
-    ...createNavigationMiddleware(platformService: platformService),
+    ...createNavigationMiddleware(
+        navigationService: navigationService, platformService: platformService),
   ];
 }
