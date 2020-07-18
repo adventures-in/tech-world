@@ -1,6 +1,5 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
@@ -37,7 +36,6 @@ List<Middleware<AppState>> createAuthMiddleware({
     PlumbServicesMiddleware(authService, databaseService),
     ConnectAuthStateMiddleware(authService),
     StoreUserDataMiddleware(authService, databaseService),
-    ObserveGitHubTokenMiddleware(databaseService),
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, gitHubService),
     SignOutMiddleware(authService),
@@ -108,18 +106,6 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
           } catch (error, trace) {
             handleProblem(error, trace);
           }
-        });
-}
-
-/// Observe the auth token in the [Database] and update the [AppState] to
-/// reflect changes
-class ObserveGitHubTokenMiddleware
-    extends TypedMiddleware<AppState, ObserveGitHubToken> {
-  ObserveGitHubTokenMiddleware(DatabaseService databaseService)
-      : super((store, action, next) async {
-          next(action);
-
-          databaseService.connectTokensDoc(uid: action.uid);
         });
 }
 

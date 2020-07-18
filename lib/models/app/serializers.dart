@@ -1,7 +1,6 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
@@ -66,7 +65,6 @@ part 'serializers.g.dart';
   GitHubUser,
   LaunchURL,
   NavigateToProfile,
-  ObserveGitHubToken,
   PlumbServices,
   PullRequestState,
   RequestGitHubAuth,
