@@ -4,9 +4,11 @@ import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_reposit
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
+import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:redux/redux.dart';
 
@@ -35,10 +37,16 @@ class RetrieveGitHubRepositoriesMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final repositories = await gitHubService.retrieveRespositories();
+          final handleProblem = generateProblemHandler(
+              ProblemLocation.retrieveGitHubRepositories, store.dispatch);
 
-          store.dispatch(StoreGitHubRepositories(
-              repositories: BuiltList<GitHubRepository>(repositories)));
+          try {
+            final repositories = await gitHubService.retrieveRespositories();
+            store.dispatch(StoreGitHubRepositories(
+                repositories: BuiltList<GitHubRepository>(repositories)));
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 
@@ -48,8 +56,16 @@ class RetrieveGitHubAssignedIssuesMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final issues = await gitHubService.retrieveAssignedIssues();
-          store.dispatch(StoreGitHubAssignedIssues(issues: BuiltList(issues)));
+          final handleProblem = generateProblemHandler(
+              ProblemLocation.retrieveGitHubAssignedIssues, store.dispatch);
+
+          try {
+            final issues = await gitHubService.retrieveAssignedIssues();
+            store
+                .dispatch(StoreGitHubAssignedIssues(issues: BuiltList(issues)));
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 
@@ -59,7 +75,14 @@ class RetrieveGitHubPullRequestsMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final prs = await githubService.retrievePullRequests();
-          store.dispatch(StoreGitHubPullRequests(prs: BuiltList(prs)));
+          final handleProblem = generateProblemHandler(
+              ProblemLocation.retrieveGitHubPullRequests, store.dispatch);
+
+          try {
+            final prs = await githubService.retrievePullRequests();
+            store.dispatch(StoreGitHubPullRequests(prs: BuiltList(prs)));
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }

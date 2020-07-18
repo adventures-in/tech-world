@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,7 +15,7 @@ extension ConnectAndConvert on FirebaseAuth {
       StreamController<ReduxAction> controller) {
     // create a function to be called on finding an error
     final handleProblem = generateProblemHandler(
-        ProblemType.connectFirebaseAuthExtension, controller.add);
+        ProblemLocation.connectFirebaseAuthExtension, controller.add);
 
     // listen to the onAuthStateChanged stream, convert events to actions and
     // dispatch to the store with the controller

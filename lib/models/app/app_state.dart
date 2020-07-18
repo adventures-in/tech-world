@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_selection.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
@@ -45,7 +45,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Adventurer get adventurer;
 
   /// Navigation
-  NavBarSelection get navBarSelection;
+  NavSelection get navSelection;
 
   AppState._();
 
@@ -54,7 +54,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..settings = Settings.initBuilder()
     ..authState = AuthState.unknown
     ..authStep = AuthStep.checking
-    ..navBarSelection = NavBarSelection.projects);
+    ..navSelection = NavSelection.projects);
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

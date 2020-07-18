@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -7,9 +7,9 @@ import 'package:redux/redux.dart';
 ///
 /// Each reducer returns a new [AppState].
 final navigationReducers = <AppState Function(AppState, dynamic)>[
-  TypedReducer<AppState, StoreNavBarSelection>(_storeNavBarSelection),
+  TypedReducer<AppState, StoreNavSelection>(_storeNavSelection),
 ];
 
-AppState _storeNavBarSelection(AppState state, StoreNavBarSelection action) {
-  return state.rebuild((b) => b..navBarSelection = action.selection);
+AppState _storeNavSelection(AppState state, StoreNavSelection action) {
+  return state.rebuild((b) => b..navSelection = action.selection);
 }
