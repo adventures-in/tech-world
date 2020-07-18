@@ -5,6 +5,12 @@ A web app for organising collaboration, built with Flutter.
 [![Coverage Status](https://coveralls.io/repos/github/Adventures-In/Tech-World/badge.svg?branch=dev)](https://coveralls.io/github/Adventures-In/Tech-World?branch=dev)
 ![CI](https://github.com/Adventures-In/Tech-World/workflows/CI/badge.svg)
 
+## State Diagrams 
+
+### Auth Sequence 
+
+![](https://docs.google.com/drawings/d/e/2PACX-1vR9GnJw-lPS7YUP-By-OmTua2vrPwW89MHf7YxWZssHgWAhIblWBg9mEwiZiiJx8YWbolNfRlYedHjM/pub?w=1242&h=984)
+
 ## Profiles 
 
 You can add info about what you're working on, including links to repos. Also some of the skills you have, the type of projects you want to work on and anything you need help with.
