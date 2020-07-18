@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
+import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
@@ -27,15 +27,16 @@ class FirebaseAuthService implements AuthService {
 
   @override
   void connectAuthState() {
+    // create a function to be called on finding an error
+    final handleProblem = generateProblemHandler(
+        ProblemLocation.authServiceConnectFirebase, _storeStreamController.add);
+
     try {
       // connect the firebase auth state to the store and keep the subscription
       _firebaseAuthStateSubscription =
           _firebaseAuth.connectAuthState(_storeStreamController);
     } catch (error, trace) {
-      _storeStreamController.add(AddProblem(
-          errorString: error.toString(),
-          traceString: trace.toString(),
-          type: ProblemType.authServiceConnectFirebase));
+      handleProblem(error, trace);
     }
   }
 

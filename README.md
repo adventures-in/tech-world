@@ -21,6 +21,7 @@ You can indicate your current goals by selecting issues in your repos.
 
 ```sh
 remotedev --port 8000
+flutter pub run build_runner build --delete-conflicting-outputs
 flutter pub run build_runner watch --delete-conflicting-outputs
 firebase deploy --only functions
 firebase deploy --only hosting:adventures-in-tech-world

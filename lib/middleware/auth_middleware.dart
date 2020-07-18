@@ -1,6 +1,5 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
-import 'package:adventures_in_tech_world/actions/auth/observe_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
@@ -9,11 +8,12 @@ import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
+import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
@@ -29,6 +29,7 @@ import 'package:redux/redux.dart';
 ///
 List<Middleware<AppState>> createAuthMiddleware({
   AuthService authService,
+  NavigationService navigationService,
   GitHubService gitHubService,
   DatabaseService databaseService,
   PlatformService platformService,
@@ -36,11 +37,10 @@ List<Middleware<AppState>> createAuthMiddleware({
   return [
     PlumbServicesMiddleware(authService, databaseService),
     ConnectAuthStateMiddleware(authService),
-    StoreUserDataMiddleware(authService, databaseService),
-    ObserveGitHubTokenMiddleware(databaseService),
+    StoreUserDataMiddleware(authService, navigationService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, gitHubService),
-    SignOutMiddleware(authService),
+    SignOutMiddleware(authService, navigationService),
   ];
 }
 
@@ -51,7 +51,7 @@ class PlumbServicesMiddleware extends TypedMiddleware<AppState, PlumbServices> {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.plumbServicesMiddleware, store.dispatch);
+              ProblemLocation.plumbServicesMiddleware, store.dispatch);
 
           /// We don't manage the subscription as the streams are expected
           /// to stay open for the whole lifetime of the app
@@ -77,16 +77,20 @@ class ConnectAuthStateMiddleware
 }
 
 class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
-  StoreUserDataMiddleware(
-      AuthService authService, DatabaseService databaseService)
+  StoreUserDataMiddleware(AuthService authService,
+      NavigationService navigationService, DatabaseService databaseService)
       : super((store, action, next) async {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.storeUserDataMiddleware, store.dispatch);
+              ProblemLocation.storeUserDataMiddleware, store.dispatch);
 
           try {
             if (action.userData == null || action.userData.uid == null) {
+              if (store.state.authStep == AuthStep.signingOut) {
+                // user has signed out so reset the UI
+                navigationService.popHome();
+              }
               store
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
@@ -111,18 +115,6 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
         });
 }
 
-/// Observe the auth token in the [Database] and update the [AppState] to
-/// reflect changes
-class ObserveGitHubTokenMiddleware
-    extends TypedMiddleware<AppState, ObserveGitHubToken> {
-  ObserveGitHubTokenMiddleware(DatabaseService databaseService)
-      : super((store, action, next) async {
-          next(action);
-
-          databaseService.connectTokensDoc(uid: action.uid);
-        });
-}
-
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
   StoreGitHubTokenMiddleware(
@@ -131,7 +123,7 @@ class StoreGitHubTokenMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.storeGitHubTokenMiddleware, store.dispatch);
+              ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
             if (action.token != null) {
@@ -160,14 +152,15 @@ class RequestGitHubAuthMiddleware
 }
 
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
-  SignOutMiddleware(AuthService authService)
+  SignOutMiddleware(AuthService authService, NavigationService navigatonService)
       : super((store, action, next) async {
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemType.signOutMiddleware, store.dispatch);
+              ProblemLocation.signOutMiddleware, store.dispatch);
 
           try {
+            store.dispatch(StoreAuthStep(step: AuthStep.signingOut));
             await authService.signOut();
           } catch (error, trace) {
             handleProblem(error, trace);

@@ -2,7 +2,7 @@ library problem;
 
 import 'dart:convert';
 
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -12,7 +12,7 @@ import 'package:meta/meta.dart';
 part 'problem.g.dart';
 
 abstract class Problem implements Built<Problem, ProblemBuilder> {
-  ProblemType get type;
+  ProblemLocation get location;
   String get errorString; // built_value won't allow dynamic
   @nullable
   String get traceString;
@@ -22,7 +22,7 @@ abstract class Problem implements Built<Problem, ProblemBuilder> {
   Problem._();
 
   factory Problem(
-      {@required ProblemType type,
+      {@required ProblemLocation location,
       @required String errorString,
       String traceString,
       BuiltMap<String, Object> info}) = _$Problem._;

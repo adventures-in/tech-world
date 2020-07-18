@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
-import 'package:adventures_in_tech_world/enums/problem_type.dart';
+import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
+import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:adventures_in_tech_world/extensions/firestore_extensions.dart';
@@ -36,15 +36,16 @@ class FirestoreService implements DatabaseService {
   @override
   void connectTokensDoc({@required String uid}) {
     assert(uid != null);
+
+    final handleProblem = generateProblemHandler(
+        ProblemLocation.firestoreServiceConnectTokens, _storeController.add);
+
     try {
       // connect the database to the store and keep the subscription
       subscriptions[DatabaseSection.authToken] =
           _firestore.connectToAuthToken(uid, _storeController);
     } catch (error, trace) {
-      _storeController.add(AddProblem(
-          errorString: error.toString(),
-          traceString: trace.toString(),
-          type: ProblemType.observeGitHubToken));
+      handleProblem(error, trace);
     }
   }
 

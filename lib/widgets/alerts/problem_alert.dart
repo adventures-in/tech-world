@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:flutter/material.dart';
 
@@ -8,21 +10,26 @@ class ProblemAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('traceString: ${problem.traceString}');
     return AlertDialog(
       title: Text('Dammit!'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('Looks like there was a problem.'),
+            Text('Looks like there was A problem.'),
             SizedBox(height: 20),
-            Text(problem.errorString),
+            Text('location: ${problem.location}'),
             SizedBox(height: 20),
-            RichText(
-              text: TextSpan(
-                text: problem.traceString,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            )
+            Text('error: ${problem.errorString}'),
+            SizedBox(height: 20),
+            Text(problem.traceString),
+            // RichText(
+            //   text: TextSpan(
+            //     text: problem.traceString,
+            //     style: TextStyle(
+            //         fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+            //   ),
+            // )
           ],
         ),
       ),
