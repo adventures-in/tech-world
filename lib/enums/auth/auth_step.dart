@@ -16,6 +16,7 @@ class AuthStep extends EnumClass {
   static const AuthStep exchangedCode = _$exchangedCode;
   static const AuthStep linkingGitHub = _$linkingGitHub;
   static const AuthStep signingInWithFirebase = _$signingInWithFirebase;
+  static const AuthStep signingOut = _$signingOut;
 
   static const Map<AuthStep, int> _$indexMap = {
     checking: 0,
@@ -27,6 +28,7 @@ class AuthStep extends EnumClass {
     exchangedCode: 6,
     linkingGitHub: 7,
     signingInWithFirebase: 8,
+    signingOut: 9
   };
 
   const AuthStep._(String name) : super(name);

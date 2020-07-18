@@ -29,6 +29,7 @@ List<Middleware<AppState>> createAppMiddleware({
   return [
     ...createAuthMiddleware(
       authService: authService,
+      navigationService: navigationService,
       gitHubService: gitHubService,
       databaseService: databaseService,
       platformService: platformService,

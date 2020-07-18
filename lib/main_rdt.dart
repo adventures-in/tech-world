@@ -35,13 +35,13 @@ void main() async {
   /// Create the redux store
   final store =
       Store<AppState>(appReducer, initialState: AppState.init(), middleware: [
-    remoteDevtools,
     ...createAppMiddleware(
         authService: authService,
         gitHubService: gitHubService,
         databaseService: databaseService,
         platformService: platformService,
-        navigationService: navigationService)
+        navigationService: navigationService),
+    remoteDevtools,
   ]);
 
   // give RDT access to the store
