@@ -34,7 +34,7 @@ abstract class UserData extends Object
   bool get isEmailVerified;
   BuiltList<AuthProviderData> get providers;
 
-  // TODO memoize this
+  @memoized
   bool get hasGitHub =>
       providerId == 'github.com' ||
       providers
