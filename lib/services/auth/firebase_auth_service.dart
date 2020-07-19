@@ -19,6 +19,12 @@ class FirebaseAuthService implements AuthService {
   @override
   Stream<ReduxAction> get storeStream => _storeStreamController.stream;
 
+  @override
+  Future<String> get currentUserIdFuture async {
+    final user = await _firebaseAuth.currentUser();
+    return user.uid;
+  }
+
   /// We keep a subscription to the firebase auth state stream so we can
   /// disconnect at a later time.
   StreamSubscription<FirebaseUser> _firebaseAuthStateSubscription;

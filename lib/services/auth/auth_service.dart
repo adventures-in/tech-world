@@ -5,6 +5,7 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 /// Implemented by [FirebaseAuthService]
 abstract class AuthService {
   Stream<ReduxAction> get storeStream;
+  Future<String> get currentUserIdFuture;
   void connectAuthState();
   void disconnectAuthState();
   Future<void> signInAnonymously();

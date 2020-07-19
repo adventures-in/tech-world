@@ -35,7 +35,8 @@ class ProblemLocation extends EnumClass {
       _$retrieveGitHubAssignedIssues;
   static const ProblemLocation retrieveGitHubPullRequests =
       _$retrieveGitHubPullRequests;
-  // static const ProblemLocation connectAuthState = _$connectAuthState;
+  static const ProblemLocation connectAuthStateMiddleware =
+      _$connectAuthStateMiddleware;
 
   const ProblemLocation._(String name) : super(name);
 

@@ -35,13 +35,13 @@ class AdventuresInApp extends StatelessWidget {
             theme: MakeThemeData.from(settings.lightTheme),
             darkTheme: MakeThemeData.from(settings.darkTheme),
             themeMode: MakeThemeMode.from(settings.brightnessMode),
-            home: StoreConnector<AppState, AuthState>(
+            home: StoreConnector<AppState, bool>(
               distinct: true,
-              converter: (store) => store.state.authState,
-              builder: (context, authState) {
-                return (authState == AuthState.signedInAndGitHubToken)
-                    ? HomePage()
-                    : AuthPage();
+              converter: (store) =>
+                  store.state.authState == AuthState.signedInWithGitHub &&
+                  store.state.gitHubToken != null,
+              builder: (context, signedInAndHaveToken) {
+                return (signedInAndHaveToken) ? HomePage() : AuthPage();
               },
             ),
             routes: <String, WidgetBuilder>{

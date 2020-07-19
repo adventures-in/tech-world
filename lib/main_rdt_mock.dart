@@ -42,15 +42,9 @@ void main() async {
     remoteDevtools,
   ]);
 
-  // give RDT access to the store
+  // give RDT access to the store and connect
   remoteDevtools.store = store;
-
-  // try to connect and print out any exception thrown
-  try {
-    await remoteDevtools.connect();
-  } on SocketException catch (e) {
-    print(e);
-  }
+  await remoteDevtools.connect();
 
   runApp(AdventuresInApp(store, navKey));
 }

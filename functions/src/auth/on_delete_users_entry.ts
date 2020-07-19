@@ -23,14 +23,20 @@ export async function deleteUsers(snapshot : functions.firestore.DocumentSnapsho
         // Delete all documents in a batch.
         const db = admin.firestore();
         const batch = db.batch();
+        // users 
         const usersCollection = await db.collection('users').get();
         usersCollection.docs.forEach((doc) => {
             batch.delete(doc.ref);
         });
+        // tokens 
         const tokensCollection = await db.collection('tokens').get();
         tokensCollection.docs.forEach((doc) => {
             batch.delete(doc.ref);
         });
+        // also delete the doc that triggered the deletes
+        batch.delete(snapshot.ref);
+
+        // batch it up 
         await batch.commit();
   
     }

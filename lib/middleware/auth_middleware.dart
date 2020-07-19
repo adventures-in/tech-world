@@ -39,7 +39,7 @@ List<Middleware<AppState>> createAuthMiddleware({
     ConnectAuthStateMiddleware(authService),
     StoreUserDataMiddleware(authService, navigationService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
-    StoreGitHubTokenMiddleware(authService, gitHubService),
+    StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
     SignOutMiddleware(authService, navigationService),
   ];
 }
@@ -72,7 +72,14 @@ class ConnectAuthStateMiddleware
       : super((store, action, next) async {
           next(action);
 
-          authService.connectAuthState();
+          final handleProblem = generateProblemHandler(
+              ProblemLocation.connectAuthStateMiddleware, store.dispatch);
+
+          try {
+            authService.connectAuthState();
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 
@@ -102,16 +109,23 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               if (action.userData.isAnonymous) {
                 store.dispatch(
                     StoreAuthState(state: AuthState.signedInAnonymously));
-                // store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
-              } else {
-                store.dispatch(StoreAuthState(state: AuthState.signedIn));
+              } else if (action.userData.hasGitHub) {
+                // we are
+                store.dispatch(
+                    StoreAuthState(state: AuthState.signedInWithGitHub));
               }
 
               // whether we're signed in anonymously or with github we need to
               // get the token from the database
-              store.dispatch(
-                  StoreAuthStep(step: AuthStep.checkingForGitHubToken));
-              databaseService.connectTokensDoc(uid: action.userData.uid);
+              if (store.state.gitHubToken == null) {
+                store.dispatch(
+                    StoreAuthStep(step: AuthStep.checkingForGitHubToken));
+                databaseService.connectTokensDoc(uid: action.userData.uid);
+              } else {
+                // here we are signed in and have a token so set set state
+                store.dispatch(
+                    StoreAuthState(state: AuthState.signedInWithGitHub));
+              }
             }
           } catch (error, trace) {
             handleProblem(error, trace);
@@ -121,8 +135,8 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
 
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
-  StoreGitHubTokenMiddleware(
-      AuthService authService, GitHubService gitHubService)
+  StoreGitHubTokenMiddleware(AuthService authService,
+      DatabaseService databaseService, GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 
@@ -135,14 +149,18 @@ class StoreGitHubTokenMiddleware
             if (action.token == null) {
               store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
             } else {
+              // set the service to use the token for making requests
               gitHubService.token = action.token;
-              // If we got a token and aren't already signed in with github do so
+
+              // If we got a token and aren't already signed in with github, do so
               if (!store.state.userData.hasGitHub) {
-                store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-                await authService.linkGithub(action.token);
-              } else {
                 store.dispatch(
-                    StoreAuthState(state: AuthState.signedInAndGitHubToken));
+                    StoreAuthStep(step: AuthStep.signingInWithGitHub));
+                await authService.signInWithGithub(action.token);
+
+                // now that we signed in, add the token to the user's db entry
+                final userId = await authService.currentUserIdFuture;
+                await databaseService.addTokenToUser(userId, action.token);
               }
             }
           } catch (error, trace) {

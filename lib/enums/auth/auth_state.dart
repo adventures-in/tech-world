@@ -12,17 +12,13 @@ class AuthState extends EnumClass {
   static const AuthState notSignedIn = _$notSignedIn;
   // the first step is to sign in to firebase anonymously
   static const AuthState signedInAnonymously = _$signedInAnonymously;
-  // when we get a token we use it to sign in with firebase
-  static const AuthState signedIn = _$signedIn;
-  // when we see a github token we link to / sign in with and add the token
-  // to a service so we are authorized to make API calls
-  static const AuthState signedInAndGitHubToken = _$signedInAndGitHubToken;
+  // when we get a github token we use it to sign in
+  static const AuthState signedInWithGitHub = _$signedInWithGitHub;
   static const Map<AuthState, int> _$indexMap = {
     unknown: 0,
     notSignedIn: 1,
     signedInAnonymously: 2,
-    signedIn: 3,
-    signedInAndGitHubToken: 3,
+    signedInWithGitHub: 3,
   };
 
   const AuthState._(String name) : super(name);

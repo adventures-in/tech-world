@@ -21,8 +21,8 @@ class AuthPage extends StatelessWidget {
             return WaitingIndicator('Signing In Anonymously');
           case AuthStep.checkingForGitHubToken:
             return WaitingIndicator('Checking For GitHub token');
-          case AuthStep.linkingGitHub:
-            return WaitingIndicator('Linking GitHub');
+          case AuthStep.signingInWithGitHub:
+            return WaitingIndicator('Signing In With GitHub');
           case AuthStep.waitingForInput:
             return SignInWithGithubButton();
           default:

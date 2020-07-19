@@ -34,6 +34,13 @@ class FirestoreService implements DatabaseService {
   FirestoreService(Firestore firestore) : _firestore = firestore;
 
   @override
+  Future<void> addTokenToUser(String userId, String token) {
+    return _firestore
+        .document('/users/$userId')
+        .setData(<String, dynamic>{'gitHubToken': token}, merge: true);
+  }
+
+  @override
   void connectTokensDoc({@required String uid}) {
     assert(uid != null);
 

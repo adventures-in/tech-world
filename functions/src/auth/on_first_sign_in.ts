@@ -6,7 +6,7 @@ export async function saveDetails(user : admin.auth.UserRecord) {
     await db.doc('/users/'+user.uid).set({
         'displayName': user.displayName,
         'photoURL': user.photoURL
-    });
+    }); // , FirebaseFirestore.SetOptions()
 }
 
 
