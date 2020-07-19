@@ -16,8 +16,23 @@ export async function deleteUsers(snapshot : functions.firestore.DocumentSnapsho
     ///////////////////////////////////////////////////////////////////////
 
     try {
+        // Delete all users.
         const listUsersResult = await admin.auth().listUsers(1000);
         await admin.auth().deleteUsers(listUsersResult.users.map((record) => record.uid));
+
+        // Delete all documents in a batch.
+        const db = admin.firestore();
+        const batch = db.batch();
+        const usersCollection = await db.collection('users').get();
+        usersCollection.docs.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+        const tokensCollection = await db.collection('tokens').get();
+        tokensCollection.docs.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+        await batch.commit();
+  
     }
     catch(error) {
         console.error('Uncaught exception: '+error);
