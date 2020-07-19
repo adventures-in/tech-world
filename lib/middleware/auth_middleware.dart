@@ -86,19 +86,23 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               ProblemLocation.storeUserDataMiddleware, store.dispatch);
 
           try {
-            if (action.userData == null || action.userData.uid == null) {
+            // if we get empty user data we assume we are not signed in
+            if (action.userData == null) {
+              // if user has just signed out reset the UI
               if (store.state.authStep == AuthStep.signingOut) {
-                // user has signed out so reset the UI
                 navigationService.popHome();
               }
+
+              // set the auth step and sign in anonymously
               store
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
             } else {
-              // set the relevant auth state
+              // we have user data so set the relevant auth state
               if (action.userData.isAnonymous) {
                 store.dispatch(
                     StoreAuthState(state: AuthState.signedInAnonymously));
+                // store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
               } else {
                 store.dispatch(StoreAuthState(state: AuthState.signedIn));
               }
@@ -126,12 +130,19 @@ class StoreGitHubTokenMiddleware
               ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
-            if (action.token != null) {
+            // set the auth state and auth step based on whether we have
+            // a github token
+            if (action.token == null) {
+              store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+            } else {
               gitHubService.token = action.token;
               // If we got a token and aren't already signed in with github do so
               if (!store.state.userData.hasGitHub) {
                 store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-                await authService.signInWithGithub(action.token);
+                await authService.linkGithub(action.token);
+              } else {
+                store.dispatch(
+                    StoreAuthState(state: AuthState.signedInAndGitHubToken));
               }
             }
           } catch (error, trace) {

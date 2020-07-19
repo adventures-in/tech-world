@@ -20,7 +20,6 @@ import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
-import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
@@ -77,7 +76,6 @@ part 'serializers.g.dart';
   StoreAdventurer,
   StoreAuthState,
   StoreAuthStep,
-  StoreDisplayingProblem,
   StoreGitHubAssignedIssues,
   StoreGitHubPullRequests,
   StoreGitHubRepositories,

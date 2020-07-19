@@ -34,20 +34,7 @@ class StoreAuthStepReducer extends TypedReducer<AppState, StoreAuthStep> {
 class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
   StoreGitHubTokenReducer()
       : super((state, action) {
-          // set the auth state and auth step based on whether we have
-          // a github token
-          var _authState = state.authState;
-          var _authStep = state.authStep;
-          if (action.token == null) {
-            _authStep = AuthStep.waitingForInput;
-          } else {
-            _authState = AuthState.signedInAndGitHubToken;
-          }
-
-          return state.rebuild((b) => b
-            ..gitHubToken = action.token
-            ..authStep = _authStep
-            ..authState = _authState);
+          return state.rebuild((b) => b..gitHubToken = action.token);
         });
 }
 
@@ -57,14 +44,6 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
           // if null comes through return straight away
           if (action.userData == null) {
             return state.rebuild((b) => b..userData = null);
-          }
-
-          // set the auth state and auth step based on the UserData
-          var _authState = state.authState;
-          var _authStep = state.authStep;
-          if (action.userData.isAnonymous) {
-            _authState = AuthState.signedInAnonymously;
-            _authStep = AuthStep.waitingForInput;
           }
 
           var _adventurer = state.adventurer;
@@ -79,8 +58,6 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
 
           return state.rebuild((b) => b
             ..adventurer = _adventurer?.toBuilder()
-            ..userData = action.userData?.toBuilder()
-            ..authState = _authState
-            ..authStep = _authStep);
+            ..userData = action.userData?.toBuilder());
         });
 }
