@@ -5,11 +5,10 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 /// Implemented by [FirebaseAuthService]
 abstract class AuthService {
   Stream<ReduxAction> get storeStream;
-  Future<String> get currentUserIdFuture;
-  void connectAuthState();
+  void connectAuthStateToStore();
   void disconnectAuthState();
-  Future<void> signInAnonymously();
-  Future<void> linkGithub(String token);
-  Future<void> signInWithGithub(String token);
+  Future<String> signInAnonymously();
+  Future<String> signInWithGithub(String token);
+  Future<String> linkGithub(String token);
   Future<void> signOut();
 }

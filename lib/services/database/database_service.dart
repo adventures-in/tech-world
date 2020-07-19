@@ -4,6 +4,6 @@ import 'package:meta/meta.dart';
 abstract class DatabaseService {
   Stream<ReduxAction> get storeStream;
   Future<void> addTokenToUser(String userId, String token);
-  void connectTokensDoc({@required String uid});
-  void disconnectTokensDoc({@required String uid});
+  void connectTempTokenToStore({@required String uid});
+  void disconnectTempToken({@required String uid});
 }

@@ -76,7 +76,7 @@ class ConnectAuthStateMiddleware
               ProblemLocation.connectAuthStateMiddleware, store.dispatch);
 
           try {
-            authService.connectAuthState();
+            authService.connectAuthStateToStore();
           } catch (error, trace) {
             handleProblem(error, trace);
           }
@@ -120,7 +120,8 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               if (store.state.gitHubToken == null) {
                 store.dispatch(
                     StoreAuthStep(step: AuthStep.checkingForGitHubToken));
-                databaseService.connectTokensDoc(uid: action.userData.uid);
+                databaseService.connectTempTokenToStore(
+                    uid: action.userData.uid);
               } else {
                 // here we are signed in and have a token so set set state
                 store.dispatch(
@@ -156,10 +157,9 @@ class StoreGitHubTokenMiddleware
               if (!store.state.userData.hasGitHub) {
                 store.dispatch(
                     StoreAuthStep(step: AuthStep.signingInWithGitHub));
-                await authService.signInWithGithub(action.token);
+                final userId = await authService.signInWithGithub(action.token);
 
                 // now that we signed in, add the token to the user's db entry
-                final userId = await authService.currentUserIdFuture;
                 await databaseService.addTokenToUser(userId, action.token);
               }
             }

@@ -41,7 +41,7 @@ class FirestoreService implements DatabaseService {
   }
 
   @override
-  void connectTokensDoc({@required String uid}) {
+  void connectTempTokenToStore({@required String uid}) {
     assert(uid != null);
 
     final handleProblem = generateProblemHandler(
@@ -50,14 +50,14 @@ class FirestoreService implements DatabaseService {
     try {
       // connect the database to the store and keep the subscription
       subscriptions[DatabaseSection.authToken] =
-          _firestore.connectToAuthToken(uid, _storeController);
+          _firestore.connectTempTokenToStore(uid, _storeController);
     } catch (error, trace) {
       handleProblem(error, trace);
     }
   }
 
   @override
-  void disconnectTokensDoc({@required String uid}) {
+  void disconnectTempToken({@required String uid}) {
     assert(uid != null);
     subscriptions[DatabaseSection.authToken]?.cancel();
   }
