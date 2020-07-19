@@ -49,7 +49,7 @@ class FirestoreService implements DatabaseService {
 
     try {
       // connect the database to the store and keep the subscription
-      subscriptions[DatabaseSection.authToken] =
+      subscriptions[DatabaseSection.tempToken] =
           _firestore.connectTempTokenToStore(uid, _storeController);
     } catch (error, trace) {
       handleProblem(error, trace);
@@ -57,8 +57,7 @@ class FirestoreService implements DatabaseService {
   }
 
   @override
-  void disconnectTempToken({@required String uid}) {
-    assert(uid != null);
-    subscriptions[DatabaseSection.authToken]?.cancel();
+  void disconnectTempToken() {
+    subscriptions[DatabaseSection.tempToken]?.cancel();
   }
 }

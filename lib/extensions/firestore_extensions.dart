@@ -13,7 +13,7 @@ extension ConnectAndConvert on Firestore {
       String userId, StreamController<ReduxAction> controller) {
     // create a function to be called on finding an error
     final handleProblem = generateProblemHandler(
-        ProblemLocation.connectToAuthToken, controller.add);
+        ProblemLocation.connectTempTokenToStore, controller.add);
 
     // listen to the firestore stream, convert events to actions and dispatch to
     // the store with the controller

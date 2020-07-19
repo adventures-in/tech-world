@@ -38,10 +38,13 @@ class DisplayProblemMiddleware
     extends TypedMiddleware<AppState, DisplayProblem> {
   DisplayProblemMiddleware(NavigationService navigationService)
       : super((store, action, next) async {
+          // check the value before dispatch as the reducer will set to false
+          final notAlreadyDisplaying = !store.state.displayingProblem;
+
           next(action);
 
           // if not already displaying problem
-          if (!store.state.displayingProblem) {
+          if (notAlreadyDisplaying) {
             // display problem and remove after
             final removeProblem =
                 await navigationService.display(action.problem);

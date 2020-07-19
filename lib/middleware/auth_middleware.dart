@@ -1,5 +1,5 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
-import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
@@ -67,7 +67,7 @@ class PlumbServicesMiddleware extends TypedMiddleware<AppState, PlumbServices> {
 }
 
 class ConnectAuthStateMiddleware
-    extends TypedMiddleware<AppState, ConnectAuthState> {
+    extends TypedMiddleware<AppState, ConnectAuthStateToStore> {
   ConnectAuthStateMiddleware(AuthService authService)
       : super((store, action, next) async {
           next(action);
@@ -155,6 +155,9 @@ class StoreGitHubTokenMiddleware
 
               // If we got a token and aren't already signed in with github, do so
               if (!store.state.userData.hasGitHub) {
+                // in case we are listening with the previous uid
+                databaseService.disconnectTempToken();
+
                 store.dispatch(
                     StoreAuthStep(step: AuthStep.signingInWithGitHub));
                 final userId = await authService.signInWithGithub(action.token);

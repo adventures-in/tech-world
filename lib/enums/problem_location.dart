@@ -15,7 +15,8 @@ class ProblemLocation extends EnumClass {
   static const ProblemLocation exchangeGitHubCodeForToken =
       _$exchangeGitHubCodeForToken;
   static const ProblemLocation observeGitHubToken = _$observeGitHubToken;
-  static const ProblemLocation connectToAuthToken = _$connectToAuthToken;
+  static const ProblemLocation connectTempTokenToStore =
+      _$connectTempTokenToStore;
   static const ProblemLocation plumbServicesMiddleware =
       _$plumbServicesMiddleware;
   static const ProblemLocation authServiceConnectFirebase =

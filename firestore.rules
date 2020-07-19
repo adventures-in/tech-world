@@ -11,6 +11,11 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /users/{userId} {
+      allow read: if request.auth.uid == userId;
+      allow write: if request.auth.uid == userId;
+    }
+
     match /adventurers/{userId} {
       allow read: if request.auth.uid != null;
       allow write: if request.auth.uid == userId;

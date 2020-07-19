@@ -5,5 +5,5 @@ abstract class DatabaseService {
   Stream<ReduxAction> get storeStream;
   Future<void> addTokenToUser(String userId, String token);
   void connectTempTokenToStore({@required String uid});
-  void disconnectTempToken({@required String uid});
+  void disconnectTempToken();
 }
