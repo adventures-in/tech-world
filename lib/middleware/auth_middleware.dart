@@ -151,17 +151,16 @@ class StoreGitHubTokenMiddleware
               if (!store.state.userData.hasGitHub) {
                 // we have a token but haven't signed in with github
 
-                // sign in with github
-                store.dispatch(
-                    StoreAuthStep(step: AuthStep.signingInWithGitHub));
+                // link the anonymous account with github
+                store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
                 final userData = await authService.linkGithub(action.token);
 
-                // TODO: update /users entry
-                // TODO: remove /tokens entry
-                // add the token to the user's db entry
-                await databaseService.addTokenToUser(
-                    userData.uid, action.token);
+                // add the token and user info to the user's db entry
+                await databaseService.updateUserInfo(userData, action.token);
+                // remove the temporarily stored token
+                await databaseService.removeTempToken(userData.uid);
 
+                // store the user data that we got from linking accounts
                 store.dispatch(StoreUserData(userData: userData));
               }
             }

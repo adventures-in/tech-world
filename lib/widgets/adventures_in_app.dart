@@ -37,6 +37,7 @@ class AdventuresInApp extends StatelessWidget {
             home: StoreConnector<AppState, bool>(
               distinct: true,
               converter: (store) =>
+                  store.state.userData != null &&
                   store.state.userData.hasGitHub &&
                   store.state.gitHubToken != null,
               builder: (context, signedInAndHaveToken) {

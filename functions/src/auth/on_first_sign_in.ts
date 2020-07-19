@@ -12,5 +12,3 @@ export async function saveDetails(user : admin.auth.UserRecord) {
         }, { merge: true });
     }   
 }
-
-
