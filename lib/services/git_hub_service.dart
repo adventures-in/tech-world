@@ -17,30 +17,9 @@ class GitHubService {
       'https://api.github.com/graphql',
       httpClient: AuthenticatedClient(token, http.Client()),
     );
-
-    // _dio.interceptors.add(
-    //   InterceptorsWrapper(onRequest: (RequestOptions options) async {
-    //     // Do something before request is sent
-    //     options.baseUrl = 'https://api.github.com/';
-    //     options.headers['Authorization'] = 'token $_token';
-    //     return options; //continue
-    //   }, onResponse: (Response response) async {
-    //     // Do something with response data
-    //     return response; // continue
-    //   }, onError: (DioError e) async {
-    //     // Do something with response error
-    //     return e; //continue
-    //   }),
-    // );
   }
 
   GitHubService();
-
-  // Future<String> issues() async {
-  //   final result = await _dio.get<String>('user/issues');
-  //   print(result);
-  //   return result.data;
-  // }
 
   Future<List<GitHubRepository>> retrieveRespositories() async {
     // check the token has been set

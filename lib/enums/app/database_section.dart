@@ -9,10 +9,10 @@ part 'database_section.g.dart';
 class DatabaseSection extends EnumClass {
   static Serializer<DatabaseSection> get serializer =>
       _$databaseSectionSerializer;
-  static const DatabaseSection authToken = _$authToken;
+  static const DatabaseSection tempToken = _$tempToken;
   static const DatabaseSection profile = _$profile;
   static const Map<DatabaseSection, int> _$indexMap = {
-    authToken: 0,
+    tempToken: 0,
     profile: 1
   };
 

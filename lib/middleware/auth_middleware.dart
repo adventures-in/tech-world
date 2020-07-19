@@ -1,12 +1,10 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
-import 'package:adventures_in_tech_world/actions/auth/connect_auth_state.dart';
+import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -39,7 +37,7 @@ List<Middleware<AppState>> createAuthMiddleware({
     ConnectAuthStateMiddleware(authService),
     StoreUserDataMiddleware(authService, navigationService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
-    StoreGitHubTokenMiddleware(authService, gitHubService),
+    StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
     SignOutMiddleware(authService, navigationService),
   ];
 }
@@ -67,12 +65,19 @@ class PlumbServicesMiddleware extends TypedMiddleware<AppState, PlumbServices> {
 }
 
 class ConnectAuthStateMiddleware
-    extends TypedMiddleware<AppState, ConnectAuthState> {
+    extends TypedMiddleware<AppState, ConnectAuthStateToStore> {
   ConnectAuthStateMiddleware(AuthService authService)
       : super((store, action, next) async {
           next(action);
 
-          authService.connectAuthState();
+          final handleProblem = generateProblemHandler(
+              ProblemLocation.connectAuthStateMiddleware, store.dispatch);
+
+          try {
+            authService.connectAuthStateToStore();
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 
@@ -86,28 +91,31 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               ProblemLocation.storeUserDataMiddleware, store.dispatch);
 
           try {
-            if (action.userData == null || action.userData.uid == null) {
+            if (action.userData == null) {
+              // we are not signed in
+
               if (store.state.authStep == AuthStep.signingOut) {
-                // user has signed out so reset the UI
+                // user has just signed out so reset UI
+
                 navigationService.popHome();
               }
+
+              // sign in anonymously
               store
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
             } else {
-              // set the relevant auth state
-              if (action.userData.isAnonymous) {
-                store.dispatch(
-                    StoreAuthState(state: AuthState.signedInAnonymously));
-              } else {
-                store.dispatch(StoreAuthState(state: AuthState.signedIn));
-              }
+              // we are signed in
 
-              // whether we're signed in anonymously or with github we need to
-              // get the token from the database
-              store.dispatch(
-                  StoreAuthStep(step: AuthStep.checkingForGitHubToken));
-              databaseService.connectTokensDoc(uid: action.userData.uid);
+              if (store.state.gitHubToken == null) {
+                // we have no token
+
+                // connect to the database to see if there is a token there
+                store.dispatch(
+                    StoreAuthStep(step: AuthStep.checkingForGitHubToken));
+                databaseService.connectTempTokenToStore(
+                    uid: action.userData.uid);
+              }
             }
           } catch (error, trace) {
             handleProblem(error, trace);
@@ -117,8 +125,8 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
 
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
-  StoreGitHubTokenMiddleware(
-      AuthService authService, GitHubService gitHubService)
+  StoreGitHubTokenMiddleware(AuthService authService,
+      DatabaseService databaseService, GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 
@@ -126,12 +134,34 @@ class StoreGitHubTokenMiddleware
               ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
-            if (action.token != null) {
+            if (action.token == null) {
+              // there was no token
+
+              // set the UI to let the user get a token
+              store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+            } else {
+              // there was a token
+
+              // put the token in the service
               gitHubService.token = action.token;
-              // If we got a token and aren't already signed in with github do so
+
+              // disconnect from the token section of the database
+              databaseService.disconnectTempToken();
+
               if (!store.state.userData.hasGitHub) {
+                // we have a token but haven't signed in with github
+
+                // link the anonymous account with github
                 store.dispatch(StoreAuthStep(step: AuthStep.linkingGitHub));
-                await authService.signInWithGithub(action.token);
+                final userData = await authService.linkGithub(action.token);
+
+                // add the token and user info to the user's db entry
+                await databaseService.updateUserInfo(userData, action.token);
+                // remove the temporarily stored token
+                await databaseService.removeTempToken(userData.uid);
+
+                // store the user data that we got from linking accounts
+                store.dispatch(StoreUserData(userData: userData));
               }
             }
           } catch (error, trace) {

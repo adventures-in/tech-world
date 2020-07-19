@@ -7,6 +7,7 @@ import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:meta/meta.dart';
 
 part 'store_adventurer.g.dart';
 
@@ -17,7 +18,8 @@ abstract class StoreAdventurer extends Object
 
   StoreAdventurer._();
 
-  factory StoreAdventurer({Adventurer adventurer}) = _$StoreAdventurer._;
+  factory StoreAdventurer({@required Adventurer adventurer}) =
+      _$StoreAdventurer._;
 
   factory StoreAdventurer.by([void Function(StoreAdventurerBuilder) updates]) =
       _$StoreAdventurer;

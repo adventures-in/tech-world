@@ -1,5 +1,4 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -35,13 +34,14 @@ class AdventuresInApp extends StatelessWidget {
             theme: MakeThemeData.from(settings.lightTheme),
             darkTheme: MakeThemeData.from(settings.darkTheme),
             themeMode: MakeThemeMode.from(settings.brightnessMode),
-            home: StoreConnector<AppState, AuthState>(
+            home: StoreConnector<AppState, bool>(
               distinct: true,
-              converter: (store) => store.state.authState,
-              builder: (context, authState) {
-                return (authState == AuthState.signedInAndGitHubToken)
-                    ? HomePage()
-                    : AuthPage();
+              converter: (store) =>
+                  store.state.userData != null &&
+                  store.state.userData.hasGitHub &&
+                  store.state.gitHubToken != null,
+              builder: (context, signedInAndHaveToken) {
+                return (signedInAndHaveToken) ? HomePage() : AuthPage();
               },
             ),
             routes: <String, WidgetBuilder>{

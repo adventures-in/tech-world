@@ -11,7 +11,7 @@ import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dar
 extension ConnectAndConvert on FirebaseAuth {
   /// Observe the auth state and convert each [FirebaseUser]
   /// into a [ReduxAction] and send to the store using the passed in [StreamController]
-  StreamSubscription<FirebaseUser> connectAuthState(
+  StreamSubscription<FirebaseUser> connectAuthStateToStore(
       StreamController<ReduxAction> controller) {
     // create a function to be called on finding an error
     final handleProblem = generateProblemHandler(
