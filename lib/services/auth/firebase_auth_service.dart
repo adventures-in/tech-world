@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/problem_location.dart';
+import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
 
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth;
@@ -48,26 +49,26 @@ class FirebaseAuthService implements AuthService {
   // The sign in updates the app state as the services have been plumbed so
   // the stream of auth state is connected to the store.
   @override
-  Future<String> signInAnonymously() async {
+  Future<UserData> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
-    return authResult.user.uid;
+    return authResult.user.toData();
   }
 
   // We don't do anything with the result as we are connected to the auth state
   @override
-  Future<String> linkGithub(String token) async {
+  Future<UserData> linkGithub(String token) async {
     final credential = GithubAuthProvider.getCredential(token: token);
     final firebaseUser = await _firebaseAuth.currentUser();
     final authResult = await firebaseUser.linkWithCredential(credential);
-    return authResult.user.uid;
+    return authResult.user.toData();
   }
 
   // We don't do anything with the result as we are connected to the auth state
   @override
-  Future<String> signInWithGithub(String token) async {
+  Future<UserData> signInWithGithub(String token) async {
     final credential = GithubAuthProvider.getCredential(token: token);
     final authResult = await _firebaseAuth.signInWithCredential(credential);
-    return authResult.user.uid;
+    return authResult.user.toData();
   }
 
   /// The stream of auth state is connected to the store so the app state will

@@ -2,11 +2,9 @@ import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -93,39 +91,30 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               ProblemLocation.storeUserDataMiddleware, store.dispatch);
 
           try {
-            // if we get empty user data we assume we are not signed in
             if (action.userData == null) {
-              // if user has just signed out reset the UI
+              // we are not signed in
+
               if (store.state.authStep == AuthStep.signingOut) {
+                // user has just signed out so reset UI
+
                 navigationService.popHome();
               }
 
-              // set the auth step and sign in anonymously
+              // sign in anonymously
               store
                   .dispatch(StoreAuthStep(step: AuthStep.signingInAnonymously));
               await authService.signInAnonymously();
             } else {
-              // we have user data so set the relevant auth state
-              if (action.userData.isAnonymous) {
-                store.dispatch(
-                    StoreAuthState(state: AuthState.signedInAnonymously));
-              } else if (action.userData.hasGitHub) {
-                // we are
-                store.dispatch(
-                    StoreAuthState(state: AuthState.signedInWithGitHub));
-              }
+              // we are signed in
 
-              // whether we're signed in anonymously or with github we need to
-              // get the token from the database
               if (store.state.gitHubToken == null) {
+                // we have no token
+
+                // connect to the database to see if there is a token there
                 store.dispatch(
                     StoreAuthStep(step: AuthStep.checkingForGitHubToken));
                 databaseService.connectTempTokenToStore(
                     uid: action.userData.uid);
-              } else {
-                // here we are signed in and have a token so set set state
-                store.dispatch(
-                    StoreAuthState(state: AuthState.signedInWithGitHub));
               }
             }
           } catch (error, trace) {
@@ -145,25 +134,35 @@ class StoreGitHubTokenMiddleware
               ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
 
           try {
-            // set the auth state and auth step based on whether we have
-            // a github token
             if (action.token == null) {
+              // there was no token
+
+              // set the UI to let the user get a token
               store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
             } else {
-              // set the service to use the token for making requests
+              // there was a token
+
+              // put the token in the service
               gitHubService.token = action.token;
 
-              // If we got a token and aren't already signed in with github, do so
-              if (!store.state.userData.hasGitHub) {
-                // in case we are listening with the previous uid
-                databaseService.disconnectTempToken();
+              // disconnect from the token section of the database
+              databaseService.disconnectTempToken();
 
+              if (!store.state.userData.hasGitHub) {
+                // we have a token but haven't signed in with github
+
+                // sign in with github
                 store.dispatch(
                     StoreAuthStep(step: AuthStep.signingInWithGitHub));
-                final userId = await authService.signInWithGithub(action.token);
+                final userData = await authService.linkGithub(action.token);
 
-                // now that we signed in, add the token to the user's db entry
-                await databaseService.addTokenToUser(userId, action.token);
+                // TODO: update /users entry
+                // TODO: remove /tokens entry
+                // add the token to the user's db entry
+                await databaseService.addTokenToUser(
+                    userData.uid, action.token);
+
+                store.dispatch(StoreUserData(userData: userData));
               }
             }
           } catch (error, trace) {

@@ -1,9 +1,6 @@
-import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
@@ -13,35 +10,15 @@ import 'package:redux/redux.dart';
 ///
 /// Each reducer returns a new [AppState].
 final authReducers = <AppState Function(AppState, dynamic)>[
-  StoreAuthStateReducer(),
+  StoreUserDataReducer(),
   StoreAuthStepReducer(),
   StoreGitHubTokenReducer(),
-  StoreUserDataReducer(),
 ];
-
-class StoreAuthStateReducer extends TypedReducer<AppState, StoreAuthState> {
-  StoreAuthStateReducer()
-      : super((state, action) =>
-            state.rebuild((b) => b..authState = action.state));
-}
-
-class StoreAuthStepReducer extends TypedReducer<AppState, StoreAuthStep> {
-  StoreAuthStepReducer()
-      : super(
-            (state, action) => state.rebuild((b) => b..authStep = action.step));
-}
-
-class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
-  StoreGitHubTokenReducer()
-      : super((state, action) {
-          return state.rebuild((b) => b..gitHubToken = action.token);
-        });
-}
 
 class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
   StoreUserDataReducer()
       : super((state, action) {
-          // if null comes through return straight away
+          // guard statement to avoid further null checks
           if (action.userData == null) {
             return state.rebuild((b) => b..userData = null);
           }
@@ -59,5 +36,18 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
           return state.rebuild((b) => b
             ..adventurer = _adventurer?.toBuilder()
             ..userData = action.userData?.toBuilder());
+        });
+}
+
+class StoreAuthStepReducer extends TypedReducer<AppState, StoreAuthStep> {
+  StoreAuthStepReducer()
+      : super(
+            (state, action) => state.rebuild((b) => b..authStep = action.step));
+}
+
+class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
+  StoreGitHubTokenReducer()
+      : super((state, action) {
+          return state.rebuild((b) => b..gitHubToken = action.token);
         });
 }

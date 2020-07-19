@@ -2,7 +2,6 @@ library app_state;
 
 import 'dart:convert';
 
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/nav_selection.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
@@ -28,7 +27,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Settings get settings;
 
   /// Auth
-  AuthState get authState;
   AuthStep get authStep;
   @nullable
   UserData get userData;
@@ -52,7 +50,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
     ..settings = Settings.initBuilder()
-    ..authState = AuthState.unknown
     ..authStep = AuthStep.checking
     ..navSelection = NavSelection.projects);
 

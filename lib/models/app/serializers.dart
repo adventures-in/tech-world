@@ -4,7 +4,6 @@ import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_stor
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
@@ -20,7 +19,6 @@ import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
 import 'package:adventures_in_tech_world/enums/nav_selection.dart';
@@ -74,7 +72,6 @@ part 'serializers.g.dart';
   SignInAnonymously,
   SignOut,
   StoreAdventurer,
-  StoreAuthState,
   StoreAuthStep,
   StoreGitHubAssignedIssues,
   StoreGitHubPullRequests,
