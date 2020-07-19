@@ -33,5 +33,9 @@ abstract class StoreGitHubToken extends Object
       _$storeGitHubTokenSerializer;
 
   @override
-  String toString() => 'STORE_GIT_HUB_TOKEN: $token';
+  String toString() {
+    final tokenOutput =
+        (token == null) ? 'null' : token.substring(0, 4) + '...';
+    return 'STORE_GIT_HUB_TOKEN: $tokenOutput';
+  }
 }

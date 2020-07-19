@@ -32,5 +32,17 @@ abstract class StoreUserData extends Object
   static Serializer<StoreUserData> get serializer => _$storeUserDataSerializer;
 
   @override
-  String toString() => 'STORE_USER_DATA';
+  String toString() {
+    var userDataSummary = '-';
+
+    if (userData == null) {
+      userDataSummary = 'null';
+    } else if (userData.isAnonymous) {
+      userDataSummary = 'anon-${userData.uid.substring(0, 4)}...';
+    } else {
+      userDataSummary = '${userData.uid.substring(0, 4)}...';
+    }
+
+    return 'STORE_USER_DATA: $userDataSummary';
+  }
 }

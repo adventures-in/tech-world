@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/enums/problem_location.dart';
+import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +35,29 @@ class FirestoreService implements DatabaseService {
   FirestoreService(Firestore firestore) : _firestore = firestore;
 
   @override
-  void connectTokensDoc({@required String uid}) {
+  Future<void> updateUserInfo(UserData userData, String token) {
+    return _firestore
+        .document('/users/${userData.uid}')
+        .setData(<String, dynamic>{
+      'gitHubToken': token,
+      'displayName': userData.displayName ??
+          ((userData.providers.isNotEmpty)
+              ? userData.providers.first.displayName
+              : null),
+      'photoURL': userData.photoUrl ??
+          ((userData.providers.isNotEmpty)
+              ? userData.providers.first.photoUrl
+              : null)
+    }, merge: true);
+  }
+
+  @override
+  Future<void> removeTempToken(String userId) {
+    return _firestore.document('/tokens/${userId}').delete();
+  }
+
+  @override
+  void connectTempTokenToStore({@required String uid}) {
     assert(uid != null);
 
     final handleProblem = generateProblemHandler(
@@ -42,16 +65,15 @@ class FirestoreService implements DatabaseService {
 
     try {
       // connect the database to the store and keep the subscription
-      subscriptions[DatabaseSection.authToken] =
-          _firestore.connectToAuthToken(uid, _storeController);
+      subscriptions[DatabaseSection.tempToken] =
+          _firestore.connectTempTokenToStore(uid, _storeController);
     } catch (error, trace) {
       handleProblem(error, trace);
     }
   }
 
   @override
-  void disconnectTokensDoc({@required String uid}) {
-    assert(uid != null);
-    subscriptions[DatabaseSection.authToken]?.cancel();
+  void disconnectTempToken() {
+    subscriptions[DatabaseSection.tempToken]?.cancel();
   }
 }

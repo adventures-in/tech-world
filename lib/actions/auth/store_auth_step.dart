@@ -30,5 +30,5 @@ abstract class StoreAuthStep extends Object
   static Serializer<StoreAuthStep> get serializer => _$storeAuthStepSerializer;
 
   @override
-  String toString() => 'STORE_AUTH_STEP: : $step';
+  String toString() => 'STORE_AUTH_STEP: $step';
 }

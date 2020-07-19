@@ -1,6 +1,5 @@
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
-import 'package:adventures_in_tech_world/actions/problems/store_displaying_problem.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:redux/redux.dart';
@@ -39,19 +38,16 @@ class DisplayProblemMiddleware
     extends TypedMiddleware<AppState, DisplayProblem> {
   DisplayProblemMiddleware(NavigationService navigationService)
       : super((store, action, next) async {
+          // check the value before dispatch as the reducer will set to false
+          final notAlreadyDisplaying = !store.state.displayingProblem;
+
           next(action);
 
           // if not already displaying problem
-          if (!store.state.displayingProblem) {
-            // set the app state to indicate problem is being displayed
-            store.dispatch(StoreDisplayingProblem(value: true));
-
+          if (notAlreadyDisplaying) {
             // display problem and remove after
             final removeProblem =
                 await navigationService.display(action.problem);
-
-            // Set the app state back
-            store.dispatch(StoreDisplayingProblem(value: false));
 
             // Remove the problem
             store.dispatch(removeProblem);

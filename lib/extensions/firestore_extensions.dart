@@ -9,11 +9,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 extension ConnectAndConvert on Firestore {
   /// Observe the document at /tokens/${userId} and convert each [DocumentSnapshot]
   /// into a [ReduxAction] and send to the store using the passed in [StreamController]
-  StreamSubscription<DocumentSnapshot> connectToAuthToken(
+  StreamSubscription<DocumentSnapshot> connectTempTokenToStore(
       String userId, StreamController<ReduxAction> controller) {
     // create a function to be called on finding an error
     final handleProblem = generateProblemHandler(
-        ProblemLocation.connectToAuthToken, controller.add);
+        ProblemLocation.connectTempTokenToStore, controller.add);
 
     // listen to the firestore stream, convert events to actions and dispatch to
     // the store with the controller
