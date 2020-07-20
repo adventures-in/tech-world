@@ -8,7 +8,6 @@ export async function deleteUsers(snapshot : functions.firestore.DocumentSnapsho
     // 
     // Relevant references: 
     //  - https://firebase.google.com/docs/reference/admin/node 
-    //  - https://googleapis.dev/nodejs/storage/latest/File.html#delete 
     //
     //  When using promises and await, errors need to be caught. Error responses are described here: 
     //  - https://cloud.google.com/storage/docs/json_api/v1/status-codes 

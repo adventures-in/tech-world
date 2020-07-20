@@ -8,6 +8,7 @@ abstract class AuthService {
   Stream<ReduxAction> get storeStream;
   void connectAuthStateToStore();
   void disconnectAuthState();
+  Future<String> getCurrentUserId();
   Future<UserData> signInAnonymously();
   Future<UserData> signInWithGithub(String token);
   Future<UserData> linkGithub(String token);

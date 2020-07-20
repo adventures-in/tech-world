@@ -52,11 +52,6 @@ class FirestoreService implements DatabaseService {
   }
 
   @override
-  Future<void> removeTempToken(String userId) {
-    return _firestore.document('/tokens/${userId}').delete();
-  }
-
-  @override
   void connectTempTokenToStore({@required String uid}) {
     assert(uid != null);
 
@@ -75,5 +70,14 @@ class FirestoreService implements DatabaseService {
   @override
   void disconnectTempToken() {
     subscriptions[DatabaseSection.tempToken]?.cancel();
+  }
+
+  @override
+  Future<void> deleteAnonymousAccount(String userId) async {
+    assert(userId != null);
+
+    await _firestore
+        .document('/anon/$userId')
+        .setData(<String, dynamic>{'delete': true});
   }
 }
