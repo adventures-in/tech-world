@@ -1,3 +1,4 @@
+import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
@@ -13,6 +14,7 @@ final authReducers = <AppState Function(AppState, dynamic)>[
   StoreUserDataReducer(),
   StoreAuthStepReducer(),
   StoreGitHubTokenReducer(),
+  SignOutReducer(),
 ];
 
 class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
@@ -50,4 +52,11 @@ class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
       : super((state, action) {
           return state.rebuild((b) => b..gitHubToken = action.token);
         });
+}
+
+class SignOutReducer extends TypedReducer<AppState, SignOut> {
+  SignOutReducer()
+      : super((state, action) => state.rebuild((b) => b
+          ..adventurer = null
+          ..gitHubToken = null));
 }
