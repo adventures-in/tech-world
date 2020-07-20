@@ -2,7 +2,7 @@
 name: Feature plan
 about: Plan a feature
 title: ''
-labels: ''
+labels: plan
 assignees: ''
 
 ---
