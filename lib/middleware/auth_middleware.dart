@@ -38,7 +38,7 @@ List<Middleware<AppState>> createAuthMiddleware({
     StoreUserDataMiddleware(authService, navigationService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
-    SignOutMiddleware(authService, navigationService),
+    SignOutMiddleware(authService, navigationService, gitHubService),
   ];
 }
 
@@ -110,11 +110,20 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               if (store.state.gitHubToken == null) {
                 // we have no token
 
-                // connect to the database to see if there is a token there
-                store.dispatch(
-                    StoreAuthStep(step: AuthStep.checkingForGitHubToken));
-                databaseService.connectTempTokenToStore(
-                    uid: action.userData.uid);
+                if (action.userData.hasGitHub) {
+                  // we have signed in with github so retrieve the stored token
+                  store.dispatch(
+                      StoreAuthStep(step: AuthStep.retrievingStoredToken));
+                  final token = await databaseService
+                      .retrieveStoredToken(action.userData.uid);
+                  store.dispatch(StoreGitHubToken(token: token));
+                } else {
+                  // connect to the database to see if there is a token there
+                  store.dispatch(
+                      StoreAuthStep(step: AuthStep.listeningForTempToken));
+                  databaseService.connectTempTokenToStore(
+                      uid: action.userData.uid);
+                }
               }
             }
           } catch (error, trace) {
@@ -184,7 +193,8 @@ class RequestGitHubAuthMiddleware
 }
 
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
-  SignOutMiddleware(AuthService authService, NavigationService navigatonService)
+  SignOutMiddleware(AuthService authService, NavigationService navigatonService,
+      GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 
@@ -192,8 +202,12 @@ class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
               ProblemLocation.signOutMiddleware, store.dispatch);
 
           try {
+            // set the auth step and use the service to sign out
             store.dispatch(StoreAuthStep(step: AuthStep.signingOut));
             await authService.signOut();
+
+            // delete the github token
+            gitHubService.token = null;
           } catch (error, trace) {
             handleProblem(error, trace);
           }

@@ -9,7 +9,8 @@ class AuthStep extends EnumClass {
   static Serializer<AuthStep> get serializer => _$authStepSerializer;
   static const AuthStep checking = _$checking;
   static const AuthStep signingInAnonymously = _$signingInAnonymously;
-  static const AuthStep checkingForGitHubToken = _$checkingForGitHubToken;
+  static const AuthStep listeningForTempToken = _$listeningForTempToken;
+  static const AuthStep retrievingStoredToken = _$retrievingStoredToken;
   static const AuthStep waitingForInput = _$waitingForInput;
   static const AuthStep requestingGitHubAuth = _$requestingGitHubAuth;
   static const AuthStep exchangingCode = _$exchangingCode;
@@ -20,13 +21,14 @@ class AuthStep extends EnumClass {
   static const Map<AuthStep, int> _$indexMap = {
     checking: 0,
     signingInAnonymously: 1,
-    checkingForGitHubToken: 2,
-    waitingForInput: 3,
-    requestingGitHubAuth: 4,
-    exchangingCode: 5,
-    exchangedCode: 6,
-    signingInWithGitHub: 7,
-    signingOut: 8
+    listeningForTempToken: 2,
+    retrievingStoredToken: 3,
+    waitingForInput: 4,
+    requestingGitHubAuth: 5,
+    exchangingCode: 6,
+    exchangedCode: 7,
+    signingInWithGitHub: 8,
+    signingOut: 9
   };
 
   const AuthStep._(String name) : super(name);

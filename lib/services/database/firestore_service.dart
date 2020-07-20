@@ -80,4 +80,12 @@ class FirestoreService implements DatabaseService {
         .document('/anon/$userId')
         .setData(<String, dynamic>{'delete': true});
   }
+
+  @override
+  Future<String> retrieveStoredToken(String userId) {
+    return _firestore
+        .document('/users/$userId')
+        .get()
+        .then((snapshot) => snapshot['gitHubToken'] as String);
+  }
 }
