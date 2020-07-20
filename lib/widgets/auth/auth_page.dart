@@ -19,8 +19,10 @@ class AuthPage extends StatelessWidget {
             return WaitingIndicator('Checking Auth State');
           case AuthStep.signingInAnonymously:
             return WaitingIndicator('Signing In Anonymously');
-          case AuthStep.checkingForGitHubToken:
-            return WaitingIndicator('Checking For GitHub token');
+          case AuthStep.listeningForTempToken:
+            return WaitingIndicator('Waiting for GitHub token');
+          case AuthStep.retrievingStoredToken:
+            return WaitingIndicator('Retrieving stored GitHub token');
           case AuthStep.signingInWithGitHub:
             return WaitingIndicator('Signing in to Firebase with GitHub');
           case AuthStep.waitingForInput:

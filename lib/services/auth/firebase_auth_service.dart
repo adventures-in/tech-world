@@ -34,6 +34,7 @@ class FirebaseAuthService implements AuthService {
 
     try {
       // connect the firebase auth state to the store and keep the subscription
+      _firebaseAuthStateSubscription?.cancel();
       _firebaseAuthStateSubscription =
           _firebaseAuth.connectAuthStateToStore(_storeStreamController);
     } catch (error, trace) {

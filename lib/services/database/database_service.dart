@@ -8,4 +8,5 @@ abstract class DatabaseService {
   void connectTempTokenToStore({@required String uid});
   void disconnectTempToken();
   Future<void> deleteAnonymousAccount(String userId);
+  Future<String> retrieveStoredToken(String userId);
 }
