@@ -14,7 +14,7 @@ class AuthStep extends EnumClass {
   static const AuthStep requestingGitHubAuth = _$requestingGitHubAuth;
   static const AuthStep exchangingCode = _$exchangingCode;
   static const AuthStep exchangedCode = _$exchangedCode;
-  static const AuthStep linkingGitHub = _$linkingWithGitHub;
+  static const AuthStep signingInWithGitHub = _$signingInWithGitHub;
   static const AuthStep signingOut = _$signingOut;
 
   static const Map<AuthStep, int> _$indexMap = {
@@ -25,7 +25,7 @@ class AuthStep extends EnumClass {
     requestingGitHubAuth: 4,
     exchangingCode: 5,
     exchangedCode: 6,
-    linkingGitHub: 7,
+    signingInWithGitHub: 7,
     signingOut: 8
   };
 

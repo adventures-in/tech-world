@@ -42,6 +42,12 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
+  Future<String> getCurrentUserId() async {
+    final user = await _firebaseAuth.currentUser();
+    return user.uid;
+  }
+
+  @override
   void disconnectAuthState() {
     _firebaseAuthStateSubscription?.cancel();
   }
@@ -75,6 +81,6 @@ class FirebaseAuthService implements AuthService {
   /// be automatically updated
   @override
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await _firebaseAuth.signOut();
   }
 }
