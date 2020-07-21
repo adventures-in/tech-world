@@ -6,7 +6,6 @@ import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
@@ -48,8 +47,8 @@ class PlumbServicesMiddleware extends TypedMiddleware<AppState, PlumbServices> {
       : super((store, action, next) async {
           next(action);
 
-          final handleProblem = generateProblemHandler(
-              ProblemLocation.plumbServicesMiddleware, store.dispatch);
+          final handleProblem =
+              generateProblemHandler(store.dispatch, 'PlumbServicesMiddleware');
 
           /// We don't manage the subscription as the streams are expected
           /// to stay open for the whole lifetime of the app
@@ -71,7 +70,7 @@ class ConnectAuthStateMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemLocation.connectAuthStateMiddleware, store.dispatch);
+              store.dispatch, 'ConnectAuthStateMiddleware');
 
           try {
             authService.connectAuthStateToStore();
@@ -87,8 +86,8 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
       : super((store, action, next) async {
           next(action);
 
-          final handleProblem = generateProblemHandler(
-              ProblemLocation.storeUserDataMiddleware, store.dispatch);
+          final handleProblem =
+              generateProblemHandler(store.dispatch, 'StoreUserDataMiddleware');
 
           try {
             if (action.userData == null) {
@@ -132,6 +131,17 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
         });
 }
 
+class RequestGitHubAuthMiddleware
+    extends TypedMiddleware<AppState, RequestGitHubAuth> {
+  RequestGitHubAuthMiddleware(PlatformService platformService)
+      : super((store, action, next) async {
+          next(action);
+
+          store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
+          await platformService.redirectWithState(store.state.userData.uid);
+        });
+}
+
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
   StoreGitHubTokenMiddleware(AuthService authService,
@@ -140,7 +150,7 @@ class StoreGitHubTokenMiddleware
           next(action);
 
           final handleProblem = generateProblemHandler(
-              ProblemLocation.storeGitHubTokenMiddleware, store.dispatch);
+              store.dispatch, 'StoreGitHubTokenMiddleware');
 
           try {
             if (action.token == null) {
@@ -181,25 +191,14 @@ class StoreGitHubTokenMiddleware
         });
 }
 
-class RequestGitHubAuthMiddleware
-    extends TypedMiddleware<AppState, RequestGitHubAuth> {
-  RequestGitHubAuthMiddleware(PlatformService platformService)
-      : super((store, action, next) async {
-          next(action);
-
-          store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
-          await platformService.redirectWithState(store.state.userData.uid);
-        });
-}
-
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
   SignOutMiddleware(AuthService authService, NavigationService navigatonService,
       GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 
-          final handleProblem = generateProblemHandler(
-              ProblemLocation.signOutMiddleware, store.dispatch);
+          final handleProblem =
+              generateProblemHandler(store.dispatch, 'SignOutMiddleware');
 
           try {
             // set the auth step and use the service to sign out

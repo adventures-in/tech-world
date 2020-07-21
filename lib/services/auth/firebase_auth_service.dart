@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
@@ -13,7 +12,7 @@ class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth;
 
   /// [StreamController] for adding auth state actions
-  final _storeStreamController = StreamController<ReduxAction>();
+  final StreamController<ReduxAction> _storeStreamController;
 
   /// The [Stream] is used just once on app load, to
   /// connect the [Database] to the redux [Store]
@@ -24,13 +23,16 @@ class FirebaseAuthService implements AuthService {
   /// disconnect at a later time.
   StreamSubscription<FirebaseUser> _firebaseAuthStateSubscription;
 
-  FirebaseAuthService(FirebaseAuth firebaseAuth) : _firebaseAuth = firebaseAuth;
+  FirebaseAuthService(FirebaseAuth firebaseAuth,
+      StreamController<ReduxAction> _storeStreamController)
+      : _firebaseAuth = firebaseAuth,
+        _storeStreamController = _storeStreamController;
 
   @override
   void connectAuthStateToStore() {
     // create a function to be called on finding an error
-    final handleProblem = generateProblemHandler(
-        ProblemLocation.authServiceConnectFirebase, _storeStreamController.add);
+    final handleProblem = generateProblemHandler(_storeStreamController.add,
+        'FirebaseAuthService -> connectAuthStateToStore');
 
     try {
       // connect the firebase auth state to the store and keep the subscription

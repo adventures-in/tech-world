@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
-import 'package:adventures_in_tech_world/enums/problem_location.dart';
+import 'package:adventures_in_tech_world/extensions/firestore_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
-import 'package:adventures_in_tech_world/extensions/firestore_extensions.dart';
 
 class FirestoreService implements DatabaseService {
   /// The [Firestore] instance
@@ -54,9 +53,8 @@ class FirestoreService implements DatabaseService {
   @override
   void connectTempTokenToStore({@required String uid}) {
     assert(uid != null);
-
     final handleProblem = generateProblemHandler(
-        ProblemLocation.firestoreServiceConnectTokens, _storeController.add);
+        _storeController.add, 'FireStoreService -> connectTempTokenToStore');
 
     try {
       // connect the database to the store and keep the subscription

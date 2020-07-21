@@ -22,7 +22,6 @@ import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
 import 'package:adventures_in_tech_world/enums/nav_selection.dart';
-import 'package:adventures_in_tech_world/enums/problem_location.dart';
 import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
 import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
