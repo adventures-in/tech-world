@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/middleware/app_middleware.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
@@ -26,7 +29,8 @@ void main() {
   final navKey = GlobalKey<NavigatorState>();
 
   /// Create services
-  final authService = FirebaseAuthService(FirebaseAuth.instance);
+  final authService = FirebaseAuthService(
+      FirebaseAuth.instance, StreamController<ReduxAction>());
   final databaseService = FirestoreService(Firestore.instance);
   final platformService = PlatformService();
   final navigationService = NavigationService(navKey);
