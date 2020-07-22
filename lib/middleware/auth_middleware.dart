@@ -137,8 +137,15 @@ class RequestGitHubAuthMiddleware
       : super((store, action, next) async {
           next(action);
 
-          store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
-          await platformService.redirectWithState(store.state.userData.uid);
+          final handleProblem = generateProblemHandler(
+              store.dispatch, 'RequestGitHubAuthMiddleware');
+
+          try {
+            store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
+            await platformService.redirectWithState(store.state.userData.uid);
+          } catch (error, trace) {
+            handleProblem(error, trace);
+          }
         });
 }
 

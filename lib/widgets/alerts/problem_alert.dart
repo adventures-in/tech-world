@@ -8,21 +8,21 @@ class ProblemAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('traceString: ${problem.traceString}');
     return AlertDialog(
+      scrollable: true,
       title: Text('Dammit!'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             Text('Looks like there was A problem.'),
             SizedBox(height: 20),
-            ListView.builder(
-                itemCount: problem.info.keys.length,
-                itemBuilder: (context, index) {
-                  final key = problem.info.keys.elementAt(index);
-                  final value = problem.info[key];
-                  return Text('$key: $value');
-                }),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final key in problem.info.keys)
+                  Text('$key: ${problem.info[key]}')
+              ],
+            ),
             Text('error: ${problem.errorString}'),
             SizedBox(height: 20),
             Text(problem.traceString),
