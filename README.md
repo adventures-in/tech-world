@@ -32,4 +32,6 @@ flutter pub run build_runner watch --delete-conflicting-outputs
 firebase deploy --only functions
 firebase deploy --only hosting:adventures-in-tech-world
 firebase deploy --only firestore:rules
+~/utils/chromedriver --port=4444
+flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chome
 ```

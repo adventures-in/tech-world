@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Release",
             "request": "launch",
@@ -13,14 +14,18 @@
         {
             "name": "Debug - RDT",
             "type": "dart",
+            "deviceId": "chrome",
             "request": "launch",
-            "program": "lib/main_rdt.dart",
+            "program": "lib/main_dev.dart",
+            "args": ["--dart-define=RDT=true"],
         },
         {
             "name": "Debug - RDT/Mocks",
             "type": "dart",
+            "deviceId": "chrome",
             "request": "launch",
-            "program": "lib/main_rdt_mock.dart",
-        },
+            "program": "lib/main_dev.dart",
+            "args": ["--dart-define=RDT=true", "--dart-define=MOCKS=true"],
+        }
     ]
 }
