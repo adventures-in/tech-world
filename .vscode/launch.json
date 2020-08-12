@@ -12,7 +12,7 @@
             "program": "lib/main.dart",
         },
         {
-            "name": "Debug - RDT",
+            "name": "Integration Test - RDT",
             "type": "dart",
             "deviceId": "chrome",
             "request": "launch",
@@ -20,7 +20,7 @@
             "args": ["--dart-define=RDT=true"],
         },
         {
-            "name": "Debug - RDT/Mocks",
+            "name": "Integration Test - RDT/Mocks",
             "type": "dart",
             "deviceId": "chrome",
             "request": "launch",
