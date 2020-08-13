@@ -603,7 +603,7 @@ packages:
     source: hosted
     version: "0.5.2"
   redux_remote_devtools:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: redux_remote_devtools
       url: "https://pub.dartlang.org"
