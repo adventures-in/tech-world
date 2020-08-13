@@ -52,14 +52,8 @@ app.*.map.json
 # Built value generated files 
 *.g.dart
 
-# credentials and mocks for local debugging
-lib/utils/private_credentials.dart
-lib/utils/mocks/
-
 # ignore the index.html file so we can use the cdns config method without 
-# adding the firease config details to version control
+# adding the firebase config details to version control
 web/index.html
-# different versions for easy swapping back and forth for local debugging
-web/index_release.html
-web/index_debug.html
+# firebase credentials for mac target 
 macos/Runner/GoogleService-Info.plist

@@ -34,9 +34,7 @@ dependencies:
   built_collection:
   redux:
   flutter_redux:
-
-  # used in prototyping, will not be in release 
-  redux_remote_devtools:
+  
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +46,7 @@ dev_dependencies:
   pedantic:
   test:
   mockito:
+  redux_remote_devtools:
 
 flutter:
   uses-material-design: true
