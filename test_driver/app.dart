@@ -9,7 +9,7 @@ import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 void main() async {
   const rdtMode = bool.fromEnvironment('RDT');
   final _remoteDevtools =
-      (rdtMode) ? RemoteDevToolsMiddleware('localhost:8000') : null;
+      (rdtMode) ? RemoteDevToolsMiddleware<dynamic>('localhost:8000') : null;
 
   // This line enables the extension.
   enableFlutterDriverExtension();
