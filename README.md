@@ -14,17 +14,33 @@ A web app for organising collaboration, built with Flutter.
 ### (if you want to join as a collaborator)
 1. join [the firebase project](https://console.firebase.google.com/project/adventures-in-tech-world)
 1. setup [firebase cli](https://firebase.google.com/docs/cli), if not done already
-1. get the credential files
-   1. Get .firebaserc & index_debug.html from [adventures-in-tech-world – Storage – Firebase console](https://console.firebase.google.com/project/adventures-in-tech-world/storage/ci-credentials/files)
+1. get the missing credential files - run: `./get-credentials.sh`
 
 ### (if you don't want to join as a collaborator)
-1. create a firebase project
-1. firebase init - follow the prompts
-1. add firebase setup to index.html
+1. create a firebase project, see: [Add Firebase to your JavaScript project](https://firebase.google.com/docs/web/setup)
+1. run `firebase init` and follow the prompts 
+1. add firebase config to `index.html`
+   1. see [Add Firebase to your JavaScript project > Add SDKs](https://firebase.google.com/docs/web/setup#add-sdks-initialize)
+   1. use the "From the CDN" method for local debugging 
 
-### run the project
-1. codegen for built_value
-1. redux devtools setup and use
+### Run the project
+1. Generate missing built_value files 
+   - `flutter pub run build_runner build --delete-conflicting-outputs`
+     - or, if you want the code gen to rebuild on changes: 
+   - `flutter pub run build_runner watch --delete-conflicting-outputs`
+1. Run with the 'Main' launch configuration 
+
+### Integration tests (WIP) 
+1. install [redux-devtools-cli](https://github.com/reduxjs/redux-devtools/tree/master/packages/redux-devtools-cli)
+   - `npm install -g redux-devtools-cli`
+1. run redux devtools
+   - `redux-devtools --open`
+1. setup chrome driver 
+   - [An introduction to integration testing > Flutter Web](https://flutter.dev/docs/cookbook/testing/integration/introduction#6b-web)
+1. run chrome driver 
+   - `~/utils/chromedriver --port=4444`
+1. run the integration tests 
+   - `flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chrome`
 
 ## State Diagrams 
 
@@ -55,5 +71,5 @@ firebase deploy --only functions
 firebase deploy --only hosting:adventures-in-tech-world
 firebase deploy --only firestore:rules
 ~/utils/chromedriver --port=4444
-flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chome
+flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chrome
 ```
