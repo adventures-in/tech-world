@@ -7,9 +7,9 @@ assignees: ''
 
 ---
 
-## user goal & interactions 
+## User flow
 
-goal: 
+An adventurer wants to 
 - 
 
 ## designs 
