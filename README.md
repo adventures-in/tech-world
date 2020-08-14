@@ -61,6 +61,15 @@ You can select a set of topics you are interested in.
 
 You can indicate your current goals by selecting issues in your repos. 
 
+## Editing the Wiki 
+
+If you haven't yet, you'll need to initialize the submodule and update it:
+
+```sh
+git submodule init
+git submodule update
+```
+
 # Common Commands 
 
 ```sh
