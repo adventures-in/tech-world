@@ -1,8 +1,9 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
-import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
@@ -50,8 +51,11 @@ part 'serializers.g.dart';
 /// Collection of generated serializers for the AdventuresIn app
 @SerializersFor([
   AddProblem,
+  Adventurer,
   AppState,
   AuthProviderData,
+  AuthStep,
+  BrightnessMode,
   ConnectAuthStateToStore,
   DisplayProblem,
   GitHubIssue,
@@ -61,14 +65,18 @@ part 'serializers.g.dart';
   GitHubUser,
   LaunchURL,
   NavigateToProfile,
+  NavSelection,
   PlumbServices,
+  Problem,
   PullRequestState,
   RequestGitHubAuth,
   RemoveProblem,
   RetrieveGitHubAssignedIssues,
   RetrieveGitHubPullRequests,
   RetrieveGitHubRepositories,
+  Settings,
   SignInAnonymously,
+  SignInWithGoogle,
   SignOut,
   StoreAdventurer,
   StoreAuthStep,
@@ -78,6 +86,9 @@ part 'serializers.g.dart';
   StoreGitHubToken,
   StoreNavSelection,
   StoreUserData,
+  ThemeBrightness,
+  ThemeColors,
+  ThemeSet,
   UserData,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

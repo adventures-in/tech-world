@@ -1,11 +1,10 @@
+import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:adventures_in_tech_world/widgets/profile/profile_page.dart';
 import 'package:adventures_in_tech_world/widgets/projects/projects_page.dart';
 import 'package:adventures_in_tech_world/widgets/topics/topics_page.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:flutter/material.dart';
 
 part 'nav_selection.g.dart';

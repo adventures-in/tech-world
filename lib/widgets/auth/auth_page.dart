@@ -1,9 +1,9 @@
 import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class AuthPage extends StatelessWidget {
@@ -26,7 +26,7 @@ class AuthPage extends StatelessWidget {
           case AuthStep.signingInWithGitHub:
             return WaitingIndicator('Signing in to Firebase with GitHub');
           case AuthStep.waitingForInput:
-            return SignInWithGithubButton();
+            return SignInWithGitHubButton();
           default:
             return Container();
         }
@@ -35,8 +35,8 @@ class AuthPage extends StatelessWidget {
   }
 }
 
-class SignInWithGithubButton extends StatelessWidget {
-  const SignInWithGithubButton({
+class SignInWithGitHubButton extends StatelessWidget {
+  const SignInWithGitHubButton({
     Key key,
   }) : super(key: key);
 
@@ -47,27 +47,13 @@ class SignInWithGithubButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         color: Theme.of(context).primaryColor,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Sign in with GitHub',
-              style: TextStyle(color: Colors.white),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Image.asset(
-              'assets/GitHub-Mark-Light-64px.png',
-              width: 20,
-              height: 20,
-              fit: BoxFit.cover,
-            ),
-          ],
-        ),
-        onPressed: () {
-          context.dispatch(RequestGitHubAuth());
-        },
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Text('Sign in with GitHub', style: TextStyle(color: Colors.white)),
+          SizedBox(width: 10),
+          Image.asset('assets/GitHub-Mark-Light-64px.png',
+              width: 20, height: 20, fit: BoxFit.cover),
+        ]),
+        onPressed: () => context.dispatch(RequestGitHubAuth()),
       ),
     );
   }

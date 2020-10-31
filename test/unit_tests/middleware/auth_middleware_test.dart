@@ -1,5 +1,5 @@
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
-import 'package:adventures_in_tech_world/middleware/auth_middleware.dart';
+import 'package:adventures_in_tech_world/middleware/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:mockito/mockito.dart';
 import 'package:redux/redux.dart';

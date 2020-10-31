@@ -1,8 +1,7 @@
+import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 
 part 'pull_request_state.g.dart';
 

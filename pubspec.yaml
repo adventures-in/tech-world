@@ -18,6 +18,7 @@ dependencies:
   # auth 
   oauth2:
   firebase_auth:
+  google_sign_in:
 
   # database 
   cloud_firestore:
