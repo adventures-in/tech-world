@@ -31,7 +31,7 @@ void main() {
       final userData2 = userData.rebuild((b) => b
         ..providers.add(AuthProviderData(
             providerId: 'github.com',
-            uid: null,
+            uid: 'uid2',
             displayName: null,
             photoURL: null,
             email: null,

@@ -10,6 +10,5 @@ class FakeFirebaseAuth extends Fake implements auth.FirebaseAuth {
       : _emitUsersList = emitUsersList;
 
   @override
-  Stream<auth.User> get onAuthStateChanged =>
-      Stream.fromIterable(_emitUsersList);
+  Stream<auth.User> authStateChanges() => Stream.fromIterable(_emitUsersList);
 }
