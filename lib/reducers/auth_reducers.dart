@@ -32,7 +32,7 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
             _adventurer = Adventurer(
                 id: action.userData.uid,
                 displayName: providerData.displayName,
-                photoURL: providerData.photoUrl);
+                photoURL: providerData.photoURL);
           }
 
           return state.rebuild((b) => b

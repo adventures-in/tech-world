@@ -5,19 +5,13 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
 import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:redux/redux.dart';
 
 void main() {
   testWidgets('Initial view shows Checking Auth State',
       (WidgetTester tester) async {
-    final store = Store<AppState>(appReducer, initialState: AppState.init());
-    final navKey = GlobalKey<NavigatorState>();
-    final widget = AdventuresInApp(store, navKey);
+    final widget = AdventuresInApp();
     // Create the widget by telling the tester to build it.
     await tester.pumpWidget(widget);
 

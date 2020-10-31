@@ -6,7 +6,7 @@ extension UserInfoExt on UserInfo {
         providerId: providerId,
         uid: uid,
         displayName: displayName,
-        photoUrl: photoUrl,
+        photoURL: photoURL,
         email: email,
         phoneNumber: phoneNumber,
       );
