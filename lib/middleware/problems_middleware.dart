@@ -1,7 +1,6 @@
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:redux/redux.dart';
 
 /// Middleware is used for a variety of things:
@@ -13,11 +12,10 @@ import 'package:redux/redux.dart';
 ///
 /// The output of an action can perform another action using the [NextDispatcher]
 ///
-List<Middleware<AppState>> createProblemsMiddleware(
-    {NavigationService navigationService}) {
+List<Middleware<AppState>> createProblemsMiddleware() {
   return [
     AddProblemMiddleware(),
-    DisplayProblemMiddleware(navigationService),
+    DisplayProblemMiddleware(),
   ];
 }
 
@@ -36,7 +34,7 @@ class AddProblemMiddleware extends TypedMiddleware<AppState, AddProblem> {
 /// to display the [Problem], if there is not currently a problem being displayed.
 class DisplayProblemMiddleware
     extends TypedMiddleware<AppState, DisplayProblem> {
-  DisplayProblemMiddleware(NavigationService navigationService)
+  DisplayProblemMiddleware()
       : super((store, action, next) async {
           // check the value before dispatch as the reducer will set to false
           final notAlreadyDisplaying = !store.state.displayingProblem;
@@ -45,12 +43,7 @@ class DisplayProblemMiddleware
 
           // if not already displaying problem
           if (notAlreadyDisplaying) {
-            // display problem and remove after
-            final removeProblem =
-                await navigationService.display(action.problem);
-
-            // Remove the problem
-            store.dispatch(removeProblem);
+            // TODO: display problem and remove after
           }
         });
 }

@@ -10,8 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 class FirestoreService implements DatabaseService {
-  /// The [Firestore] instance
-  final Firestore _firestore;
+  /// The [FirebaseFirestore] instance
+  final FirebaseFirestore _firestore;
 
   /// The stream of the [_storeController] is used just once on app load, to
   /// connect the [_storeController] to the redux [Store]
@@ -31,23 +31,21 @@ class FirestoreService implements DatabaseService {
   final StreamController<ReduxAction> _storeController =
       StreamController<ReduxAction>();
 
-  FirestoreService(Firestore firestore) : _firestore = firestore;
+  FirestoreService(FirebaseFirestore firestore) : _firestore = firestore;
 
   @override
   Future<void> updateUserInfo(UserData userData, String token) {
-    return _firestore
-        .document('/users/${userData.uid}')
-        .setData(<String, dynamic>{
+    return _firestore.doc('/users/${userData.uid}').set(<String, dynamic>{
       'gitHubToken': token,
       'displayName': userData.displayName ??
           ((userData.providers.isNotEmpty)
               ? userData.providers.first.displayName
               : null),
-      'photoURL': userData.photoUrl ??
+      'photoURL': userData.photoURL ??
           ((userData.providers.isNotEmpty)
-              ? userData.providers.first.photoUrl
+              ? userData.providers.first.photoURL
               : null)
-    }, merge: true);
+    }, SetOptions(merge: true));
   }
 
   @override
@@ -75,14 +73,14 @@ class FirestoreService implements DatabaseService {
     assert(userId != null);
 
     await _firestore
-        .document('/anon/$userId')
-        .setData(<String, dynamic>{'delete': true});
+        .doc('/anon/$userId')
+        .set(<String, dynamic>{'delete': true});
   }
 
   @override
   Future<String> retrieveStoredToken(String userId) {
     return _firestore
-        .document('/users/$userId')
+        .doc('/users/$userId')
         .get()
         .then((snapshot) => snapshot['gitHubToken'] as String);
   }

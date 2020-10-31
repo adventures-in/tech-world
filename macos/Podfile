@@ -46,6 +46,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  # pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '6.26.0'
+
   # Prepare symlinks folder. We use symlinks to avoid having Podfile.lock
   # referring to absolute paths on developers' machines.
   ephemeral_dir = File.join('Flutter', 'ephemeral')

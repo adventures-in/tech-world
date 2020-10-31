@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
-import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class FirebaseAuthService implements AuthService {
-  final FirebaseAuth _firebaseAuth;
+  final auth.FirebaseAuth _firebaseAuth;
 
   /// [StreamController] for adding auth state actions
   final StreamController<ReduxAction> _storeStreamController;
@@ -21,9 +21,9 @@ class FirebaseAuthService implements AuthService {
 
   /// We keep a subscription to the firebase auth state stream so we can
   /// disconnect at a later time.
-  StreamSubscription<FirebaseUser> _firebaseAuthStateSubscription;
+  StreamSubscription<auth.User> _firebaseAuthStateSubscription;
 
-  FirebaseAuthService(FirebaseAuth firebaseAuth,
+  FirebaseAuthService(auth.FirebaseAuth firebaseAuth,
       StreamController<ReduxAction> _storeStreamController)
       : _firebaseAuth = firebaseAuth,
         _storeStreamController = _storeStreamController;
@@ -46,7 +46,7 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<String> getCurrentUserId() async {
-    final user = await _firebaseAuth.currentUser();
+    final user = await _firebaseAuth.currentUser;
     return user.uid;
   }
 
@@ -66,8 +66,8 @@ class FirebaseAuthService implements AuthService {
   // We don't do anything with the result as we are connected to the auth state
   @override
   Future<UserData> linkGithub(String token) async {
-    final credential = GithubAuthProvider.getCredential(token: token);
-    final firebaseUser = await _firebaseAuth.currentUser();
+    final credential = auth.GithubAuthProvider.credential(token);
+    final firebaseUser = await _firebaseAuth.currentUser;
     final authResult = await firebaseUser.linkWithCredential(credential);
     return authResult.user.toData();
   }
@@ -75,7 +75,7 @@ class FirebaseAuthService implements AuthService {
   // We don't do anything with the result as we are connected to the auth state
   @override
   Future<UserData> signInWithGithub(String token) async {
-    final credential = GithubAuthProvider.getCredential(token: token);
+    final credential = auth.GithubAuthProvider.credential(token);
     final authResult = await _firebaseAuth.signInWithCredential(credential);
     return authResult.user.toData();
   }

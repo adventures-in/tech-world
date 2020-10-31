@@ -10,7 +10,6 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
-import 'package:adventures_in_tech_world/services/navigation_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
@@ -26,7 +25,6 @@ import 'package:redux/redux.dart';
 ///
 List<Middleware<AppState>> createAuthMiddleware({
   AuthService authService,
-  NavigationService navigationService,
   GitHubService gitHubService,
   DatabaseService databaseService,
   PlatformService platformService,
@@ -34,10 +32,10 @@ List<Middleware<AppState>> createAuthMiddleware({
   return [
     PlumbServicesMiddleware(authService, databaseService),
     ConnectAuthStateMiddleware(authService),
-    StoreUserDataMiddleware(authService, navigationService, databaseService),
+    StoreUserDataMiddleware(authService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
-    SignOutMiddleware(authService, navigationService, gitHubService),
+    SignOutMiddleware(authService, gitHubService),
   ];
 }
 
@@ -81,8 +79,8 @@ class ConnectAuthStateMiddleware
 }
 
 class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
-  StoreUserDataMiddleware(AuthService authService,
-      NavigationService navigationService, DatabaseService databaseService)
+  StoreUserDataMiddleware(
+      AuthService authService, DatabaseService databaseService)
       : super((store, action, next) async {
           next(action);
 
@@ -96,7 +94,7 @@ class StoreUserDataMiddleware extends TypedMiddleware<AppState, StoreUserData> {
               if (store.state.authStep == AuthStep.signingOut) {
                 // user has just signed out so reset UI
 
-                navigationService.popHome();
+                // TODO: popHome();
               }
 
               // sign in anonymously
@@ -199,8 +197,7 @@ class StoreGitHubTokenMiddleware
 }
 
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
-  SignOutMiddleware(AuthService authService, NavigationService navigatonService,
-      GitHubService gitHubService)
+  SignOutMiddleware(AuthService authService, GitHubService gitHubService)
       : super((store, action, next) async {
           next(action);
 

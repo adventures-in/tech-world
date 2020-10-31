@@ -2,10 +2,10 @@ library auth_provider_data;
 
 import 'dart:convert';
 
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/models/app/serializers.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_provider_data.g.dart';
@@ -25,7 +25,7 @@ abstract class AuthProviderData extends Object
 
   /// The URL of the user’s profile photo.
   @nullable
-  String get photoUrl;
+  String get photoURL;
 
   /// The user’s email address.
   @nullable
@@ -41,7 +41,7 @@ abstract class AuthProviderData extends Object
     @required String providerId,
     @required String uid,
     @required String displayName,
-    @required String photoUrl,
+    @required String photoURL,
     @required String email,
     @required String phoneNumber,
   }) = _$AuthProviderData._;

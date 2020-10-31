@@ -8,28 +8,34 @@ void main() {
     test('.hasGitHub checks providerId and providers list', () {
       final userData = UserData(
           uid: 'uid',
-          providerId: 'provider',
           displayName: 'andy',
-          photoUrl: 'url',
+          photoURL: 'url',
           email: 'email@email.email',
           phoneNumber: '0423123421',
           createdOn: DateTime.now(),
           lastSignedInOn: DateTime.now(),
           isAnonymous: false,
-          isEmailVerified: false,
+          emailVerified: false,
           providers: BuiltList(<AuthProviderData>[
             AuthProviderData(
                 providerId: 'firebase',
                 uid: 'uid1234',
                 displayName: 'sam',
-                photoUrl: 'url2',
+                photoURL: 'url2',
                 email: 'a@a.com',
                 phoneNumber: '1234')
           ]));
 
       expect(userData.hasGitHub, false);
 
-      final userData2 = userData.rebuild((b) => b..providerId = 'github.com');
+      final userData2 = userData.rebuild((b) => b
+        ..providers.add(AuthProviderData(
+            providerId: 'github.com',
+            uid: 'uid2',
+            displayName: null,
+            photoURL: null,
+            email: null,
+            phoneNumber: null)));
 
       expect(userData2.hasGitHub, true);
 
@@ -44,21 +50,20 @@ void main() {
         () {
       final userData = UserData(
           uid: 'uid',
-          providerId: 'firebase',
           displayName: 'andy',
-          photoUrl: 'url',
+          photoURL: 'url',
           email: 'email@email.email',
           phoneNumber: '0423123421',
           createdOn: DateTime.now(),
           lastSignedInOn: DateTime.now(),
           isAnonymous: false,
-          isEmailVerified: false,
+          emailVerified: false,
           providers: BuiltList(<AuthProviderData>[
             AuthProviderData(
                 providerId: 'github.com',
                 uid: 'github.com',
                 displayName: 'sam',
-                photoUrl: 'url2',
+                photoURL: 'url2',
                 email: 'a@a.com',
                 phoneNumber: '1234')
           ]));

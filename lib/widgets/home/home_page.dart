@@ -4,6 +4,7 @@ import 'package:adventures_in_tech_world/enums/nav_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/utils/checked_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -108,10 +109,7 @@ class ProfileAvatar extends StatelessWidget {
       child: CircleAvatar(
         radius: 17,
         backgroundColor: Color(0xffFDCF09),
-        child: CircleAvatar(
-          radius: 15,
-          backgroundImage: NetworkImage(photoURL),
-        ),
+        child: CheckedCircleAvatar(radius: 15, url: photoURL),
       ),
       padding: EdgeInsets.all(5.0),
       shape: CircleBorder(),

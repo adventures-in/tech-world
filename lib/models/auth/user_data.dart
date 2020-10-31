@@ -2,12 +2,12 @@ library user_data;
 
 import 'dart:convert';
 
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:meta/meta.dart';
 
 part 'user_data.g.dart';
@@ -18,11 +18,9 @@ abstract class UserData extends Object
     implements Built<UserData, UserDataBuilder> {
   String get uid;
   @nullable
-  String get providerId;
-  @nullable
   String get displayName;
   @nullable
-  String get photoUrl;
+  String get photoURL;
   @nullable
   String get email;
   @nullable
@@ -31,29 +29,26 @@ abstract class UserData extends Object
   DateTime get createdOn;
   DateTime get lastSignedInOn;
   bool get isAnonymous;
-  bool get isEmailVerified;
+  bool get emailVerified;
   BuiltList<AuthProviderData> get providers;
 
   @memoized
-  bool get hasGitHub =>
-      providerId == 'github.com' ||
-      providers
-          .where((provider) => provider.providerId == 'github.com')
-          .isNotEmpty;
+  bool get hasGitHub => providers
+      .where((provider) => provider.providerId == 'github.com')
+      .isNotEmpty;
 
   UserData._();
 
   factory UserData({
     @required String uid,
-    @required String providerId,
     @required String displayName,
-    @required String photoUrl,
+    @required String photoURL,
     @required String email,
     @required String phoneNumber,
     @required DateTime createdOn,
     @required DateTime lastSignedInOn,
     @required bool isAnonymous,
-    @required bool isEmailVerified,
+    @required bool emailVerified,
     @required BuiltList<AuthProviderData> providers,
   }) = _$UserData._;
 
