@@ -40,8 +40,10 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Exceptions to above rules.
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
 
 ### My extra ignores 
 
@@ -57,3 +59,5 @@ app.*.map.json
 web/index.html
 # firebase credentials for mac target 
 macos/Runner/GoogleService-Info.plist
+# settings for hiding files in VS Code 
+.vscode/settings.json

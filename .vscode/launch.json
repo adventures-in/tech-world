@@ -4,28 +4,10 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Release",
+            "name": "adventures_in_tech_world",
             "request": "launch",
-            "type": "dart",
-            "program": "lib/main.dart",
-        },
-        {
-            "name": "Integration Test - RDT",
-            "type": "dart",
-            "deviceId": "chrome",
-            "request": "launch",
-            "program": "lib/main_dev.dart",
-            "args": ["--dart-define=RDT=true"],
-        },
-        {
-            "name": "Integration Test - RDT/Mocks",
-            "type": "dart",
-            "deviceId": "chrome",
-            "request": "launch",
-            "program": "lib/main_dev.dart",
-            "args": ["--dart-define=RDT=true", "--dart-define=MOCKS=true"],
+            "type": "dart"
         }
     ]
 }

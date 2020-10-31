@@ -5,27 +5,41 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
-import 'package:adventures_in_tech_world/widgets/adventures_in_app.dart';
-import 'package:flutter/material.dart';
+import 'package:adventures_in_tech_world/widgets/app/initializing_indicator.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:redux/redux.dart';
+
+import '../utils/completable_app_widget_harness.dart';
 
 void main() {
-  testWidgets('Initial view shows Checking Auth State',
-      (WidgetTester tester) async {
-    final store = Store<AppState>(appReducer, initialState: AppState.init());
-    final navKey = GlobalKey<NavigatorState>();
-    final widget = AdventuresInApp(store, navKey);
-    // Create the widget by telling the tester to build it.
-    await tester.pumpWidget(widget);
+  group('AdventuresInApp', () {
+    testWidgets('completes initialization and displays relevant prompts',
+        (WidgetTester tester) async {
+      // Create the Finders.
+      final initializingIndicatorFinder = find.byType(InitializingIndicator);
 
-    // Create the Finders.
-    final titleFinder = find.text('Checking Auth State');
+      // Create a test harness that wraps the App widget.
+      final harness = CompletableAppWidgetHarnessWithFakeStore();
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to verify
-    // that the Text widgets appear exactly once in the widget tree.
-    expect(titleFinder, findsOneWidget);
+      // Build the widget tree.
+      await tester.pumpWidget(harness.widget);
+
+      expect(initializingIndicatorFinder, findsOneWidget);
+
+      // Verify the expected text is shown, indicating waiting for Firebase init
+      expect(find.text('Enticing a ghost into the machine...'), findsOneWidget);
+
+      harness.completeFirebase();
+
+      await tester.pump();
+
+      // Verify the expected text is shown, indicating waiting for redux init
+      expect(find.text('Plumbing the pipes...'), findsOneWidget);
+
+      harness.completeRedux();
+
+      await tester.pump();
+
+      expect(initializingIndicatorFinder, findsNothing);
+    });
   });
 }
