@@ -16,13 +16,13 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_reque
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
 import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
-import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
-import 'package:adventures_in_tech_world/enums/nav_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
 import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
@@ -65,7 +65,7 @@ part 'serializers.g.dart';
   GitHubUser,
   LaunchURL,
   NavigateToProfile,
-  NavSelection,
+  NavBarSelection,
   PlumbServices,
   Problem,
   PullRequestState,
@@ -84,7 +84,7 @@ part 'serializers.g.dart';
   StoreGitHubPullRequests,
   StoreGitHubRepositories,
   StoreGitHubToken,
-  StoreNavSelection,
+  StoreNavBarSelection,
   StoreUserData,
   ThemeBrightness,
   ThemeColors,

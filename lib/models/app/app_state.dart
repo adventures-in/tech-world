@@ -3,7 +3,7 @@ library app_state;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/nav_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
@@ -43,7 +43,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Adventurer get adventurer;
 
   /// Navigation
-  NavSelection get navSelection;
+  NavBarSelection get navSelection;
 
   AppState._();
 
@@ -51,7 +51,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..displayingProblem = false
     ..settings = Settings.initBuilder()
     ..authStep = AuthStep.checking
-    ..navSelection = NavSelection.projects);
+    ..navSelection = NavBarSelection.projects);
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

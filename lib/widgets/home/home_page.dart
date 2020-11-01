@@ -1,6 +1,6 @@
 import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
-import 'package:adventures_in_tech_world/actions/navigation/store_nav_selection.dart';
-import 'package:adventures_in_tech_world/enums/nav_selection.dart';
+import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           NavRail(),
           VerticalDivider(thickness: 1, width: 1),
-          StoreConnector<AppState, NavSelection>(
+          StoreConnector<AppState, NavBarSelection>(
             distinct: true,
             converter: (store) => store.state.navSelection,
             builder: (context, selection) => selection.widget,
@@ -39,7 +39,7 @@ class NavRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, NavSelection>(
+    return StoreConnector<AppState, NavBarSelection>(
         distinct: true,
         converter: (store) => store.state.navSelection,
         builder: (context, selection) {
@@ -49,8 +49,8 @@ class NavRail extends StatelessWidget {
                 child: NavigationRail(
                   selectedIndex: selection.index,
                   onDestinationSelected: (int index) {
-                    context.dispatch(StoreNavSelection(
-                      selection: NavSelection.valueOfIndex(index),
+                    context.dispatch(StoreNavBarSelection(
+                      selection: NavBarSelection.valueOfIndex(index),
                     ));
                   },
                   labelType: NavigationRailLabelType.selected,

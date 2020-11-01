@@ -7,34 +7,35 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/material.dart';
 
-part 'nav_selection.g.dart';
+part 'nav_bar_selection.g.dart';
 
-class NavSelection extends EnumClass {
-  static Serializer<NavSelection> get serializer => _$navSelectionSerializer;
-  static const NavSelection projects = _$projects;
-  static const NavSelection topics = _$topics;
-  static const NavSelection profile = _$profile;
+class NavBarSelection extends EnumClass {
+  static Serializer<NavBarSelection> get serializer =>
+      _$navBarSelectionSerializer;
+  static const NavBarSelection projects = _$projects;
+  static const NavBarSelection topics = _$topics;
+  static const NavBarSelection profile = _$profile;
 
-  static const Map<NavSelection, int> _$indexMap = {
+  static const Map<NavBarSelection, int> _$indexMap = {
     projects: 0,
     topics: 1,
     profile: 2,
   };
 
-  static const Map<NavSelection, Widget> _$widgetMap = {
+  static const Map<NavBarSelection, Widget> _$widgetMap = {
     projects: ProjectsPage(),
     topics: TopicsPage(),
     profile: ProfilePage(),
   };
 
-  const NavSelection._(String name) : super(name);
+  const NavBarSelection._(String name) : super(name);
 
   int get index => _$indexMap[this];
   Widget get widget => _$widgetMap[this];
-  static BuiltSet<NavSelection> get values => _$values;
-  static NavSelection valueOf(String name) => _$valueOf(name);
+  static BuiltSet<NavBarSelection> get values => _$values;
+  static NavBarSelection valueOf(String name) => _$valueOf(name);
 
-  static NavSelection valueOfIndex(int index) {
+  static NavBarSelection valueOfIndex(int index) {
     switch (index) {
       case 0:
         return _$projects;
@@ -47,5 +48,6 @@ class NavSelection extends EnumClass {
     }
   }
 
-  Object toJson() => serializers.serializeWith(NavSelection.serializer, this);
+  Object toJson() =>
+      serializers.serializeWith(NavBarSelection.serializer, this);
 }

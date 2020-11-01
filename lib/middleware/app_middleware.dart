@@ -1,6 +1,6 @@
 import 'package:adventures_in_tech_world/middleware/auth/connect_auth_state.dart';
 import 'package:adventures_in_tech_world/middleware/auth/plumb_services.dart';
-import 'package:adventures_in_tech_world/middleware/auth/request_git_hub_auth.dart.dart';
+import 'package:adventures_in_tech_world/middleware/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/middleware/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/middleware/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/middleware/auth/store_user_data.dart';
