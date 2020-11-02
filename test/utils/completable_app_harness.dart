@@ -7,8 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
-import '../mocks/redux/redux_store_mocks.dart';
-import '../mocks/wrappers/firebase_wrapper_mocks.dart';
+import 'mocks/redux/redux_store_mocks.dart';
+import 'mocks/wrappers/firebase_wrapper_mocks.dart';
 import 'redux_bundle_mocks.dart';
 
 /// A test harness to wrap the widget under test, (in this case the

@@ -26,14 +26,14 @@ void main() {
       expect(initializingIndicatorFinder, findsOneWidget);
 
       // Verify the expected text is shown, indicating waiting for Firebase init
-      expect(find.text('Enticing a ghost into the machine...'), findsOneWidget);
+      expect(find.text('Firing up the machine...'), findsOneWidget);
 
       harness.completeFirebase();
 
       await tester.pump();
 
       // Verify the expected text is shown, indicating waiting for redux init
-      expect(find.text('Plumbing the pipes...'), findsOneWidget);
+      expect(find.text('Plumbing the streams...'), findsOneWidget);
 
       harness.completeRedux();
 
