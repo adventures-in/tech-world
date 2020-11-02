@@ -25,20 +25,13 @@ class CheckedCircleAvatar extends StatelessWidget {
 
   @override
   Widget build(context) {
+    if (_url == null) return ErrorAvatar();
     return FutureBuilder(
       future: cacheImage(_url, context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none ||
             snapshot.hasError) {
-          return Container(
-            height: 80.0,
-            decoration: BoxDecoration(color: Colors.grey),
-            child: Center(
-              child: Text(
-                'Error',
-              ),
-            ),
-          );
+          return ErrorAvatar();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
@@ -49,20 +42,30 @@ class CheckedCircleAvatar extends StatelessWidget {
           );
         }
         if (snapshot.data == false) {
-          return Container(
-            height: 80.0,
-            decoration: BoxDecoration(color: Colors.grey),
-            child: Center(
-              child: Text(
-                'Error',
-                style: TextStyle(fontSize: 10.0),
-              ),
-            ),
-          );
+          return ErrorAvatar();
         }
         return CircleAvatar(
             radius: _radius, backgroundImage: Image.network(_url).image);
       },
+    );
+  }
+}
+
+class ErrorAvatar extends StatelessWidget {
+  const ErrorAvatar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80.0,
+      decoration: BoxDecoration(color: Colors.grey),
+      child: Center(
+        child: Text(
+          'Error',
+        ),
+      ),
     );
   }
 }

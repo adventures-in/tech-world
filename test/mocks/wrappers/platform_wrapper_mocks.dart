@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/wrappers/platform_wrapper.dart';
+import 'package:adventures_in_tech_world/utils/wrappers/platform_wrapper.dart';
 import 'package:mockito/mockito.dart';
 
 class FakePlatformWrapper extends Fake implements PlatformWrapper {

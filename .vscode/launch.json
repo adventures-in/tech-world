@@ -5,9 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "adventures_in_tech_world",
+            "name": "tech_world",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "web_world",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": [
+                "--web-hostname",
+                "localhost",
+                "--web-port",
+                "5000"
+            ]
+        },
+        {
+            "name": "rdt_world",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_rdt.dart",
         }
     ]
 }

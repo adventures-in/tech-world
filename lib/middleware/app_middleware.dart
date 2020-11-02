@@ -1,5 +1,15 @@
-import 'package:adventures_in_tech_world/middleware/auth_middleware.dart';
-import 'package:adventures_in_tech_world/middleware/git_hub_middleware.dart';
+import 'package:adventures_in_tech_world/middleware/auth/connect_auth_state.dart';
+import 'package:adventures_in_tech_world/middleware/auth/plumb_services.dart';
+import 'package:adventures_in_tech_world/middleware/auth/request_git_hub_auth.dart';
+import 'package:adventures_in_tech_world/middleware/auth/sign_in_with_google.dart';
+import 'package:adventures_in_tech_world/middleware/auth/sign_out.dart';
+import 'package:adventures_in_tech_world/middleware/auth/store_git_hub_token.dart';
+import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_pull_requests.dart';
+import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/middleware/platform/launch_u_r_l.dart';
+import 'package:adventures_in_tech_world/middleware/problems/add_problem.dart';
+import 'package:adventures_in_tech_world/middleware/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
@@ -23,12 +33,21 @@ List<Middleware<AppState>> createAppMiddleware({
   PlatformService platformService,
 }) {
   return [
-    ...createAuthMiddleware(
-      authService: authService,
-      gitHubService: gitHubService,
-      databaseService: databaseService,
-      platformService: platformService,
-    ),
-    ...createGitHubMiddleware(gitHubService: gitHubService),
+    // Auth
+    PlumbServicesMiddleware(authService, databaseService),
+    ConnectAuthStateMiddleware(authService),
+    RequestGitHubAuthMiddleware(platformService),
+    StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
+    SignInWithGoogleMiddleware(authService),
+    SignOutMiddleware(authService, gitHubService),
+    // GitHub
+    RetrieveGitHubRepositoriesMiddleware(gitHubService),
+    RetrieveGitHubAssignedIssuesMiddleware(gitHubService),
+    RetrieveGitHubPullRequestsMiddleware(gitHubService),
+    // Platform
+    LaunchURLMiddleware(platformService),
+    // Problems
+    AddProblemMiddleware(),
+    DisplayProblemMiddleware(),
   ];
 }
