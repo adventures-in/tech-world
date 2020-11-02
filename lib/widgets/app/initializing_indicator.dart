@@ -18,9 +18,9 @@ class InitializingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     var message = '';
     if (!firebaseDone) {
-      message = 'Enticing a ghost into the machine...';
+      message = 'Firing up the machine...';
     } else if (!reduxDone) {
-      message = 'Plumbing the pipes...';
+      message = 'Plumbing the streams...';
     }
     return Material(
       child: Column(

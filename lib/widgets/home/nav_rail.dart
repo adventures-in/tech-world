@@ -52,7 +52,7 @@ class NavRail extends StatelessWidget {
                 builder: (context, adventurer) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProfileAvatar(adventurer?.photoURL),
+                    child: ProfileAvatar(adventurer),
                   );
                 },
               ),

@@ -1,5 +1,5 @@
-import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
-import 'package:adventures_in_tech_world/actions/database/plumb_database_stream.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_streams.dart';
+import 'package:adventures_in_tech_world/actions/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
 import 'package:adventures_in_tech_world/extensions/page_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
@@ -51,13 +51,13 @@ class _AppWidgetState extends State<AppWidget> {
         _initializedRedux = true;
       });
 
-      // dispatch initial actions
-      // ...
-
       /// This should happen once on app load, the various streams from the
       /// [FirebaseFirestore] database are changed but the [DatabaseService]'s
       /// [StreamController] stays connected to the redux [Store].
-      _store.dispatch(PlumbDatabaseStream());
+      _store.dispatch(PlumbStreams());
+
+      // dispatch initial actions
+      _store.dispatch(ObserveAuthState());
     } catch (e) {
       setState(() {
         _error = e;
@@ -88,7 +88,6 @@ class _AppWidgetState extends State<AppWidget> {
     return StoreProvider<AppState>(
       store: _store,
       child: StoreConnector<AppState, Settings>(
-        onInit: (store) => store.dispatch(PlumbServices()),
         distinct: true,
         converter: (store) => store.state.settings,
         builder: (context, settings) {

@@ -26,6 +26,7 @@ class StoreUserDataReducer extends TypedReducer<AppState, StoreUserData> {
 
           return state.rebuild((b) => b
             ..adventurer = _adventurer?.toBuilder()
-            ..userData = action.userData?.toBuilder());
+            ..userData = action.userData?.toBuilder()
+            ..authStep = AuthStep.waitingForInput);
         });
 }

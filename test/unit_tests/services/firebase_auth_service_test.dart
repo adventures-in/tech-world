@@ -5,7 +5,7 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
 import 'package:test/test.dart';
 
-import '../../mocks/services/auth/firebase_auth_mocks.dart';
+import '../../utils/mocks/services/auth/firebase_auth_mocks.dart';
 
 void main() {
   group('Auth Service.', () {
