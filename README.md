@@ -81,4 +81,5 @@ firebase deploy --only hosting:adventures-in-tech-world
 firebase deploy --only firestore:rules
 ~/utils/chromedriver --port=4444
 flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chrome
+flutter run -t lib/main_rdt.dart
 ```

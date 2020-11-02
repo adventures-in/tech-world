@@ -18,6 +18,7 @@ dependencies:
   # auth 
   oauth2:
   firebase_auth:
+  google_sign_in:
 
   # database 
   cloud_firestore:
@@ -44,10 +45,10 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   built_value_generator:
+  redux_remote_devtools:
   pedantic:
   test:
   mockito:
-  redux_remote_devtools:
 
 flutter:
   uses-material-design: true

@@ -4,9 +4,9 @@ import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
 import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_set.dart';
+import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 

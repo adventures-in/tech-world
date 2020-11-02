@@ -7,6 +7,8 @@ import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthService implements AuthService {
   final auth.FirebaseAuth _firebaseAuth;
@@ -78,6 +80,25 @@ class FirebaseAuthService implements AuthService {
     final credential = auth.GithubAuthProvider.credential(token);
     final authResult = await _firebaseAuth.signInWithCredential(credential);
     return authResult.user.toData();
+  }
+
+  @override
+  Future<UserData> signInWithGoogle() async {
+    final _googleSignIn = GoogleSignIn(
+      scopes: ['email', 'https://www.googleapis.com/auth/drive.file'],
+    );
+
+    final googleSignInAccount = await _googleSignIn.signIn();
+    final googleSignInAuthentication = await googleSignInAccount.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    final user = userCredential.user;
+    return user.toData();
   }
 
   /// The stream of auth state is connected to the store so the app state will

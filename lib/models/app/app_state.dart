@@ -3,15 +3,17 @@ library app_state;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/nav_selection.dart';
+import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/models/navigation/initial_page_data.dart';
+import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
+import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -43,15 +45,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Adventurer get adventurer;
 
   /// Navigation
-  NavSelection get navSelection;
+  BuiltList<PageData> get pagesData;
+  NavBarSelection get navSelection;
 
   AppState._();
 
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
+    ..pagesData = ListBuilder<PageData>(<PageData>[InitialPageData()])
     ..settings = Settings.initBuilder()
     ..authStep = AuthStep.checking
-    ..navSelection = NavSelection.projects);
+    ..navSelection = NavBarSelection.projects);
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

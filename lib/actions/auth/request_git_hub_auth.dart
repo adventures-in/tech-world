@@ -2,11 +2,10 @@ library request_git_hub_auth;
 
 import 'dart:convert';
 
+import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/models/app/serializers.dart';
 
 part 'request_git_hub_auth.g.dart';
 

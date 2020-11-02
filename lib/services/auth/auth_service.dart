@@ -11,6 +11,7 @@ abstract class AuthService {
   Future<String> getCurrentUserId();
   Future<UserData> signInAnonymously();
   Future<UserData> signInWithGithub(String token);
+  Future<UserData> signInWithGoogle();
   Future<UserData> linkGithub(String token);
   Future<void> signOut();
 }
