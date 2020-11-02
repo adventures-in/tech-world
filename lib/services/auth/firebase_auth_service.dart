@@ -85,7 +85,7 @@ class FirebaseAuthService implements AuthService {
   @override
   Future<UserData> signInWithGoogle() async {
     final _googleSignIn = GoogleSignIn(
-      scopes: ['email', 'https://www.googleapis.com/auth/drive.file	'],
+      scopes: ['email', 'https://www.googleapis.com/auth/drive.file'],
     );
 
     final googleSignInAccount = await _googleSignIn.signIn();

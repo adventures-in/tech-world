@@ -15,19 +15,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-class AdventuresInApp extends StatefulWidget {
+class AppWidget extends StatefulWidget {
   final FirebaseWrapper _firebase;
   final ReduxBundle _redux;
 
-  AdventuresInApp({FirebaseWrapper firebase, ReduxBundle redux})
+  AppWidget({FirebaseWrapper firebase, ReduxBundle redux})
       : _firebase = firebase ?? FirebaseWrapper(),
         _redux = redux;
 
   @override
-  _AdventuresInAppState createState() => _AdventuresInAppState();
+  _AppWidgetState createState() => _AppWidgetState();
 }
 
-class _AdventuresInAppState extends State<AdventuresInApp> {
+class _AppWidgetState extends State<AppWidget> {
   ReduxBundle _redux;
   Store<AppState> _store;
   dynamic _error;

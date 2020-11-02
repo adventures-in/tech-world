@@ -8,6 +8,7 @@ import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
+import 'package:adventures_in_tech_world/actions/database/plumb_database_stream.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
@@ -66,6 +67,7 @@ part 'serializers.g.dart';
   LaunchURL,
   NavigateToProfile,
   NavBarSelection,
+  PlumbDatabaseStream,
   PlumbServices,
   Problem,
   PullRequestState,

@@ -8,7 +8,7 @@
 import 'package:adventures_in_tech_world/widgets/app/initializing_indicator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../utils/completable_app_widget_harness.dart';
+import '../utils/completable_app_harness.dart';
 
 void main() {
   group('AdventuresInApp', () {
@@ -18,7 +18,7 @@ void main() {
       final initializingIndicatorFinder = find.byType(InitializingIndicator);
 
       // Create a test harness that wraps the App widget.
-      final harness = CompletableAppWidgetHarnessWithFakeStore();
+      final harness = CompletableAppHarnessWithFakeStore();
 
       // Build the widget tree.
       await tester.pumpWidget(harness.widget);
