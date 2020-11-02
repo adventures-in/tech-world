@@ -1,6 +1,6 @@
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
-import 'package:adventures_in_tech_world/actions/auth/connect_auth_state_to_store.dart';
+import 'package:adventures_in_tech_world/actions/app/plumb_streams.dart';
+import 'package:adventures_in_tech_world/actions/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
@@ -8,7 +8,6 @@ import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
-import 'package:adventures_in_tech_world/actions/database/plumb_database_stream.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
@@ -60,7 +59,6 @@ part 'serializers.g.dart';
   AuthProviderData,
   AuthStep,
   BrightnessMode,
-  ConnectAuthStateToStore,
   DisplayProblem,
   GitHubIssue,
   GitHubLabel,
@@ -70,8 +68,8 @@ part 'serializers.g.dart';
   InitialPageData,
   LaunchURL,
   NavBarSelection,
-  PlumbDatabaseStream,
-  PlumbServices,
+  ObserveAuthState,
+  PlumbStreams,
   Problem,
   ProfilePageData,
   PullRequestState,

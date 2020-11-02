@@ -1,9 +1,10 @@
-import 'package:adventures_in_tech_world/middleware/auth/connect_auth_state.dart';
-import 'package:adventures_in_tech_world/middleware/auth/plumb_services.dart';
+import 'package:adventures_in_tech_world/middleware/app/plumb_streams.dart';
+import 'package:adventures_in_tech_world/middleware/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/middleware/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/middleware/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/middleware/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/middleware/auth/store_git_hub_token.dart';
+import 'package:adventures_in_tech_world/middleware/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_repositories.dart';
@@ -34,10 +35,11 @@ List<Middleware<AppState>> createAppMiddleware({
 }) {
   return [
     // Auth
-    PlumbServicesMiddleware(authService, databaseService),
-    ConnectAuthStateMiddleware(authService),
+    ObserveAuthStateMiddleware(authService),
+    PlumbStreamsMiddleware(authService, databaseService),
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
+    StoreUserDataMiddleware(authService),
     SignInWithGoogleMiddleware(authService),
     SignOutMiddleware(authService, gitHubService),
     // GitHub

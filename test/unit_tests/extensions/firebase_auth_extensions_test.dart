@@ -5,8 +5,8 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
 import 'package:test/test.dart';
 
-import '../../mocks/services/auth/firebase_auth_mocks.dart';
-import '../../mocks/services/auth/firebase_user_mocks.dart';
+import '../../utils/mocks/services/auth/firebase_auth_mocks.dart';
+import '../../utils/mocks/services/auth/firebase_user_mocks.dart';
 
 void main() {
   group('Firebase Auth Extensions -> ', () {
