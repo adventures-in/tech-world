@@ -7,8 +7,7 @@ import 'package:adventures_in_tech_world/middleware/auth/store_git_hub_token.dar
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/middleware/git_hub/retrieve_git_hub_repositories.dart';
-import 'package:adventures_in_tech_world/middleware/navigation/launch_u_r_l.dart';
-import 'package:adventures_in_tech_world/middleware/navigation/navigate_to_profile.dart';
+import 'package:adventures_in_tech_world/middleware/platform/launch_u_r_l.dart';
 import 'package:adventures_in_tech_world/middleware/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/middleware/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
@@ -45,9 +44,8 @@ List<Middleware<AppState>> createAppMiddleware({
     RetrieveGitHubRepositoriesMiddleware(gitHubService),
     RetrieveGitHubAssignedIssuesMiddleware(gitHubService),
     RetrieveGitHubPullRequestsMiddleware(gitHubService),
-    // Navigation
+    // Platform
     LaunchURLMiddleware(platformService),
-    NavigateToProfileMiddleware(),
     // Problems
     AddProblemMiddleware(),
     DisplayProblemMiddleware(),

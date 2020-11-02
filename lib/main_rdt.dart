@@ -1,7 +1,7 @@
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/utils/redux_bundle.dart';
 import 'package:adventures_in_tech_world/utils/store_operation.dart';
-import 'package:adventures_in_tech_world/widgets/app/app.dart';
+import 'package:adventures_in_tech_world/widgets/app/app_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';

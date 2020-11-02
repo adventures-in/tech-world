@@ -1,16 +1,17 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_services.dart';
 import 'package:adventures_in_tech_world/actions/database/plumb_database_stream.dart';
+import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
+import 'package:adventures_in_tech_world/extensions/page_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/app/settings.dart';
+import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
 import 'package:adventures_in_tech_world/utils/redux_bundle.dart';
 import 'package:adventures_in_tech_world/utils/wrappers/firebase_wrapper.dart';
 import 'package:adventures_in_tech_world/widgets/app/initializing_error_page.dart';
 import 'package:adventures_in_tech_world/widgets/app/initializing_indicator.dart';
-import 'package:adventures_in_tech_world/widgets/auth/auth_page.dart';
-import 'package:adventures_in_tech_world/widgets/home/home_page.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -96,19 +97,23 @@ class _AppWidgetState extends State<AppWidget> {
             theme: MakeThemeData.from(settings.lightTheme),
             darkTheme: MakeThemeData.from(settings.darkTheme),
             themeMode: MakeThemeMode.from(settings.brightnessMode),
-            home: StoreConnector<AppState, bool>(
+            home: StoreConnector<AppState, BuiltList<PageData>>(
               distinct: true,
-              converter: (store) =>
-                  store.state.userData != null &&
-                  store.state.userData.hasGitHub &&
-                  store.state.gitHubToken != null,
-              builder: (context, signedInAndHaveToken) {
-                return (signedInAndHaveToken) ? HomePage() : AuthPage();
-              },
+              converter: (store) => store.state.pagesData,
+              builder: (context, pagesData) => Navigator(
+                  pages: pagesData.toPages(),
+                  onPopPage: (route, dynamic result) {
+                    if (!route.didPop(result)) {
+                      return false;
+                    }
+
+                    if (route.isCurrent) {
+                      _store.dispatch(RemoveCurrentPage());
+                    }
+
+                    return true;
+                  }),
             ),
-            routes: <String, WidgetBuilder>{
-              '/profile': (context) => ProfilePage(),
-            },
           );
         },
       ),

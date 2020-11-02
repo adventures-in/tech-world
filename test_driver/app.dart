@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/widgets/app/app.dart';
+import 'package:adventures_in_tech_world/widgets/app/app_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:redux/redux.dart';

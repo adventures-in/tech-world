@@ -10,6 +10,8 @@ import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/models/navigation/initial_page_data.dart';
+import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_collection/built_collection.dart';
@@ -43,12 +45,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Adventurer get adventurer;
 
   /// Navigation
+  BuiltList<PageData> get pagesData;
   NavBarSelection get navSelection;
 
   AppState._();
 
   factory AppState.init() => AppState((a) => a
     ..displayingProblem = false
+    ..pagesData = ListBuilder<PageData>(<PageData>[InitialPageData()])
     ..settings = Settings.initBuilder()
     ..authStep = AuthStep.checking
     ..navSelection = NavBarSelection.projects);

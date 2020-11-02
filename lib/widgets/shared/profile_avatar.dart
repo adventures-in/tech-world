@@ -1,5 +1,6 @@
-import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
+import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
+import 'package:adventures_in_tech_world/models/navigation/profile_page_data.dart';
 import 'package:adventures_in_tech_world/utils/checked_circle_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class ProfileAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: () {
-        context.dispatch(NavigateToProfile());
+        context.dispatch(PushPage(data: ProfilePageData()));
       },
       elevation: 0.0,
       fillColor: Colors.white,

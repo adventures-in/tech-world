@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/widgets/app/app.dart';
+import 'package:adventures_in_tech_world/widgets/app/app_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';

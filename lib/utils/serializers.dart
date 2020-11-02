@@ -16,7 +16,7 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_i
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
-import 'package:adventures_in_tech_world/actions/navigation/navigate_to_profile.dart';
+import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
@@ -36,6 +36,9 @@ import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
+import 'package:adventures_in_tech_world/models/navigation/initial_page_data.dart';
+import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
+import 'package:adventures_in_tech_world/models/navigation/profile_page_data.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/themes/theme_set.dart';
@@ -64,13 +67,15 @@ part 'serializers.g.dart';
   GitHubPullRequest,
   GitHubRepository,
   GitHubUser,
+  InitialPageData,
   LaunchURL,
-  NavigateToProfile,
   NavBarSelection,
   PlumbDatabaseStream,
   PlumbServices,
   Problem,
+  ProfilePageData,
   PullRequestState,
+  PushPage,
   RequestGitHubAuth,
   RemoveProblem,
   RetrieveGitHubAssignedIssues,
