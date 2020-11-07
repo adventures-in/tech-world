@@ -3,6 +3,7 @@ import 'package:adventures_in_tech_world/actions/app/plumb_streams.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_anonymously.dart';
+import 'package:adventures_in_tech_world/actions/auth/sign_in_with_apple.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
@@ -16,6 +17,7 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_reque
 import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
 import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
+import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
@@ -75,12 +77,14 @@ part 'serializers.g.dart';
   PullRequestState,
   PushPage,
   RequestGitHubAuth,
+  RemoveCurrentPage,
   RemoveProblem,
   RetrieveGitHubAssignedIssues,
   RetrieveGitHubPullRequests,
   RetrieveGitHubRepositories,
   Settings,
   SignInAnonymously,
+  SignInWithApple,
   SignInWithGoogle,
   SignOut,
   StoreAdventurer,

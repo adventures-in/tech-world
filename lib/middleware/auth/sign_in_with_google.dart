@@ -9,8 +9,9 @@ class SignInWithGoogleMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final reaction = await authService.signInWithGoogle();
-
-          store.dispatch(reaction);
+          // We don't do anyting with the UserData object here as the
+          // authStateChanges stream will emit the same object and the state is
+          // changed there.
+          await authService.signInWithGoogle();
         });
 }

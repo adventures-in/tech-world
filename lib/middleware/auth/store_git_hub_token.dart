@@ -41,8 +41,8 @@ class StoreGitHubTokenMiddleware
                 await databaseService.deleteAnonymousAccount(currentUserId);
 
                 // dispatch step change and sign in with github
-                store.dispatch(
-                    StoreAuthStep(step: AuthStep.signingInWithGitHub));
+                // store.dispatch(
+                //     StoreAuthStep(step: AuthStep.signingInWithGitHub));
                 final userData =
                     await authService.signInWithGithub(action.token);
 
