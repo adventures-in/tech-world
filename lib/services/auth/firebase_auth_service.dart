@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/google_sign_in_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/sign_in_with_apple_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/apple_id_credential.dart';
+import 'package:adventures_in_tech_world/models/auth/google_sign_in_credential.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
@@ -87,29 +89,40 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<UserData> signInWithGoogle() async {
+  Future<GoogleSignInCredential> getGoogleCredential() async {
     final _googleSignIn = GoogleSignIn(
       scopes: ['email', 'https://www.googleapis.com/auth/drive.file'],
     );
 
     final googleSignInAccount = await _googleSignIn.signIn();
     final googleSignInAuthentication = await googleSignInAccount.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
+
+    return googleSignInAuthentication.toBuiltValue();
+  }
+
+  @override
+  Future<UserData> signInWithGoogle(
+      {@required GoogleSignInCredential credential}) async {
+    final AuthCredential authCredential = GoogleAuthProvider.credential(
+      accessToken: credential.accessToken,
+      idToken: credential.idToken,
     );
 
     final userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        await FirebaseAuth.instance.signInWithCredential(authCredential);
     final user = userCredential.user;
     return user.toData();
   }
 
-  /// The stream of auth state is connected to the store so the app state will
-  /// be automatically updated
   @override
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  Future<AppleIdCredential> getAppleCredential() async {
+    final appleIdCredential =
+        await SignInWithApple.getAppleIDCredential(scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ]);
+
+    return appleIdCredential.toBuiltValue();
   }
 
   @override
@@ -128,14 +141,10 @@ class FirebaseAuthService implements AuthService {
     return user.toData();
   }
 
+  /// The stream of auth state is connected to the store so the app state will
+  /// be automatically updated
   @override
-  Future<AppleIdCredential> getAppleCredential() async {
-    final appleIdCredential =
-        await SignInWithApple.getAppleIDCredential(scopes: [
-      AppleIDAuthorizationScopes.email,
-      AppleIDAuthorizationScopes.fullName,
-    ]);
-
-    return appleIdCredential.toBuiltValue();
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
   }
 }

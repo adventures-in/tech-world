@@ -19,6 +19,8 @@ class InitialPage extends StatelessWidget {
               return WaitingIndicator('Checking where we\'re at...');
             case AuthStep.contactingApple:
               return WaitingIndicator('Contacting Apple...');
+            case AuthStep.contactingGoogle:
+              return WaitingIndicator('Contacting Google...');
             case AuthStep.signingInWithFirebase:
               return WaitingIndicator('Preparing your Adventure...');
             case AuthStep.waitingForInput:
