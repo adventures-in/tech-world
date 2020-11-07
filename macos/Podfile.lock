@@ -318,6 +318,8 @@ PODS:
   - shared_preferences (0.0.1)
   - shared_preferences_macos (0.0.1):
     - FlutterMacOS
+  - sign_in_with_apple (0.0.1):
+    - FlutterMacOS
   - url_launcher (0.0.1)
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
@@ -329,6 +331,7 @@ DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral/.symlinks/flutter/darwin-x64`)
   - shared_preferences (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
+  - sign_in_with_apple (from `Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos`)
   - url_launcher (from `Flutter/ephemeral/.symlinks/plugins/url_launcher/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
@@ -363,6 +366,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences/macos
   shared_preferences_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos
+  sign_in_with_apple:
+    :path: Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos
   url_launcher:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher/macos
   url_launcher_macos:
@@ -390,6 +395,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   shared_preferences: 9fec34d1bd906196a4da48fcf6c3ad521cc00b8d
   shared_preferences_macos: 480ce071d0666e37cef23fe6c702293a3d21799e
+  sign_in_with_apple: a9e97e744e8edc36aefc2723111f652102a7a727
   url_launcher: af78307ef9bafff91273b34f1c6c0c86a0004fd7
   url_launcher_macos: 45af3d61de06997666568a7149c1be98b41c95d4
 

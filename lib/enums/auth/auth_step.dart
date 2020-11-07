@@ -8,27 +8,19 @@ part 'auth_step.g.dart';
 class AuthStep extends EnumClass {
   static Serializer<AuthStep> get serializer => _$authStepSerializer;
   static const AuthStep checking = _$checking;
-  static const AuthStep signingInAnonymously = _$signingInAnonymously;
-  static const AuthStep listeningForTempToken = _$listeningForTempToken;
-  static const AuthStep retrievingStoredToken = _$retrievingStoredToken;
   static const AuthStep waitingForInput = _$waitingForInput;
-  static const AuthStep requestingGitHubAuth = _$requestingGitHubAuth;
-  static const AuthStep exchangingCode = _$exchangingCode;
-  static const AuthStep exchangedCode = _$exchangedCode;
-  static const AuthStep signingInWithGitHub = _$signingInWithGitHub;
+  static const AuthStep contactingApple = _$contactingApple;
+  static const AuthStep contactingGoogle = _$contactingGoogle;
+  static const AuthStep signingInWithFirebase = _$signingInWithFirebase;
   static const AuthStep signingOut = _$signingOut;
 
   static const Map<AuthStep, int> _$indexMap = {
     checking: 0,
-    signingInAnonymously: 1,
-    listeningForTempToken: 2,
-    retrievingStoredToken: 3,
-    waitingForInput: 4,
-    requestingGitHubAuth: 5,
-    exchangingCode: 6,
-    exchangedCode: 7,
-    signingInWithGitHub: 8,
-    signingOut: 9
+    waitingForInput: 1,
+    contactingApple: 2,
+    contactingGoogle: 3,
+    signingInWithFirebase: 4,
+    signingOut: 5
   };
 
   const AuthStep._(String name) : super(name);
