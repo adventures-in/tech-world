@@ -3,8 +3,8 @@ import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/enums/platform/platform_enum.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/widgets/auth/apple_sign_in_button.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/google_sign_in_button.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page_buttons/apple_sign_in_button.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page_buttons/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

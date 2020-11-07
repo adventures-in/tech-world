@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/google_sign_in_button.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/sign_in_with_git_hub_button.dart';
+import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/link_asana_fab.dart';
+import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/link_git_hub_fab.dart';
+import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/link_google_fab.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -21,11 +21,11 @@ class ProfilePage extends StatelessWidget {
           child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GoogleSignInButton(
-              darkMode: true,
-              onPressed: () => context.dispatch(SignInWithGoogle())),
+          LinkGoogleFAB(),
           SizedBox(height: 20),
-          SignInWithGitHubButton(),
+          LinkGitHubFAB(),
+          SizedBox(height: 20),
+          LinkAsanaFAB(),
           SizedBox(height: 20),
           MaterialButton(
             child: Text('Sign Out'),

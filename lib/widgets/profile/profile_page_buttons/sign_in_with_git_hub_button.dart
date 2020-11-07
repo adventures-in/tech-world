@@ -17,7 +17,7 @@ class SignInWithGitHubButton extends StatelessWidget {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Text('Sign in with GitHub', style: TextStyle(color: Colors.white)),
           SizedBox(width: 10),
-          Image.asset('assets/GitHub-Mark-Light-64px.png',
+          Image.asset('assets/git_hub_white.png',
               width: 20, height: 20, fit: BoxFit.cover),
         ]),
         onPressed: () => context.dispatch(RequestGitHubAuth()),

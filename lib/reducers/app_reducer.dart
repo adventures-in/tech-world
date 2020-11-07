@@ -13,6 +13,7 @@ import 'package:adventures_in_tech_world/reducers/navigation/store_nav_bar_selec
 import 'package:adventures_in_tech_world/reducers/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/reducers/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/reducers/problems/remove_problem.dart';
+import 'package:adventures_in_tech_world/reducers/settings/update_settings.dart';
 import 'package:redux/redux.dart';
 
 /// Reducers specify how the application"s state changes in response to actions
@@ -40,4 +41,6 @@ final appReducer =
   DisplayProblemReducer(),
   AddProblemReducer(),
   RemoveProblemReducer(),
+  // Settings
+  UpdateSettingsReducer(),
 ]);
