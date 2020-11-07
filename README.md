@@ -51,3 +51,8 @@ firebase deploy --only firestore:rules
 flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chrome
 flutter run -t lib/main_rdt.dart
 ```
+
+Kill the process on port 8080 (ie. when `firebase emulators` wasn't properly terminated)
+```
+lsof -t -i tcp:8080 | xargs kill
+```

@@ -1,5 +1,7 @@
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page.dart';
 import 'package:adventures_in_tech_world/widgets/home/home_page.dart';
 import 'package:adventures_in_tech_world/widgets/shared/waiting_indicator.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +16,17 @@ class InitialPage extends StatelessWidget {
         builder: (context, authStep) {
           switch (authStep) {
             case AuthStep.checking:
-              return WaitingIndicator('Checking Auth State');
-            case AuthStep.signingInAnonymously:
-              return WaitingIndicator('Signing In Anonymously');
-            case AuthStep.listeningForTempToken:
-              return WaitingIndicator('Waiting for GitHub token');
-            case AuthStep.retrievingStoredToken:
-              return WaitingIndicator('Retrieving stored GitHub token');
-            case AuthStep.signingInWithGitHub:
-              return WaitingIndicator('Signing in to Firebase with GitHub');
+              return WaitingIndicator('Checking where we\'re at...');
+            case AuthStep.contactingApple:
+              return WaitingIndicator('Contacting Apple...');
+            case AuthStep.signingInWithFirebase:
+              return WaitingIndicator('Preparing your Adventure...');
             case AuthStep.waitingForInput:
-              return HomePage();
+              return StoreConnector<AppState, UserData>(
+                  distinct: true,
+                  converter: (store) => store.state.userData,
+                  builder: (context, userData) =>
+                      (userData == null) ? AuthPage() : HomePage());
             default:
               return Container();
           }

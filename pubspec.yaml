@@ -19,6 +19,7 @@ dependencies:
   oauth2:
   firebase_auth:
   google_sign_in:
+  sign_in_with_apple:
 
   # database 
   cloud_firestore:

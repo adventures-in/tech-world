@@ -3,12 +3,16 @@ import 'dart:async';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_auth_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dart';
+import 'package:adventures_in_tech_world/extensions/sign_in_with_apple_extensions.dart';
+import 'package:adventures_in_tech_world/models/auth/apple_id_credential.dart';
 import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:meta/meta.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseAuthService implements AuthService {
   final auth.FirebaseAuth _firebaseAuth;
@@ -106,5 +110,32 @@ class FirebaseAuthService implements AuthService {
   @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<UserData> signInWithApple(
+      {@required AppleIdCredential credential}) async {
+    // convert to OAuthCredential
+    final oAuthCredential = OAuthProvider('apple.com').credential(
+      idToken: credential.identityToken,
+      accessToken: credential.authorizationCode,
+    );
+
+    // use the credential to sign in to firebase
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+    final user = userCredential.user;
+    return user.toData();
+  }
+
+  @override
+  Future<AppleIdCredential> getAppleCredential() async {
+    final appleIdCredential =
+        await SignInWithApple.getAppleIDCredential(scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ]);
+
+    return appleIdCredential.toBuiltValue();
   }
 }
