@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/navigation/launch_url.dart';
+import 'package:adventures_in_tech_world/actions/platform/launch_url.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:redux/redux.dart';
