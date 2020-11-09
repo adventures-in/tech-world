@@ -18,16 +18,21 @@ import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositori
 import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:adventures_in_tech_world/actions/platform/detect_platform.dart';
 import 'package:adventures_in_tech_world/actions/platform/launch_url.dart';
 import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
+import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
+import 'package:adventures_in_tech_world/actions/settings/update_settings.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
+import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/enums/platform/platform_enum.dart';
-import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
-import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
+import 'package:adventures_in_tech_world/enums/settings/brightness_mode.dart';
+import 'package:adventures_in_tech_world/enums/settings/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
@@ -41,6 +46,7 @@ import 'package:adventures_in_tech_world/models/navigation/initial_page_data.dar
 import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
 import 'package:adventures_in_tech_world/models/navigation/profile_page_data.dart';
 import 'package:adventures_in_tech_world/models/problems/problem.dart';
+import 'package:adventures_in_tech_world/models/profile/profile_v_m.dart';
 import 'package:adventures_in_tech_world/models/settings/settings.dart';
 import 'package:adventures_in_tech_world/models/settings/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/settings/theme_set.dart';
@@ -62,6 +68,7 @@ part 'serializers.g.dart';
   AuthProviderData,
   AuthStep,
   BrightnessMode,
+  DetectPlatform,
   DisplayProblem,
   GitHubIssue,
   GitHubLabel,
@@ -70,11 +77,17 @@ part 'serializers.g.dart';
   GitHubUser,
   InitialPageData,
   LaunchURL,
+  LinkProvider,
+  LinkingStep,
   NavBarSelection,
   ObserveAuthState,
+  PageData,
+  PlatformEnum,
   PlumbStreams,
   Problem,
   ProfilePageData,
+  ProfileVM,
+  Provider,
   PullRequestState,
   PushPage,
   RequestGitHubAuth,
@@ -99,6 +112,7 @@ part 'serializers.g.dart';
   ThemeBrightness,
   ThemeColors,
   ThemeSet,
+  UpdateSettings,
   UserData,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

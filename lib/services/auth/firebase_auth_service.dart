@@ -115,6 +115,20 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
+  Future<UserData> linkGoogle(
+      {@required GoogleSignInCredential credential}) async {
+    final AuthCredential authCredential = GoogleAuthProvider.credential(
+      accessToken: credential.accessToken,
+      idToken: credential.idToken,
+    );
+
+    final userCredential = await FirebaseAuth.instance.currentUser
+        .linkWithCredential(authCredential);
+    final user = userCredential.user;
+    return user.toData();
+  }
+
+  @override
   Future<AppleIdCredential> getAppleCredential() async {
     final appleIdCredential =
         await SignInWithApple.getAppleIDCredential(scopes: [

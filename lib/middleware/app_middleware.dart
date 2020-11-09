@@ -12,6 +12,7 @@ import 'package:adventures_in_tech_world/middleware/platform/detect_platform.dar
 import 'package:adventures_in_tech_world/middleware/platform/launch_u_r_l.dart';
 import 'package:adventures_in_tech_world/middleware/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/middleware/problems/display_problem.dart';
+import 'package:adventures_in_tech_world/middleware/profile/link_provider.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
@@ -53,5 +54,7 @@ List<Middleware<AppState>> createAppMiddleware({
     // Problems
     AddProblemMiddleware(),
     DisplayProblemMiddleware(),
+    // Profile
+    LinkGoogleMiddleware(authService),
   ];
 }

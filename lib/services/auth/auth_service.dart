@@ -19,6 +19,7 @@ abstract class AuthService {
       {@required GoogleSignInCredential credential});
   Future<AppleIdCredential> getAppleCredential();
   Future<UserData> signInWithApple({@required AppleIdCredential credential});
+  Future<UserData> linkGoogle({@required GoogleSignInCredential credential});
   Future<UserData> linkGithub(String token);
   Future<void> signOut();
 }
