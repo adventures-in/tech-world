@@ -11,7 +11,9 @@ part 'adventurer.g.dart';
 
 abstract class Adventurer implements Built<Adventurer, AdventurerBuilder> {
   String get id;
+  @nullable
   String get displayName;
+  @nullable
   String get photoURL;
   @nullable
   String get firstName;
