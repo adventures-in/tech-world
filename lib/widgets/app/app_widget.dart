@@ -1,6 +1,7 @@
 import 'package:adventures_in_tech_world/actions/app/plumb_streams.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
+import 'package:adventures_in_tech_world/actions/platform/detect_platform.dart';
 import 'package:adventures_in_tech_world/extensions/page_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_data_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/theme_mode_extensions.dart';
@@ -58,6 +59,7 @@ class _AppWidgetState extends State<AppWidget> {
 
       // dispatch initial actions
       _store.dispatch(ObserveAuthState());
+      _store.dispatch(DetectPlatform());
     } catch (e) {
       setState(() {
         _error = e;

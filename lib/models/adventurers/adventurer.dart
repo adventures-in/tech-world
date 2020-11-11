@@ -11,12 +11,20 @@ part 'adventurer.g.dart';
 
 abstract class Adventurer implements Built<Adventurer, AdventurerBuilder> {
   String get id;
+  @nullable
   String get displayName;
+  @nullable
   String get photoURL;
   @nullable
   String get firstName;
   @nullable
   String get lastName;
+  @nullable
+  String get gitHubToken;
+  @nullable
+  String get googleToken;
+  @nullable
+  String get asanaToken;
 
   Adventurer._();
 
@@ -25,7 +33,10 @@ abstract class Adventurer implements Built<Adventurer, AdventurerBuilder> {
       @required String displayName,
       @required String photoURL,
       String firstName,
-      String lastName}) = _$Adventurer._;
+      String lastName,
+      String gitHubToken,
+      String googleToken,
+      String asanaToken}) = _$Adventurer._;
 
   factory Adventurer.by([void Function(AdventurerBuilder) updates]) =
       _$Adventurer;

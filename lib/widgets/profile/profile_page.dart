@@ -1,9 +1,12 @@
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/disregard_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/observe_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/google_sign_in_button.dart';
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/sign_in_with_git_hub_button.dart';
+import 'package:adventures_in_tech_world/models/app/app_state.dart';
+import 'package:adventures_in_tech_world/models/profile/profile_v_m.dart';
+import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/request_authorization_fab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage();
@@ -18,20 +21,27 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       body: Center(
-          child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GoogleSignInButton(
-              darkMode: true,
-              onPressed: () => context.dispatch(SignInWithGoogle())),
-          SizedBox(height: 20),
-          SignInWithGitHubButton(),
-          SizedBox(height: 20),
-          MaterialButton(
-            child: Text('Sign Out'),
-            onPressed: () => context.dispatch(SignOut()),
-          ),
-        ],
+          child: StoreConnector<AppState, ProfileVM>(
+        onInit: (store) => store.dispatch(ObserveAdventurer()),
+        onDispose: (store) => store.dispatch(DisregardAdventurer()),
+        distinct: true,
+        converter: (store) => store.state.profile,
+        builder: (context, profile) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              for (final provider in profile.stateOf.keys)
+                RequestAuthorizationFAB(
+                  provider: provider,
+                  state: profile.stateOf[provider],
+                ),
+              MaterialButton(
+                child: Text('Sign Out'),
+                onPressed: () => context.dispatch(SignOut()),
+              ),
+            ],
+          );
+        },
       )),
     );
   }

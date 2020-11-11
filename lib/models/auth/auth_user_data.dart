@@ -1,4 +1,4 @@
-library user_data;
+library auth_user_data;
 
 import 'dart:convert';
 
@@ -10,12 +10,12 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
 
-part 'user_data.g.dart';
+part 'auth_user_data.g.dart';
 
 /// [createdOn] and [lastSignedInOn] are in UTC as required for serialization
-abstract class UserData extends Object
+abstract class AuthUserData extends Object
     with ReduxAction
-    implements Built<UserData, UserDataBuilder> {
+    implements Built<AuthUserData, AuthUserDataBuilder> {
   String get uid;
   @nullable
   String get displayName;
@@ -37,9 +37,9 @@ abstract class UserData extends Object
       .where((provider) => provider.providerId == 'github.com')
       .isNotEmpty;
 
-  UserData._();
+  AuthUserData._();
 
-  factory UserData({
+  factory AuthUserData({
     @required String uid,
     @required String displayName,
     @required String photoURL,
@@ -50,17 +50,18 @@ abstract class UserData extends Object
     @required bool isAnonymous,
     @required bool emailVerified,
     @required BuiltList<AuthProviderData> providers,
-  }) = _$UserData._;
+  }) = _$AuthUserData._;
 
-  factory UserData.by([void Function(UserDataBuilder) updates]) = _$UserData;
+  factory AuthUserData.by([void Function(AuthUserDataBuilder) updates]) =
+      _$AuthUserData;
 
-  Object toJson() => serializers.serializeWith(UserData.serializer, this);
+  Object toJson() => serializers.serializeWith(AuthUserData.serializer, this);
 
-  static UserData fromJson(String jsonString) =>
-      serializers.deserializeWith(UserData.serializer, json.decode(jsonString));
+  static AuthUserData fromJson(String jsonString) => serializers
+      .deserializeWith(AuthUserData.serializer, json.decode(jsonString));
 
-  static Serializer<UserData> get serializer => _$userDataSerializer;
+  static Serializer<AuthUserData> get serializer => _$authUserDataSerializer;
 
   @override
-  String toString() => 'USER_DATA';
+  String toString() => 'AUTH_USER_DATA';
 }

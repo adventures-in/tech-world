@@ -1,6 +1,6 @@
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/widgets/auth/auth_page.dart';
 import 'package:adventures_in_tech_world/widgets/home/home_page.dart';
 import 'package:adventures_in_tech_world/widgets/shared/waiting_indicator.dart';
@@ -24,9 +24,9 @@ class InitialPage extends StatelessWidget {
             case AuthStep.signingInWithFirebase:
               return WaitingIndicator('Preparing your Adventure...');
             case AuthStep.waitingForInput:
-              return StoreConnector<AppState, UserData>(
+              return StoreConnector<AppState, AuthUserData>(
                   distinct: true,
-                  converter: (store) => store.state.userData,
+                  converter: (store) => store.state.authUserData,
                   builder: (context, userData) =>
                       (userData == null) ? AuthPage() : HomePage());
             default:
