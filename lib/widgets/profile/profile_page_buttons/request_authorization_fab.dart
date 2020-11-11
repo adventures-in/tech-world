@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
+import 'package:adventures_in_tech_world/actions/profile/request_authorization.dart';
 import 'package:adventures_in_tech_world/enums/auth/authorization_state.dart';
 import 'package:adventures_in_tech_world/enums/auth/authorizing_step.dart';
 import 'package:adventures_in_tech_world/enums/auth/provider.dart';
@@ -25,7 +25,8 @@ class RequestAuthorizationFAB extends StatelessWidget {
       return FloatingActionButton(
           child: ImageIcon(AssetImage('assets/$_provider.png')),
           elevation: 1,
-          onPressed: () => context.dispatch(LinkProvider(provider: _provider)));
+          onPressed: () =>
+              context.dispatch(RequestAuthorization(provider: _provider)));
     }
 
     if (_state.state == AuthorizationState.authorized) {

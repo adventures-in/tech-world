@@ -30,7 +30,7 @@
             "\t${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Middleware(${1/(.*)/${1:/pascalcase}/g}Service ${1}Service) : super((store, action, next) async {",
             "\t\tnext(action);",
             "",
-            "\t\tfinal  = await ${1/(.*)/${1:/pascalcase}/g}service${2};",
+            "\t\tfinal  = await ${1/(.*)/${1:/pascalcase}/g}Service${2};",
             "\t\tstore.dispatch();",
             "\t});",
             "}"

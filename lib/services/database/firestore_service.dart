@@ -4,6 +4,7 @@ import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.da
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
+import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/extensions/document_snapshot_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
@@ -48,6 +49,16 @@ class FirestoreService implements DatabaseService {
               ? authUserData.providers.first.photoURL
               : null)
     }, SetOptions(merge: true));
+  }
+
+  @override
+  Future<void> updateAuthToken(Provider provider, String uid, String token) {
+    if (provider == Provider.google) {
+      return _firestore.doc('/users/${uid}').set(
+          <String, dynamic>{'gitHubToken': token}, SetOptions(merge: true));
+    } else {
+      return null;
+    }
   }
 
   /// Observe the document at /adventurers/${uid} and convert each

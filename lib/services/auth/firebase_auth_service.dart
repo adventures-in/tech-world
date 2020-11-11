@@ -90,9 +90,7 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<GoogleSignInCredential> getGoogleCredential() async {
-    final _googleSignIn = GoogleSignIn(
-      scopes: ['email', 'https://www.googleapis.com/auth/drive.file'],
-    );
+    final _googleSignIn = GoogleSignIn(scopes: ['email']);
 
     final googleSignInAccount = await _googleSignIn.signIn();
     final googleSignInAuthentication = await googleSignInAccount.authentication;
@@ -112,6 +110,18 @@ class FirebaseAuthService implements AuthService {
         await FirebaseAuth.instance.signInWithCredential(authCredential);
     final user = userCredential.user;
     return user.toData();
+  }
+
+  @override
+  Future<String> getTokenFromGoogle() async {
+    final _googleSignIn = GoogleSignIn(
+      scopes: ['email', 'https://www.googleapis.com/auth/drive.file'],
+    );
+
+    final googleSignInAccount = await _googleSignIn.signIn();
+    final googleSignInAuthentication = await googleSignInAccount.authentication;
+
+    return googleSignInAuthentication.accessToken;
   }
 
   @override

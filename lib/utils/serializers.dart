@@ -27,6 +27,7 @@ import 'package:adventures_in_tech_world/actions/problems/add_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/display_problem.dart';
 import 'package:adventures_in_tech_world/actions/problems/remove_problem.dart';
 import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
+import 'package:adventures_in_tech_world/actions/profile/request_authorization.dart';
 import 'package:adventures_in_tech_world/actions/profile/update_profile.dart';
 import 'package:adventures_in_tech_world/actions/settings/update_settings.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
@@ -105,6 +106,7 @@ part 'serializers.g.dart';
   RequestGitHubAuth,
   RemoveCurrentPage,
   RemoveProblem,
+  RequestAuthorization,
   RetrieveGitHubAssignedIssues,
   RetrieveGitHubPullRequests,
   RetrieveGitHubRepositories,
