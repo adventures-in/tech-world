@@ -45,7 +45,7 @@ List<Middleware<AppState>> createAppMiddleware({
     RequestGitHubAuthMiddleware(platformService),
     StoreGitHubTokenMiddleware(authService, databaseService, gitHubService),
     SignInWithAppleMiddleware(authService),
-    SignInWithGoogleMiddleware(authService),
+    SignInWithGoogleMiddleware(authService, databaseService),
     SignOutMiddleware(authService, gitHubService),
     // GitHub
     RetrieveGitHubRepositoriesMiddleware(gitHubService),

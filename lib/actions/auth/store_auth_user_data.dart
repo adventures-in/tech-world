@@ -14,6 +14,7 @@ part 'store_auth_user_data.g.dart';
 abstract class StoreAuthUserData extends Object
     with ReduxAction
     implements Built<StoreAuthUserData, StoreAuthUserDataBuilder> {
+  @nullable
   AuthUserData get authUserData;
 
   StoreAuthUserData._();

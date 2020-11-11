@@ -54,8 +54,8 @@ class FirestoreService implements DatabaseService {
   @override
   Future<void> updateAuthToken(Provider provider, String uid, String token) {
     if (provider == Provider.google) {
-      return _firestore.doc('/users/${uid}').set(
-          <String, dynamic>{'gitHubToken': token}, SetOptions(merge: true));
+      return _firestore.doc('/adventurers/${uid}').set(
+          <String, dynamic>{'googleToken': token}, SetOptions(merge: true));
     } else {
       return null;
     }

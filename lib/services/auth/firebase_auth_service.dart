@@ -119,6 +119,7 @@ class FirebaseAuthService implements AuthService {
     );
 
     final googleSignInAccount = await _googleSignIn.signIn();
+
     final googleSignInAuthentication = await googleSignInAccount.authentication;
 
     return googleSignInAuthentication.accessToken;
