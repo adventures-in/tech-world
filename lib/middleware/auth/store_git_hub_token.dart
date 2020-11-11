@@ -1,5 +1,6 @@
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
+import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
@@ -31,9 +32,9 @@ class StoreGitHubTokenMiddleware
               gitHubService.token = action.token;
 
               // disconnect from the token section of the database
-              databaseService.disconnectTempToken();
+              databaseService.disconnect(DatabaseSection.tempToken);
 
-              if (!store.state.userData.hasGitHub) {
+              if (!store.state.authUserData.hasGitHub) {
                 // we have a token but haven't signed in with github
 
                 // set anonymous account to be deleted

@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
+import 'package:adventures_in_tech_world/enums/settings/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/settings/theme_set.dart';
 import 'package:flutter/material.dart';
 

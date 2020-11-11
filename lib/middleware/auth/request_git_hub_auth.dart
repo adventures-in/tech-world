@@ -15,7 +15,8 @@ class RequestGitHubAuthMiddleware
 
           try {
             // store.dispatch(StoreAuthStep(step: AuthStep.requestingGitHubAuth));
-            await platformService.redirectWithState(store.state.userData.uid);
+            await platformService
+                .redirectWithState(store.state.authUserData.uid);
           } catch (error, trace) {
             handleProblem(error, trace);
           }

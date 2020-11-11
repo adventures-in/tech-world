@@ -3,8 +3,8 @@ library settings;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/platform/platform_enum.dart';
-import 'package:adventures_in_tech_world/enums/themes/brightness_mode.dart';
-import 'package:adventures_in_tech_world/enums/themes/theme_brightness.dart';
+import 'package:adventures_in_tech_world/enums/settings/brightness_mode.dart';
+import 'package:adventures_in_tech_world/enums/settings/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/settings/theme_colors.dart';
 import 'package:adventures_in_tech_world/models/settings/theme_set.dart';
 import 'package:adventures_in_tech_world/utils/serializers.dart';

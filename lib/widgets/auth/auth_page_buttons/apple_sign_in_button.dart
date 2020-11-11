@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/stretchable_button.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page_buttons/stretchable_button.dart';
 import 'package:flutter/material.dart';
 
 const double defaultBorderRadius = 3.0;

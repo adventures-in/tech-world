@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/widgets/profile/profile_page_buttons/stretchable_button.dart';
+import 'package:adventures_in_tech_world/widgets/auth/auth_page_buttons/stretchable_button.dart';
 import 'package:flutter/material.dart';
 
 /// A sign in button that matches Google's design guidelines.
@@ -64,7 +64,7 @@ class GoogleSignInButton extends StatelessWidget {
             child: Center(
               child: Image(
                 image: AssetImage(
-                  'assets/google-logo.png',
+                  'assets/google.png',
                 ),
                 height: 18.0,
                 width: 18.0,

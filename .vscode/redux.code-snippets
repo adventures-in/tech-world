@@ -3,45 +3,51 @@
         "prefix": "reb",
         "body": [
             "rebuild((b) => b.",
-      ],
-      "description": "better rebuild autocomplete"
+        ],
+        "description": "better rebuild autocomplete"
     },
     "import meta": {
         "prefix": "meta import",
         "body": [
             "import 'package:meta/meta.dart';",
-      ],
-      "description": "meta import"
+        ],
+        "description": "meta import"
     },
     "import extensions": {
         "prefix": "extensions import",
         "body": [
             "import 'package:${WORKSPACE_NAME}/extensions/extensions.dart';",
-      ],
-      "description": "extensions import"
+        ],
+        "description": "extensions import"
     },
     "middleware class": {
         "prefix": "mdlware",
         "body": [
+            "import 'package:${WORKSPACE_NAME}/models/app/app_state.dart';",
+            "import 'package:redux/redux.dart';",
+            "",
             "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Middleware extends TypedMiddleware<AppState, ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}> {",
             "\t${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Middleware(${1/(.*)/${1:/pascalcase}/g}Service ${1}Service) : super((store, action, next) async {",
             "\t\tnext(action);",
             "",
-            "\t\tfinal reaction = await service${2};",
-            "\t\tstore.dispatch(reaction);",
+            "\t\tfinal  = await ${1/(.*)/${1:/pascalcase}/g}Service${2};",
+            "\t\tstore.dispatch();",
             "\t});",
             "}"
-      ],
-      "description": "middleware class"
+        ],
+        "description": "middleware class"
     },
     "reducer class": {
         "prefix": "reducer",
         "body": [
+            "import 'package:${WORKSPACE_NAME}/models/app/app_state.dart';",
+            "import 'package:redux/redux.dart';",
+            "",
             "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Reducer extends TypedReducer<AppState, ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}> {",
             "\t${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Reducer() : super((state, action) => state.rebuild((b) => b..${1} = action.${1}));",
             "}",
-      ],
-      "description": "reducer class"
+        ],
+        "description": "reducer class"
     },
     "built_value fix": {
         "prefix": "bv_fix",
@@ -83,7 +89,7 @@
             "\tstatic Serializer<${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}> get serializer => _$${TM_FILENAME_BASE/([a-z]*)_+([a-z]*)/${1:/lower}${2:/capitalize}/g}Serializer;",
             "}"
         ],
-      "description": "dart built_value class"
+        "description": "dart built_value class"
     },
     "built_value no-member class": {
         "prefix": "bv_class_no_members",
@@ -114,7 +120,7 @@
             "\tstatic Serializer<${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}> get serializer => _$${TM_FILENAME_BASE/([a-z]*)_+([a-z]*)/${1:/lower}${2:/capitalize}/g}Serializer;",
             "}"
         ],
-      "description": "dart built_value class"
+        "description": "dart built_value class"
     },
     "redux action": {
         "prefix": "bv_act",
@@ -152,7 +158,7 @@
             "\t@override",
             "\tString toString() => '${TM_FILENAME_BASE/(.*)/${1:/upcase}/g}';",
             "}",
-      ],
+        ],
     },
     "redux no-member action": {
         "prefix": "bv_act_no_members",
