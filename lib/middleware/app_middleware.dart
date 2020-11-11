@@ -1,3 +1,5 @@
+import 'package:adventures_in_tech_world/middleware/adventurers/disregard_adventurer.dart';
+import 'package:adventures_in_tech_world/middleware/adventurers/observe_adventurer.dart';
 import 'package:adventures_in_tech_world/middleware/app/plumb_streams.dart';
 import 'package:adventures_in_tech_world/middleware/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/middleware/auth/request_git_hub_auth.dart';
@@ -55,6 +57,8 @@ List<Middleware<AppState>> createAppMiddleware({
     AddProblemMiddleware(),
     DisplayProblemMiddleware(),
     // Profile
+    ObserveAdventurerMiddleware(databaseService),
+    DisregardAdventurerMiddleware(databaseService),
     LinkGoogleMiddleware(authService),
   ];
 }

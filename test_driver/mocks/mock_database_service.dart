@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 
@@ -24,7 +25,7 @@ class MockDatabaseService implements DatabaseService {
       StreamController<ReduxAction>();
 
   @override
-  void connectTempTokenToStore({String uid}) {
+  void connectTempToken({String uid}) {
     if (uid == afterGitHubSignInAuthUserData.uid) {
       _storeController.add(StoreGitHubToken(token: 'token'));
     } else {
@@ -33,7 +34,13 @@ class MockDatabaseService implements DatabaseService {
   }
 
   @override
-  void disconnectTempToken({String uid}) {
+  void connectAdventurerData({String uid}) {
+    // not implemented in mock
+    throw UnimplementedError();
+  }
+
+  @override
+  void disconnect(DatabaseSection section) {
     // not implemented in mock
     throw UnimplementedError();
   }

@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/adventurers/update_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
+import 'package:adventures_in_tech_world/extensions/document_snapshot_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
@@ -70,10 +71,8 @@ class FirestoreService implements DatabaseService {
           .listen((docSnapshot) {
         try {
           if (docSnapshot.exists) {
-            _storeController.add(UpdateAdventurer(
-                gitHubToken: docSnapshot.data()['gitHubToken'] as String,
-                googleToken: docSnapshot.data()['googleToken'] as String,
-                asanaToken: docSnapshot.data()['asanaToken'] as String));
+            _storeController
+                .add(StoreAdventurer(adventurer: docSnapshot.toAdventurer()));
           }
         } catch (error, trace) {
           handleProblem(error, trace);

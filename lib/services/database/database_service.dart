@@ -3,6 +3,7 @@ import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:meta/meta.dart';
 
+/// Implemented by [FirestoreService]
 abstract class DatabaseService {
   Stream<ReduxAction> get storeStream;
   Future<void> updateUserInfo(AuthUserData authUserData, String token);

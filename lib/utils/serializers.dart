@@ -1,4 +1,7 @@
+import 'package:adventures_in_tech_world/actions/adventurers/disregard_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/observe_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:adventures_in_tech_world/actions/adventurers/update_adventurer.dart';
 import 'package:adventures_in_tech_world/actions/app/plumb_streams.dart';
 import 'package:adventures_in_tech_world/actions/auth/observe_auth_state.dart';
 import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
@@ -76,6 +79,7 @@ part 'serializers.g.dart';
   BrightnessMode,
   DetectPlatform,
   DisplayProblem,
+  DisregardAdventurer,
   GitHubIssue,
   GitHubLabel,
   GitHubPullRequest,
@@ -86,6 +90,7 @@ part 'serializers.g.dart';
   LinkProvider,
   LinkingStep,
   NavBarSelection,
+  ObserveAdventurer,
   ObserveAuthState,
   PageData,
   PlatformEnum,
@@ -119,6 +124,7 @@ part 'serializers.g.dart';
   ThemeBrightness,
   ThemeColors,
   ThemeSet,
+  UpdateAdventurer,
   UpdateProfile,
   UpdateSettings,
   AuthUserData,
