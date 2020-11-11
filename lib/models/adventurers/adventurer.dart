@@ -19,6 +19,12 @@ abstract class Adventurer implements Built<Adventurer, AdventurerBuilder> {
   String get firstName;
   @nullable
   String get lastName;
+  @nullable
+  String get gitHubToken;
+  @nullable
+  String get googleToken;
+  @nullable
+  String get asanaToken;
 
   Adventurer._();
 

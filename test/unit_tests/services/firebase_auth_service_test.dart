@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
 import 'package:test/test.dart';
@@ -19,7 +19,7 @@ void main() {
       service.connectAuthStateToStore();
 
       service.storeStream.listen(expectAsync1((action) {
-        expect(action is StoreUserData, true);
+        expect(action is StoreAuthUserData, true);
       }, count: 1));
     });
 

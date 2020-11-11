@@ -1,4 +1,4 @@
-import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
 import 'package:adventures_in_tech_world/actions/profile/update_profile.dart';
 import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
@@ -25,19 +25,16 @@ class LinkGoogleMiddleware extends TypedMiddleware<AppState, LinkProvider> {
           }
 
           store.dispatch(UpdateProfile(
-              provider: action.provider, step: LinkingStep.contacting));
+              provider: action.provider, linkingStep: LinkingStep.contacting));
 
           final _googleCredential = await authService.getGoogleCredential();
 
           store.dispatch(UpdateProfile(
-              provider: action.provider, step: LinkingStep.linking));
+              provider: action.provider, linkingStep: LinkingStep.linking));
 
-          final _userData =
+          final _authUserData =
               await authService.linkGoogle(credential: _googleCredential);
 
-          store.dispatch(UpdateProfile(
-              provider: action.provider, step: LinkingStep.linked));
-
-          store.dispatch(StoreUserData(userData: _userData));
+          store.dispatch(StoreAuthUserData(authUserData: _authUserData));
         });
 }

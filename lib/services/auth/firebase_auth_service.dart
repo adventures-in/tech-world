@@ -6,8 +6,8 @@ import 'package:adventures_in_tech_world/extensions/firebase_user_extensions.dar
 import 'package:adventures_in_tech_world/extensions/google_sign_in_extensions.dart';
 import 'package:adventures_in_tech_world/extensions/sign_in_with_apple_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/apple_id_credential.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/models/auth/google_sign_in_credential.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -66,14 +66,14 @@ class FirebaseAuthService implements AuthService {
   // The sign in updates the app state as the services have been plumbed so
   // the stream of auth state is connected to the store.
   @override
-  Future<UserData> signInAnonymously() async {
+  Future<AuthUserData> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
     return authResult.user.toData();
   }
 
   // We don't do anything with the result as we are connected to the auth state
   @override
-  Future<UserData> linkGithub(String token) async {
+  Future<AuthUserData> linkGithub(String token) async {
     final credential = auth.GithubAuthProvider.credential(token);
     final firebaseUser = await _firebaseAuth.currentUser;
     final authResult = await firebaseUser.linkWithCredential(credential);
@@ -82,7 +82,7 @@ class FirebaseAuthService implements AuthService {
 
   // We don't do anything with the result as we are connected to the auth state
   @override
-  Future<UserData> signInWithGithub(String token) async {
+  Future<AuthUserData> signInWithGithub(String token) async {
     final credential = auth.GithubAuthProvider.credential(token);
     final authResult = await _firebaseAuth.signInWithCredential(credential);
     return authResult.user.toData();
@@ -101,7 +101,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<UserData> signInWithGoogle(
+  Future<AuthUserData> signInWithGoogle(
       {@required GoogleSignInCredential credential}) async {
     final AuthCredential authCredential = GoogleAuthProvider.credential(
       accessToken: credential.accessToken,
@@ -115,7 +115,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<UserData> linkGoogle(
+  Future<AuthUserData> linkGoogle(
       {@required GoogleSignInCredential credential}) async {
     final AuthCredential authCredential = GoogleAuthProvider.credential(
       accessToken: credential.accessToken,
@@ -140,7 +140,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<UserData> signInWithApple(
+  Future<AuthUserData> signInWithApple(
       {@required AppleIdCredential credential}) async {
     // convert to OAuthCredential
     final oAuthCredential = OAuthProvider('apple.com').credential(

@@ -6,11 +6,8 @@ import 'package:built_value/serializer.dart';
 part 'linking_step.g.dart';
 
 class LinkingStep extends EnumClass {
-  static const LinkingStep unknown = _$unknown;
-  static const LinkingStep notLinked = _$notLinked;
   static const LinkingStep contacting = _$contacting;
   static const LinkingStep linking = _$linking;
-  static const LinkingStep linked = _$linked;
 
   const LinkingStep._(String name) : super(name);
 

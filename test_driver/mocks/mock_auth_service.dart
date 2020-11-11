@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
 import 'package:test/fake.dart';
@@ -19,6 +19,6 @@ class FakeAuthService extends Fake implements AuthService {
   @override
   void connectAuthStateToStore() {
     _storeStreamController
-        .add(StoreUserData(userData: afterGitHubSignInUserData));
+        .add(StoreAuthUserData(authUserData: afterGitHubSignInAuthUserData));
   }
 }

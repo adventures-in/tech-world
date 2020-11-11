@@ -3,6 +3,8 @@ library update_profile;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
+import 'package:adventures_in_tech_world/enums/auth/authorization_state.dart';
+import 'package:adventures_in_tech_world/enums/auth/authorizing_step.dart';
 import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
 import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/utils/serializers.dart';
@@ -16,13 +18,20 @@ abstract class UpdateProfile extends Object
     with ReduxAction
     implements Built<UpdateProfile, UpdateProfileBuilder> {
   Provider get provider;
-  LinkingStep get step;
+  @nullable
+  LinkingStep get linkingStep;
+  @nullable
+  AuthorizingStep get authorizingStep;
+  @nullable
+  AuthorizationState get authorizationState;
 
   UpdateProfile._();
 
   factory UpdateProfile(
       {@required Provider provider,
-      @required LinkingStep step}) = _$UpdateProfile._;
+      LinkingStep linkingStep,
+      AuthorizingStep authorizingStep,
+      AuthorizationState authorizationState}) = _$UpdateProfile._;
 
   factory UpdateProfile.by([void Function(UpdateProfileBuilder) updates]) =
       _$UpdateProfile;

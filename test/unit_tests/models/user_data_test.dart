@@ -1,12 +1,12 @@
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('UserData', () {
+  group('AuthUserData', () {
     test('.hasGitHub checks providerId and providers list', () {
-      final userData = UserData(
+      final authUserData = AuthUserData(
           uid: 'uid',
           displayName: 'andy',
           photoURL: 'url',
@@ -26,9 +26,9 @@ void main() {
                 phoneNumber: '1234')
           ]));
 
-      expect(userData.hasGitHub, false);
+      expect(authUserData.hasGitHub, false);
 
-      final userData2 = userData.rebuild((b) => b
+      final authUserData2 = authUserData.rebuild((b) => b
         ..providers.add(AuthProviderData(
             providerId: 'github.com',
             uid: 'uid2',
@@ -37,18 +37,18 @@ void main() {
             email: null,
             phoneNumber: null)));
 
-      expect(userData2.hasGitHub, true);
+      expect(authUserData2.hasGitHub, true);
 
-      final userData3 = userData.rebuild((b) => b
+      final authUserData3 = authUserData.rebuild((b) => b
         ..providers.first =
             b.providers.first.rebuild((b) => b..providerId = 'github.com'));
 
-      expect(userData3.hasGitHub, true);
+      expect(authUserData3.hasGitHub, true);
     });
 
     test('.hasGitHub (memoized) returns the same value on subsequent calls',
         () {
-      final userData = UserData(
+      final authUserData = AuthUserData(
           uid: 'uid',
           displayName: 'andy',
           photoURL: 'url',
@@ -68,8 +68,8 @@ void main() {
                 phoneNumber: '1234')
           ]));
 
-      expect(userData.hasGitHub, true);
-      expect(userData.hasGitHub, true);
+      expect(authUserData.hasGitHub, true);
+      expect(authUserData.hasGitHub, true);
     });
   });
 }

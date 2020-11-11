@@ -1,9 +1,9 @@
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:built_collection/built_collection.dart';
 
 // after anonymous sign in
-final afterAnonymousSignInUserData = UserData(
+final afterAnonymousSignInAuthUserData = AuthUserData(
     uid: 'Ro8xRcoQWEfRCd3Qqz4dVFu3ois2',
     providers: BuiltList(<AuthProviderData>[]),
     displayName: null,
@@ -16,7 +16,7 @@ final afterAnonymousSignInUserData = UserData(
     emailVerified: false);
 
 // after sign in with github
-final afterGitHubSignInUserData = UserData(
+final afterGitHubSignInAuthUserData = AuthUserData(
     uid: 'EH1CsvnQWEfSGnOPsTbuQsNK22',
     displayName: null,
     photoURL: null,

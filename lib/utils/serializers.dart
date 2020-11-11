@@ -7,8 +7,8 @@ import 'package:adventures_in_tech_world/actions/auth/sign_in_with_apple.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_in_with_google.dart';
 import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
+import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_user_data.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
@@ -27,6 +27,8 @@ import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
 import 'package:adventures_in_tech_world/actions/profile/update_profile.dart';
 import 'package:adventures_in_tech_world/actions/settings/update_settings.dart';
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
+import 'package:adventures_in_tech_world/enums/auth/authorization_state.dart';
+import 'package:adventures_in_tech_world/enums/auth/authorizing_step.dart';
 import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
 import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
@@ -37,7 +39,8 @@ import 'package:adventures_in_tech_world/enums/settings/theme_brightness.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/provider_state.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
@@ -66,6 +69,8 @@ part 'serializers.g.dart';
   AddProblem,
   Adventurer,
   AppState,
+  AuthorizationState,
+  AuthorizingStep,
   AuthProviderData,
   AuthStep,
   BrightnessMode,
@@ -89,6 +94,7 @@ part 'serializers.g.dart';
   ProfilePageData,
   ProfileVM,
   Provider,
+  ProviderState,
   PullRequestState,
   PushPage,
   RequestGitHubAuth,
@@ -109,13 +115,13 @@ part 'serializers.g.dart';
   StoreGitHubRepositories,
   StoreGitHubToken,
   StoreNavBarSelection,
-  StoreUserData,
+  StoreAuthUserData,
   ThemeBrightness,
   ThemeColors,
   ThemeSet,
   UpdateProfile,
   UpdateSettings,
-  UserData,
+  AuthUserData,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..addPlugin(StandardJsonPlugin())

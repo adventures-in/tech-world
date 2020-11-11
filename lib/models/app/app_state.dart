@@ -3,11 +3,9 @@ library app_state;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
 import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
-import 'package:adventures_in_tech_world/models/auth/user_data.dart';
+import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
@@ -31,7 +29,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   /// Auth
   AuthStep get authStep;
   @nullable
-  UserData get userData;
+  AuthUserData get authUserData;
 
   /// Problems
   BuiltList<Problem> get problems;
@@ -62,11 +60,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     ..settings = Settings.initBuilder()
     ..authStep = AuthStep.checking
     ..navSelection = NavBarSelection.projects
-    ..profile.linkingStep = MapBuilder({
-      Provider.google: LinkingStep.unknown,
-      Provider.git_hub: LinkingStep.unknown,
-      Provider.asana: LinkingStep.unknown
-    }));
+    ..profile = ProfileVM.initBuilder());
 
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
