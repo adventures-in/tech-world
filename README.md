@@ -17,6 +17,7 @@ Mastery through adventuring with friends.
 ![](https://docs.google.com/drawings/d/e/2PACX-1vR9GnJw-lPS7YUP-By-OmTua2vrPwW89MHf7YxWZssHgWAhIblWBg9mEwiZiiJx8YWbolNfRlYedHjM/pub?w=1242&h=984)
 
 ## Sections 
+
 #### Profiles 
 
 You can add info about what you're working on, including links to repos. Also some of the skills you have, the type of projects you want to work on and anything you need help with.
@@ -29,23 +30,10 @@ You can select a set of topics you are interested in.
 
 You can indicate your current goals by selecting issues in your repos. 
 
-## Editing the Wiki 
-
-If you haven't yet, you'll need to initialize the submodule and update it:
-
-```sh
-git submodule init
-git submodule update
-```
-
 # Common Commands 
 
 ```sh
-remotedev --port 8000
-flutter pub run build_runner build --delete-conflicting-outputs
-flutter pub run build_runner watch --delete-conflicting-outputs
 firebase deploy --only functions
-firebase deploy --only hosting:adventures-in-tech-world
 firebase deploy --only firestore:rules
 ~/utils/chromedriver --port=4444
 flutter drive --target=test_driver/app.dart --browser-name=chrome --release -d chrome
@@ -55,4 +43,11 @@ flutter run -t lib/main_rdt.dart
 Kill the process on port 8080 (ie. when `firebase emulators` wasn't properly terminated)
 ```
 lsof -t -i tcp:8080 | xargs kill
+```
+
+## Build and deploy 
+
+```sh
+flutter build web
+firebase deploy --only hosting:adventures-in-tech-world
 ```

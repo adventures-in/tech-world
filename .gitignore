@@ -61,3 +61,4 @@ web/index.html
 macos/Runner/GoogleService-Info.plist
 # settings for hiding files in VS Code 
 .vscode/settings.json
+web/index_cdn.html
