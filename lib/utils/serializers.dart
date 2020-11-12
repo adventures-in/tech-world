@@ -18,6 +18,7 @@ import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_reposi
 import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_assigned_issues.dart';
 import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/google/create_google_doc.dart';
 import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
@@ -78,6 +79,7 @@ part 'serializers.g.dart';
   AuthProviderData,
   AuthStep,
   BrightnessMode,
+  CreateGoogleDoc,
   DetectPlatform,
   DisplayProblem,
   DisregardAdventurer,

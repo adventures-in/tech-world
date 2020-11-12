@@ -1,10 +1,10 @@
 import 'package:http/http.dart' as http;
 
-class AuthenticatedClient extends http.BaseClient {
+class GitHubClient extends http.BaseClient {
   final String _token;
   final http.Client _inner;
 
-  AuthenticatedClient(this._token, this._inner);
+  GitHubClient(this._token, this._inner);
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {

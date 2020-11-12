@@ -7,12 +7,11 @@ import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/extensions/document_snapshot_extensions.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
-import 'package:adventures_in_tech_world/services/database/database_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
-class FirestoreService implements DatabaseService {
+class DatabaseService {
   /// The [FirebaseFirestore] instance
   final FirebaseFirestore _firestore;
 
@@ -34,7 +33,7 @@ class FirestoreService implements DatabaseService {
   final StreamController<ReduxAction> _storeController =
       StreamController<ReduxAction>();
 
-  FirestoreService(FirebaseFirestore firestore) : _firestore = firestore;
+  DatabaseService(FirebaseFirestore firestore) : _firestore = firestore;
 
   @override
   Future<void> updateUserInfo(AuthUserData authUserData, String token) {

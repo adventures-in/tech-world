@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
+import 'package:adventures_in_tech_world/services/auth_service.dart';
 import 'package:test/test.dart';
 
 import '../../utils/mocks/services/auth/firebase_auth_mocks.dart';
@@ -13,8 +13,7 @@ void main() {
       final storeStreamController = StreamController<ReduxAction>();
       // create a fake that emits a single null
       final fakeFirebaseAuth = FakeFirebaseAuth([null]);
-      final service =
-          FirebaseAuthService(fakeFirebaseAuth, storeStreamController);
+      final service = AuthService(fakeFirebaseAuth, storeStreamController);
 
       service.connectAuthStateToStore();
 
