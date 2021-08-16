@@ -1,4 +1,3 @@
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/utils/redux_bundle.dart';
 import 'package:adventures_in_tech_world/utils/store_operation.dart';
 import 'package:adventures_in_tech_world/widgets/app/app_widget.dart';
@@ -8,7 +7,7 @@ import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
 void main() {
   // Create the rdt middleware that connects to the rdt server.
-  final _rdtMiddleware = RemoteDevToolsMiddleware<AppState>('localhost:8000');
+  final _rdtMiddleware = RemoteDevToolsMiddleware<dynamic>('localhost:8000');
 
   // Create an operation for the redux bundle to run on the store.
   final _rdtOperation = StoreOperation((store) async {

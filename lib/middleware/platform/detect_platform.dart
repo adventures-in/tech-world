@@ -10,7 +10,7 @@ class DetectPlatformMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final platform = await platformService.detectPlatform();
+          final platform = platformService.detectPlatform();
           store.dispatch(UpdateSettings(platform: platform));
         });
 }

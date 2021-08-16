@@ -15,6 +15,7 @@ dependencies:
   dio:
   firebase_core:
   
+  
   # auth 
   oauth2:
   firebase_auth:
@@ -24,9 +25,13 @@ dependencies:
   # database 
   cloud_firestore:
 
-  # github graphql client
+  # github
   github_graphql_client:
     git: https://github.com/Adventures-In/github_graphql_client.git
+
+  # google 
+  googleapis:
+  googleapis_auth:
 
   # platform tools 
   url_launcher:
