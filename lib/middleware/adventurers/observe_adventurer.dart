@@ -9,7 +9,7 @@ class ObserveAdventurerMiddleware
       : super((store, action, next) async {
           next(action);
 
-          await databaseService.connectAdventurerData(
+          databaseService.connectAdventurerData(
               uid: store.state.authUserData.uid);
         });
 }

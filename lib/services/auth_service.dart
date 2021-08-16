@@ -10,7 +10,6 @@ import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/models/auth/google_sign_in_credential.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -51,7 +50,7 @@ class AuthService {
   }
 
   Future<String> getCurrentUserId() async {
-    final user = await _firebaseAuth.currentUser;
+    final user = _firebaseAuth.currentUser;
     return user.uid;
   }
 
@@ -71,7 +70,7 @@ class AuthService {
 
   Future<AuthUserData> linkGithub(String token) async {
     final credential = auth.GithubAuthProvider.credential(token);
-    final firebaseUser = await _firebaseAuth.currentUser;
+    final firebaseUser = _firebaseAuth.currentUser;
     final authResult = await firebaseUser.linkWithCredential(credential);
     return authResult.user.toData();
   }
@@ -96,13 +95,14 @@ class AuthService {
 
   Future<AuthUserData> signInWithGoogle(
       {@required GoogleSignInCredential credential}) async {
-    final AuthCredential authCredential = GoogleAuthProvider.credential(
+    final auth.AuthCredential authCredential =
+        auth.GoogleAuthProvider.credential(
       accessToken: credential.accessToken,
       idToken: credential.idToken,
     );
 
     final userCredential =
-        await FirebaseAuth.instance.signInWithCredential(authCredential);
+        await auth.FirebaseAuth.instance.signInWithCredential(authCredential);
     final user = userCredential.user;
     return user.toData();
   }
@@ -121,12 +121,13 @@ class AuthService {
 
   Future<AuthUserData> linkGoogle(
       {@required GoogleSignInCredential credential}) async {
-    final AuthCredential authCredential = GoogleAuthProvider.credential(
+    final auth.AuthCredential authCredential =
+        auth.GoogleAuthProvider.credential(
       accessToken: credential.accessToken,
       idToken: credential.idToken,
     );
 
-    final userCredential = await FirebaseAuth.instance.currentUser
+    final userCredential = await auth.FirebaseAuth.instance.currentUser
         .linkWithCredential(authCredential);
     final user = userCredential.user;
     return user.toData();
@@ -145,14 +146,14 @@ class AuthService {
   Future<AuthUserData> signInWithApple(
       {@required AppleIdCredential credential}) async {
     // convert to OAuthCredential
-    final oAuthCredential = OAuthProvider('apple.com').credential(
+    final oAuthCredential = auth.OAuthProvider('apple.com').credential(
       idToken: credential.identityToken,
       accessToken: credential.authorizationCode,
     );
 
     // use the credential to sign in to firebase
     final userCredential =
-        await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+        await auth.FirebaseAuth.instance.signInWithCredential(oAuthCredential);
     final user = userCredential.user;
     return user.toData();
   }

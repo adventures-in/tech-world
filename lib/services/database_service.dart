@@ -21,7 +21,6 @@ class DatabaseService {
   /// they just connect the store to the database and keep the subscription so
   /// functions that disregard (stop observing) that part of the database just
   /// cancel the subscription.
-  @override
   Stream<ReduxAction> get storeStream => _storeController.stream;
 
   /// Keep track of the subscriptions so we can cancel them later.
@@ -35,7 +34,6 @@ class DatabaseService {
 
   DatabaseService(FirebaseFirestore firestore) : _firestore = firestore;
 
-  @override
   Future<void> updateUserInfo(AuthUserData authUserData, String token) {
     return _firestore.doc('/users/${authUserData.uid}').set(<String, dynamic>{
       'gitHubToken': token,
@@ -50,10 +48,9 @@ class DatabaseService {
     }, SetOptions(merge: true));
   }
 
-  @override
   Future<void> updateAuthToken(Provider provider, String uid, String token) {
     if (provider == Provider.google) {
-      return _firestore.doc('/adventurers/${uid}').set(
+      return _firestore.doc('/adventurers/$uid').set(
           <String, dynamic>{'googleToken': token}, SetOptions(merge: true));
     } else {
       return null;
@@ -63,7 +60,6 @@ class DatabaseService {
   /// Observe the document at /adventurers/${uid} and convert each
   /// [DocumentSnapshot] into a [ReduxAction] then send to the store using the
   /// passed in [StreamController].
-  @override
   void connectAdventurerData({@required String uid}) {
     assert(uid != null);
 
@@ -75,10 +71,8 @@ class DatabaseService {
 
     try {
       // connect the database to the store and keep the subscription
-      subscriptions[dbSection] = _firestore
-          .doc('adventurers/${uid}')
-          .snapshots()
-          .listen((docSnapshot) {
+      subscriptions[dbSection] =
+          _firestore.doc('adventurers/$uid').snapshots().listen((docSnapshot) {
         try {
           if (docSnapshot.exists) {
             _storeController
@@ -96,7 +90,6 @@ class DatabaseService {
   /// Observe the document at /tokens/${uid} and convert each
   /// [DocumentSnapshot] into a [ReduxAction] then send to the store using the
   /// passed in [StreamController].
-  @override
   void connectTempToken({@required String uid}) {
     assert(uid != null);
 
@@ -109,7 +102,7 @@ class DatabaseService {
     try {
       // connect the database to the store and keep the subscription
       subscriptions[dbSection] =
-          _firestore.doc('tokens/${uid}').snapshots().listen((docSnapshot) {
+          _firestore.doc('tokens/$uid').snapshots().listen((docSnapshot) {
         try {
           // listen to the firestore stream, convert events to actions and
           // dispatch to the store with the controller
@@ -130,11 +123,9 @@ class DatabaseService {
     }
   }
 
-  @override
   void disconnect(DatabaseSection dbSection) =>
       subscriptions[dbSection]?.cancel();
 
-  @override
   Future<void> deleteAnonymousAccount(String userId) async {
     assert(userId != null);
 
@@ -143,7 +134,6 @@ class DatabaseService {
         .set(<String, dynamic>{'delete': true});
   }
 
-  @override
   Future<String> retrieveStoredToken(String userId) {
     return _firestore
         .doc('/users/$userId')

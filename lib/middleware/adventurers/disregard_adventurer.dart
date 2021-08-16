@@ -10,6 +10,6 @@ class DisregardAdventurerMiddleware
       : super((store, action, next) async {
           next(action);
 
-          await databaseService.disconnect(DatabaseSection.adventurerData);
+          databaseService.disconnect(DatabaseSection.adventurerData);
         });
 }
