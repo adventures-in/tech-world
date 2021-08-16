@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_repositories.dart';
 import 'package:adventures_in_tech_world/actions/platform/launch_url.dart';
 import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_repository.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';

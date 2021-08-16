@@ -4,11 +4,10 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/middleware/app_middleware.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/reducers/app_reducer.dart';
-import 'package:adventures_in_tech_world/services/auth/auth_service.dart';
-import 'package:adventures_in_tech_world/services/auth/firebase_auth_service.dart';
-import 'package:adventures_in_tech_world/services/database/database_service.dart';
-import 'package:adventures_in_tech_world/services/database/firestore_service.dart';
+import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:adventures_in_tech_world/services/database_service.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
+import 'package:adventures_in_tech_world/services/google_service.dart';
 import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:adventures_in_tech_world/utils/store_operation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,6 +36,7 @@ class ReduxBundle {
   final AuthService _authService;
   final DatabaseService _databaseService;
   final PlatformService _platformService;
+  final GoogleService _googleService;
   final GitHubService _gitHubService;
 
   ReduxBundle(
@@ -44,13 +44,14 @@ class ReduxBundle {
       AuthService authService,
       DatabaseService databaseService,
       PlatformService platformService,
+      GoogleService googleService,
       GitHubService gitHubService})
       : _authService = authService ??
-            FirebaseAuthService(
-                FirebaseAuth.instance, StreamController<ReduxAction>()),
+            AuthService(FirebaseAuth.instance, StreamController<ReduxAction>()),
         _databaseService =
-            databaseService ?? FirestoreService(FirebaseFirestore.instance),
+            databaseService ?? DatabaseService(FirebaseFirestore.instance),
         _platformService = platformService ?? PlatformService(),
+        _googleService = googleService ?? GoogleService(),
         _gitHubService = gitHubService ?? GitHubService();
 
   AuthService get auth => _authService;
@@ -67,6 +68,7 @@ class ReduxBundle {
             authService: _authService,
             databaseService: _databaseService,
             platformService: _platformService,
+            googleService: _googleService,
             gitHubService: _gitHubService),
         ..._extraMiddlewares
       ],

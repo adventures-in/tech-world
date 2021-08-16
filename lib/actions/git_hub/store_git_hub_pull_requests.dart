@@ -3,7 +3,7 @@ library store_git_hub_pull_requests;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_pull_request.dart';
 import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';

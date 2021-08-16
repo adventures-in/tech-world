@@ -3,7 +3,7 @@ library git_hub_pull_request;
 import 'dart:convert';
 
 import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_user.dart';
 import 'package:adventures_in_tech_world/utils/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';

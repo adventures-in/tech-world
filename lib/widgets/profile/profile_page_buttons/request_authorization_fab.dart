@@ -23,18 +23,18 @@ class RequestAuthorizationFAB extends StatelessWidget {
 
     if (_state.state == AuthorizationState.notAuthorized) {
       return FloatingActionButton(
-          child: ImageIcon(AssetImage('assets/$_provider.png')),
           elevation: 1,
           onPressed: () =>
-              context.dispatch(RequestAuthorization(provider: _provider)));
+              context.dispatch(RequestAuthorization(provider: _provider)),
+          child: ImageIcon(AssetImage('assets/$_provider.png')));
     }
 
     if (_state.state == AuthorizationState.authorized) {
       return Opacity(
           opacity: 0.5,
           child: FloatingActionButton(
-              child: ImageIcon(AssetImage('assets/$_provider.png')),
-              onPressed: null));
+              onPressed: null,
+              child: ImageIcon(AssetImage('assets/$_provider.png'))));
     }
 
     return CircularProgressIndicator();

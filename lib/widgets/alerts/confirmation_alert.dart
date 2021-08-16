@@ -17,13 +17,13 @@ class ConfirmationAlert extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text('Yes'),
           onPressed: () {
             Navigator.of(context).pop<bool>(true);
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text('No'),
           onPressed: () {
             Navigator.of(context).pop<bool>(false);

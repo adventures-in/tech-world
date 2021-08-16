@@ -12,12 +12,13 @@ import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
 import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
-import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_assigned_issues.dart';
-import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
-import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_repositories.dart';
-import 'package:adventures_in_tech_world/actions/github/store_git_hub_assigned_issues.dart';
-import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
-import 'package:adventures_in_tech_world/actions/github/store_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_pull_requests.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_assigned_issues.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_pull_requests.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_repositories.dart';
+import 'package:adventures_in_tech_world/actions/google/create_google_doc.dart';
 import 'package:adventures_in_tech_world/actions/navigation/push_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/remove_current_page.dart';
 import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
@@ -45,11 +46,11 @@ import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:adventures_in_tech_world/models/auth/provider_state.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_issue.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_label.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_pull_request.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_repository.dart';
-import 'package:adventures_in_tech_world/models/github/git_hub_user.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_issue.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_label.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_pull_request.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_repository.dart';
+import 'package:adventures_in_tech_world/models/git_hub/git_hub_user.dart';
 import 'package:adventures_in_tech_world/models/navigation/initial_page_data.dart';
 import 'package:adventures_in_tech_world/models/navigation/page_data.dart';
 import 'package:adventures_in_tech_world/models/navigation/profile_page_data.dart';
@@ -78,6 +79,7 @@ part 'serializers.g.dart';
   AuthProviderData,
   AuthStep,
   BrightnessMode,
+  CreateGoogleDoc,
   DetectPlatform,
   DisplayProblem,
   DisregardAdventurer,

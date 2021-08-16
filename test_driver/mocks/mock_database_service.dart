@@ -5,7 +5,7 @@ import 'package:adventures_in_tech_world/actions/redux_action.dart';
 import 'package:adventures_in_tech_world/enums/app/database_section.dart';
 import 'package:adventures_in_tech_world/enums/auth/provider.dart';
 import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
-import 'package:adventures_in_tech_world/services/database/database_service.dart';
+import 'package:adventures_in_tech_world/services/database_service.dart';
 
 import '../data/user_data_mock_values.dart';
 
@@ -69,4 +69,7 @@ class MockDatabaseService implements DatabaseService {
     // not implemented in mock
     throw UnimplementedError();
   }
+
+  @override
+  Map<DatabaseSection, StreamSubscription> subscriptions;
 }

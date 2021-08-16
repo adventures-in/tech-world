@@ -1,5 +1,5 @@
-import 'package:adventures_in_tech_world/actions/github/retrieve_git_hub_pull_requests.dart';
-import 'package:adventures_in_tech_world/actions/github/store_git_hub_pull_requests.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/retrieve_git_hub_pull_requests.dart';
+import 'package:adventures_in_tech_world/actions/git_hub/store_git_hub_pull_requests.dart';
 import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:adventures_in_tech_world/services/git_hub_service.dart';
 import 'package:adventures_in_tech_world/utils/problems_utils.dart';
