@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:redfire/extensions.dart';
 import 'package:tech_world/actions/auth/request_git_hub_auth.dart';
-import 'package:tech_world/extensions/build_context_extensions.dart';
+import 'package:tech_world/main.dart';
 
 class SignInWithGitHubButton extends StatelessWidget {
-  const SignInWithGitHubButton({
-    Key key,
-  }) : super(key: key);
+  const SignInWithGitHubButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class SignInWithGitHubButton extends StatelessWidget {
           Image.asset('assets/git_hub_white.png',
               width: 20, height: 20, fit: BoxFit.cover),
         ]),
-        onPressed: () => context.dispatch(RequestGitHubAuth()),
+        onPressed: () => context.dispatch<AppState>(RequestGitHubAuth()),
       ),
     );
   }

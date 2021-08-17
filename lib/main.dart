@@ -32,25 +32,28 @@ class AppState with _$AppState, RedFireState {
 
     /// GitHub
     String? gitHubToken,
-    IList<GitHubRepository> gitHubRepositories,
-    IList<GitHubIssue> gitHubAssignedIssues,
-    IList<GitHubPullRequest> gitHubPullRequests,
+    required IList<GitHubRepository> gitHubRepositories,
+    required IList<GitHubIssue> gitHubAssignedIssues,
+    required IList<GitHubPullRequest> gitHubPullRequests,
 
     /// Navigation
-    NavBarEnum navSelection,
+    required NavBarEnum navSelection,
   }) = _AppState;
 
   factory AppState.init() => AppState(
+        /// RedFire init code
+        auth: AuthState.init(),
+        pages: <PageData>[InitialPageData()].lock,
+        problems: IList(),
+        settings: Settings.init(),
 
-      /// RedFire init code
-      auth: AuthState.init(),
-      pages: <PageData>[InitialPageData()].lock,
-      problems: IList(),
-      settings: Settings.init(),
-
-      /// Additional init code
-      navSelection: NavBarEnum.projects,
-      profileVM: ProfileVM.init());
+        /// Additional init code
+        profileVM: ProfileVM.init(),
+        gitHubRepositories: IList(),
+        gitHubAssignedIssues: IList(),
+        gitHubPullRequests: IList(),
+        navSelection: NavBarEnum.projects,
+      );
 
   factory AppState.fromJson(Map<String, Object?> json) =>
       _$AppStateFromJson(json);

@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:redfire/types.dart';
 import 'package:tech_world/actions/profile/request_authorization.dart';
-import 'package:tech_world/extensions/build_context_extensions.dart';
+import 'package:tech_world/main.dart';
 
 class RequestAuthorizationFAB extends StatelessWidget {
   final ProvidersEnum _provider;
-  final ProviderState _state;
+  final AuthorizationEnum _authorization;
 
   RequestAuthorizationFAB(
-      {required ProvidersEnum provider, required ProviderState state})
+      {required ProvidersEnum provider,
+      required AuthorizationEnum authorization})
       : _provider = provider,
-        _state = state;
+        _authorization = authorization;
   @override
   Widget build(BuildContext context) {
-    if (_state.step == AuthorizingStep.checking ||
-        _state.step == AuthorizingStep.contacting) {
+    if (_authorization == AuthorizationEnum.unknown ||
+        _authorization == AuthorizationEnum.gettingAuthorized) {
       return CircularProgressIndicator();
     }
 
-    if (_state.state == AuthorizationState.notAuthorized) {
+    if (_authorization == AuthorizationState.notAuthorized) {
       return FloatingActionButton(
           elevation: 1,
-          onPressed: () =>
-              context.dispatch(RequestAuthorization(provider: _provider)),
+          onPressed: () => context
+              .dispatch<AppState>(RequestAuthorization(provider: _provider)),
           child: ImageIcon(AssetImage('assets/$_provider.png')));
     }
 

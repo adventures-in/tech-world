@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tech_world/enums/nav_bar_enum.dart';
 import 'package:tech_world/widgets/home/nav_rail.dart';
+import 'package:tech_world/widgets/profile/profile_page.dart';
+import 'package:tech_world/widgets/projects/projects_page.dart';
+import 'package:tech_world/widgets/topics/topics_page.dart';
 
 import '../../main.dart';
+
+const Map<NavBarEnum, Widget> _widgetMap = {
+  NavBarEnum.projects: ProjectsPage(),
+  NavBarEnum.topics: TopicsPage(),
+  NavBarEnum.profile: ProfilePage(),
+};
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -23,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           StoreConnector<AppState, NavBarEnum>(
             distinct: true,
             converter: (store) => store.state.navSelection,
-            builder: (context, selection) => selection.widget,
+            builder: (context, selection) => _widgetMap[selection]!,
           )
         ],
       ),

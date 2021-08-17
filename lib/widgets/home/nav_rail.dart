@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redfire/extensions.dart';
 import 'package:redfire/widgets.dart';
 import 'package:tech_world/actions/navigation/store_nav_bar_selection.dart';
 import 'package:tech_world/enums/nav_bar_enum.dart';
-import 'package:tech_world/extensions/build_context_extensions.dart';
 import 'package:tech_world/models/adventurers/adventurer.dart';
-import 'package:tech_world/models/app/app_state.dart';
+
+import '../../main.dart';
 
 class NavRail extends StatelessWidget {
   const NavRail({Key? key}) : super(key: key);
@@ -22,9 +23,8 @@ class NavRail extends StatelessWidget {
                 child: NavigationRail(
                   selectedIndex: selection.index,
                   onDestinationSelected: (int index) {
-                    context.dispatch(StoreNavBarSelection(
-                      selection: NavBarEnum.values[index],
-                    ));
+                    context.dispatch<AppState>(
+                        StoreNavBarSelection(NavBarEnum.values[index]));
                   },
                   labelType: NavigationRailLabelType.selected,
                   destinations: [
@@ -46,13 +46,13 @@ class NavRail extends StatelessWidget {
                   ],
                 ),
               ),
-              StoreConnector<AppState, Adventurer>(
+              StoreConnector<AppState, Adventurer?>(
                 distinct: true,
                 converter: (store) => store.state.adventurer,
                 builder: (context, adventurer) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProfileAvatar(adventurer.photoURL),
+                    child: ProfileAvatar(adventurer?.photoURL),
                   );
                 },
               ),
