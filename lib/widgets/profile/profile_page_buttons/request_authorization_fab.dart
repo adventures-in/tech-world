@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redfire/extensions.dart';
 import 'package:redfire/types.dart';
 import 'package:tech_world/actions/profile/request_authorization.dart';
 import 'package:tech_world/main.dart';
@@ -19,7 +20,7 @@ class RequestAuthorizationFAB extends StatelessWidget {
       return CircularProgressIndicator();
     }
 
-    if (_authorization == AuthorizationState.notAuthorized) {
+    if (_authorization == AuthorizationEnum.waitingForInput) {
       return FloatingActionButton(
           elevation: 1,
           onPressed: () => context
@@ -27,7 +28,7 @@ class RequestAuthorizationFAB extends StatelessWidget {
           child: ImageIcon(AssetImage('assets/$_provider.png')));
     }
 
-    if (_state.state == AuthorizationState.authorized) {
+    if (_authorization == AuthorizationEnum.authorized) {
       return Opacity(
           opacity: 0.5,
           child: FloatingActionButton(

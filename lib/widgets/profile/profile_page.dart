@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redfire/actions.dart';
 import 'package:redfire/extensions.dart';
-import 'package:tech_world/actions/adventurers/tap_adventurer.dart';
+import 'package:tech_world/actions/adventurers/tap_adventurer_action.dart';
 import 'package:tech_world/models/profile/profile_v_m.dart';
 import 'package:tech_world/widgets/profile/profile_page_buttons/request_authorization_fab.dart';
 
@@ -22,8 +22,9 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Center(
           child: StoreConnector<AppState, ProfileVM>(
-        onInit: (store) => store.dispatch(TapAdventurer()),
-        onDispose: (store) => store.dispatch(TapAdventurer(turnOff: true)),
+        onInit: (store) => store.dispatch(TapAdventurerAction()),
+        onDispose: (store) =>
+            store.dispatch(TapAdventurerAction(turnOff: true)),
         distinct: true,
         converter: (store) => store.state.profileVM,
         builder: (context, profile) {
@@ -33,7 +34,7 @@ class ProfilePage extends StatelessWidget {
               for (final provider in profile.stateOf.keys)
                 RequestAuthorizationFAB(
                   provider: provider,
-                  state: profile.stateOf[provider],
+                  authorization: profile.stateOf[provider]!,
                 ),
               MaterialButton(
                 child: Text('Sign Out'),

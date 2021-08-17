@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:tech_world/enums/platform/platform_enum.dart';
-import 'package:tech_world/utils/apis/git_hub_redirect.dart'
-    as git_hub_redirect;
 import 'package:url_launcher/url_launcher.dart';
 
 class PlatformService {
@@ -35,7 +33,6 @@ class PlatformService {
   }
 
   Future<void> redirectWithState(String state) async {
-    final url = git_hub_redirect.uriWith(state: state).toString();
     if (await canLaunch(url)) {
       await launch(url);
     } else {

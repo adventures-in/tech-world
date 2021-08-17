@@ -1,18 +1,20 @@
+import 'package:redfire/services.dart';
+import 'package:redfire/types.dart';
 import 'package:redux/redux.dart';
 import 'package:tech_world/actions/profile/request_authorization.dart';
-import 'package:tech_world/enums/auth/provider.dart';
-import 'package:tech_world/models/app/app_state.dart';
-import 'package:tech_world/services/auth_service.dart';
-import 'package:tech_world/services/database_service.dart';
+
+import '../../main.dart';
 
 class RequestAuthorizationMiddleware
     extends TypedMiddleware<AppState, RequestAuthorization> {
-  RequestAuthorizationMiddleware(
-      AuthService authService, DatabaseService databaseService)
+  RequestAuthorizationMiddleware()
       : super((store, action, next) async {
           next(action);
 
-          if (action.provider == Provider.google) {
+          final authService = RedFireLocator.getAuthService();
+          final databaseService = RedFireLocator.getDatabaseService();
+
+          if (action.provider == ProvidersEnum.google) {
             final token = await authService.getTokenFromGoogle();
 
             await databaseService.updateAuthToken(

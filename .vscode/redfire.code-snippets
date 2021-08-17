@@ -69,6 +69,24 @@
       ],
       "description": "redfire action with freezed"
     },
+    "redfire tap action": {
+      "prefix": "rf_tap_action",
+      "body": [
+        "import 'package:freezed_annotation/freezed_annotation.dart';",
+        "import 'package:redfire/types.dart';",
+        "",
+        "part '${TM_FILENAME_BASE}.freezed.dart';",
+        "part '${TM_FILENAME_BASE}.g.dart';",
+        "",
+        "@freezed",
+        "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}, ReduxAction {",
+        "\tfactory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({@Default(false) bool turnOff}) = _${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g};",
+        "",
+        "factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}.fromJson(Map<String, Object?> json) => _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}FromJson(json);",
+        "}"
+      ],
+      "description": "redfire tap action with freezed"
+    },
     "redfire middleware": {
       "prefix": "rf_middleware",
       "body": [

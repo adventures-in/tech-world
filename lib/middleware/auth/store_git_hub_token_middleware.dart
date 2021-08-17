@@ -1,30 +1,29 @@
+import 'package:redfire/actions.dart';
+import 'package:redfire/services.dart';
 import 'package:redux/redux.dart';
-import 'package:tech_world/actions/auth/store_auth_step.dart';
 import 'package:tech_world/actions/auth/store_git_hub_token.dart';
-import 'package:tech_world/enums/app/database_section.dart';
-import 'package:tech_world/enums/auth/auth_step.dart';
-import 'package:tech_world/models/app/app_state.dart';
-import 'package:tech_world/services/auth_service.dart';
 import 'package:tech_world/services/database_service.dart';
 import 'package:tech_world/services/git_hub_service.dart';
-import 'package:tech_world/utils/problems_utils.dart';
+
+import '../../main.dart';
 
 class StoreGitHubTokenMiddleware
     extends TypedMiddleware<AppState, StoreGitHubToken> {
-  StoreGitHubTokenMiddleware(AuthService authService,
-      DatabaseService databaseService, GitHubService gitHubService)
+  StoreGitHubTokenMiddleware()
       : super((store, action, next) async {
           next(action);
 
-          final handleProblem = generateProblemHandler(
-              store.dispatch, 'StoreGitHubTokenMiddleware');
+          final authService = RedFireLocator.getAuthService();
+          final databaseService = RedFireLocator.getDatabaseService();
+          final gitHubService = Locator.getGitHubService();
 
           try {
             if (action.token == null) {
               // there was no token
 
               // set the UI to let the user get a token
-              store.dispatch(StoreAuthStep(step: AuthStep.waitingForInput));
+              store.dispatch(
+                  StoreAuthStepAction(step: AuthStep.waitingForInput));
             } else {
               // there was a token
 
@@ -34,7 +33,7 @@ class StoreGitHubTokenMiddleware
               // disconnect from the token section of the database
               databaseService.disconnect(DatabaseSection.tempToken);
 
-              if (!store.state.authUserData.hasGitHub) {
+              if (!store.state.auth.userData.hasGitHub) {
                 // we have a token but haven't signed in with github
 
                 // set anonymous account to be deleted
