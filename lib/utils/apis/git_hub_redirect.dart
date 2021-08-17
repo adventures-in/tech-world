@@ -1,5 +1,4 @@
 import 'package:oauth2/oauth2.dart';
-import 'package:meta/meta.dart';
 
 const _githubClientId = 'c729a4bb5121cc4a8caf';
 
@@ -20,5 +19,5 @@ final _authorizationEndpoint =
 final Uri _redirectUri =
     Uri.parse('https://adventures-in-tech-world.web.app/github/');
 
-Uri uriWith({@required String state}) => _grant
-    .getAuthorizationUrl(_redirectUri, scopes: _githubScopes, state: state);
+Uri uriWith({required String state}) => _grant.getAuthorizationUrl(_redirectUri,
+    scopes: _githubScopes, state: state);

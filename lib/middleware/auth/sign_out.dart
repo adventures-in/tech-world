@@ -1,11 +1,11 @@
-import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
-import 'package:adventures_in_tech_world/services/git_hub_service.dart';
-import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/sign_out.dart';
+import 'package:tech_world/actions/auth/store_auth_step.dart';
+import 'package:tech_world/enums/auth/auth_step.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/auth_service.dart';
+import 'package:tech_world/services/git_hub_service.dart';
+import 'package:tech_world/utils/problems_utils.dart';
 
 class SignOutMiddleware extends TypedMiddleware<AppState, SignOut> {
   SignOutMiddleware(AuthService authService, GitHubService gitHubService)

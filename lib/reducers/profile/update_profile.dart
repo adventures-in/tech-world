@@ -1,7 +1,7 @@
-import 'package:adventures_in_tech_world/actions/profile/update_profile.dart';
-import 'package:adventures_in_tech_world/extensions/built_value_extensions.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/profile/update_profile.dart';
+import 'package:tech_world/extensions/built_value_extensions.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class UpdateProfileReducer extends TypedReducer<AppState, UpdateProfile> {
   UpdateProfileReducer()

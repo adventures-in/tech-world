@@ -13,7 +13,7 @@ class GitHubClient extends http.BaseClient {
   }
 
   @override
-  Future<http.Response> get(dynamic url, {Map<String, String> headers}) {
+  Future<http.Response> get(Uri url, {Map<String, String>? headers}) {
     headers ??= {};
     headers['Authorization'] = 'token $_token';
     return _inner.get(Uri.parse('$url'), headers: headers);

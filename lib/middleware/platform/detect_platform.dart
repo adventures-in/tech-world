@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/actions/platform/detect_platform.dart';
-import 'package:adventures_in_tech_world/actions/settings/update_settings.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/platform_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/platform/detect_platform.dart';
+import 'package:tech_world/actions/settings/update_settings.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/platform_service.dart';
 
 class DetectPlatformMiddleware
     extends TypedMiddleware<AppState, DetectPlatform> {

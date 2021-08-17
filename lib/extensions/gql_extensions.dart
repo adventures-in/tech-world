@@ -1,11 +1,10 @@
-import 'package:adventures_in_tech_world/enums/github/pull_request_state.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_issue.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_label.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_pull_request.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_repository.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_user.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:github_graphql_client/src/github_gql/github_queries.data.gql.dart';
+import 'package:tech_world/models/git_hub/git_hub_issue.dart';
+import 'package:tech_world/models/git_hub/git_hub_label.dart';
+import 'package:tech_world/models/git_hub/git_hub_pull_request.dart';
+import 'package:tech_world/models/git_hub/git_hub_repository.dart';
+import 'package:tech_world/models/git_hub/git_hub_user.dart';
 
 extension ListOfGitHubRepositoryExt
     on List<$Repositories$viewer$repositories$nodes> {
@@ -43,7 +42,7 @@ extension GitHubAssignedIssuesExt
           author: GitHubUser(
               login: gqlIssue.author.login,
               avatarUrl: gqlIssue.author.url.value),
-          labels: BuiltList(gqlIssue.labels.toGitHubLabels()),
+          labels: IList(gqlIssue.labels.toGitHubLabels()),
           comments: gqlIssue.comments.totalCount);
       list.add(ghIssue);
     }
@@ -76,7 +75,7 @@ extension ListOfPullRequests
           url: node.url.value,
           title: node.title,
           updatedAt: DateTime.parse(node.updatedAt.value),
-          state: PullRequestState.valueOfToLowerCase(node.state.value),
+          state: node.state.value,
           isDraft: node.isDraft,
           comments: node.comments.totalCount,
           files: node.files.totalCount);

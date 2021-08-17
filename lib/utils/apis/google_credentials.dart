@@ -11,10 +11,6 @@ class AccessToken {
 
   /// [expiry] must be a UTC `DateTime`.
   AccessToken(this.type, this.data, this.expiry) {
-    if (type == null || data == null || expiry == null) {
-      throw ArgumentError('Arguments type/data/expiry may not be null.');
-    }
-
     if (!expiry.isUtc) {
       throw ArgumentError('The expiry date must be a Utc DateTime.');
     }
@@ -39,15 +35,11 @@ class AccessCredentials {
   final String refreshToken;
 
   /// A JWT used in calls to Google APIs that accept an id_token param.
-  final String idToken;
+  final String? idToken;
 
   /// Scopes these credentials are valid for.
   final List<String> scopes;
 
   AccessCredentials(this.accessToken, this.refreshToken, this.scopes,
-      {this.idToken}) {
-    if (accessToken == null || scopes == null) {
-      throw ArgumentError('Arguments accessToken/scopes must not be null.');
-    }
-  }
+      {this.idToken});
 }

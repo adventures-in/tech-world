@@ -1,17 +1,14 @@
-import 'package:adventures_in_tech_world/actions/profile/request_authorization.dart';
-import 'package:adventures_in_tech_world/enums/auth/authorization_state.dart';
-import 'package:adventures_in_tech_world/enums/auth/authorizing_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/provider.dart';
-import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
-import 'package:adventures_in_tech_world/models/auth/provider_state.dart';
 import 'package:flutter/material.dart';
+import 'package:redfire/types.dart';
+import 'package:tech_world/actions/profile/request_authorization.dart';
+import 'package:tech_world/extensions/build_context_extensions.dart';
 
 class RequestAuthorizationFAB extends StatelessWidget {
-  final Provider _provider;
+  final ProvidersEnum _provider;
   final ProviderState _state;
 
   RequestAuthorizationFAB(
-      {@required Provider provider, @required ProviderState state})
+      {required ProvidersEnum provider, required ProviderState state})
       : _provider = provider,
         _state = state;
   @override

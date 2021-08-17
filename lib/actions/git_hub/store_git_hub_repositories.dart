@@ -1,42 +1,13 @@
-library store_git_hub_repositories;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:redfire/types.dart';
 
-import 'dart:convert';
-
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_repository.dart';
-import 'package:adventures_in_tech_world/utils/serializers.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-import 'package:meta/meta.dart';
-
+part 'store_git_hub_repositories.freezed.dart';
 part 'store_git_hub_repositories.g.dart';
 
-abstract class StoreGitHubRepositories extends Object
-    with ReduxAction
-    implements Built<StoreGitHubRepositories, StoreGitHubRepositoriesBuilder> {
-  BuiltList<GitHubRepository> get repositories;
+@freezed
+class StoreGitHubRepositories with _$StoreGitHubRepositories, ReduxAction {
+  factory StoreGitHubRepositories() = _StoreGitHubRepositories;
 
-  StoreGitHubRepositories._();
-
-  factory StoreGitHubRepositories(
-          {@required BuiltList<GitHubRepository> repositories}) =
-      _$StoreGitHubRepositories._;
-
-  factory StoreGitHubRepositories.by(
-          [void Function(StoreGitHubRepositoriesBuilder) updates]) =
-      _$StoreGitHubRepositories;
-
-  Object toJson() =>
-      serializers.serializeWith(StoreGitHubRepositories.serializer, this);
-
-  static StoreGitHubRepositories fromJson(String jsonString) =>
-      serializers.deserializeWith(
-          StoreGitHubRepositories.serializer, json.decode(jsonString));
-
-  static Serializer<StoreGitHubRepositories> get serializer =>
-      _$storeGitHubRepositoriesSerializer;
-
-  @override
-  String toString() => 'STORE_GIT_HUB_REPOSITORIES';
+  factory StoreGitHubRepositories.fromJson(Map<String, Object?> json) =>
+      _$StoreGitHubRepositoriesFromJson(json);
 }

@@ -1,7 +1,7 @@
-import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/store_auth_user_data.dart';
+import 'package:tech_world/enums/auth/auth_step.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class StoreUserDataReducer extends TypedReducer<AppState, StoreAuthUserData> {
   StoreUserDataReducer()

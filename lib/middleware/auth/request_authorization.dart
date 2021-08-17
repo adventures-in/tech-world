@@ -1,9 +1,9 @@
-import 'package:adventures_in_tech_world/actions/profile/request_authorization.dart';
-import 'package:adventures_in_tech_world/enums/auth/provider.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
-import 'package:adventures_in_tech_world/services/database_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/profile/request_authorization.dart';
+import 'package:tech_world/enums/auth/provider.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/auth_service.dart';
+import 'package:tech_world/services/database_service.dart';
 
 class RequestAuthorizationMiddleware
     extends TypedMiddleware<AppState, RequestAuthorization> {

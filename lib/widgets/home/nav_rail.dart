@@ -1,18 +1,18 @@
-import 'package:adventures_in_tech_world/actions/navigation/store_nav_bar_selection.dart';
-import 'package:adventures_in_tech_world/enums/nav_bar_selection.dart';
-import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
-import 'package:adventures_in_tech_world/models/adventurers/adventurer.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/widgets/shared/profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redfire/widgets.dart';
+import 'package:tech_world/actions/navigation/store_nav_bar_selection.dart';
+import 'package:tech_world/enums/nav_bar_enum.dart';
+import 'package:tech_world/extensions/build_context_extensions.dart';
+import 'package:tech_world/models/adventurers/adventurer.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class NavRail extends StatelessWidget {
-  const NavRail({Key key}) : super(key: key);
+  const NavRail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, NavBarSelection>(
+    return StoreConnector<AppState, NavBarEnum>(
         distinct: true,
         converter: (store) => store.state.navSelection,
         builder: (context, selection) {
@@ -23,7 +23,7 @@ class NavRail extends StatelessWidget {
                   selectedIndex: selection.index,
                   onDestinationSelected: (int index) {
                     context.dispatch(StoreNavBarSelection(
-                      selection: NavBarSelection.valueOfIndex(index),
+                      selection: NavBarEnum.values[index],
                     ));
                   },
                   labelType: NavigationRailLabelType.selected,
@@ -52,7 +52,7 @@ class NavRail extends StatelessWidget {
                 builder: (context, adventurer) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProfileAvatar(adventurer),
+                    child: ProfileAvatar(adventurer.photoURL),
                   );
                 },
               ),

@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/models/auth/auth_provider_data.dart';
-import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:tech_world/models/auth/auth_provider_data.dart';
+import 'package:tech_world/models/auth/auth_user_data.dart';
 import 'package:test/test.dart';
 
 void main() {

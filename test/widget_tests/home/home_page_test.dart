@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/widgets/home/home_page.dart';
-import 'package:adventures_in_tech_world/widgets/projects/projects_page.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tech_world/widgets/home/home_page.dart';
+import 'package:tech_world/widgets/projects/projects_page.dart';
 
 import '../../utils/widget_test_harness.dart';
 

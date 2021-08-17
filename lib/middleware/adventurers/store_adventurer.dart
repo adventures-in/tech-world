@@ -1,7 +1,7 @@
-import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/google_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/google_service.dart';
 
 /// Add any tokens to the relevant services.
 class StoreAdventurerMiddleware

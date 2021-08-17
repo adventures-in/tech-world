@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/platform_service.dart';
-import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/request_git_hub_auth.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/platform_service.dart';
+import 'package:tech_world/utils/problems_utils.dart';
 
 class RequestGitHubAuthMiddleware
     extends TypedMiddleware<AppState, RequestGitHubAuth> {

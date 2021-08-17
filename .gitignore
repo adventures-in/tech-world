@@ -51,7 +51,8 @@ app.*.map.json
 .firebaserc
 .firebase/
 
-# Built value generated files 
+# Built value generated files
+*.freezed.dart
 *.g.dart
 
 # ignore the index.html file so we can use the cdns config method without 

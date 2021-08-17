@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/actions/auth/sign_out.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/sign_out.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class SignOutReducer extends TypedReducer<AppState, SignOut> {
   SignOutReducer()

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
+import 'package:tech_world/actions/auth/store_auth_user_data.dart';
+import 'package:tech_world/actions/redux_action.dart';
+import 'package:tech_world/services/auth_service.dart';
 import 'package:test/test.dart';
 
 import '../../utils/mocks/services/auth/firebase_auth_mocks.dart';

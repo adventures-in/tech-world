@@ -1,9 +1,9 @@
-import 'package:adventures_in_tech_world/actions/auth/sign_in_with_apple.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_auth_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/auth_step.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/sign_in_with_apple.dart';
+import 'package:tech_world/actions/auth/store_auth_step.dart';
+import 'package:tech_world/enums/auth/auth_step.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/auth_service.dart';
 
 class SignInWithAppleMiddleware
     extends TypedMiddleware<AppState, SignInWithApple> {

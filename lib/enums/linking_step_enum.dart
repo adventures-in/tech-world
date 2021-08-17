@@ -1,0 +1,1 @@
+enum LinkingStepEnum { contacting, linking }

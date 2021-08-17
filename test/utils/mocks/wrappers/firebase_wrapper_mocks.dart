@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/utils/wrappers/firebase_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tech_world/utils/wrappers/firebase_wrapper.dart';
 
 class FakeFirebaseWrapper implements FirebaseWrapper {
   final Completer<FirebaseApp> _completer;

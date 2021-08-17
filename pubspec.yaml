@@ -1,66 +1,49 @@
-name: adventures_in_tech_world
-description: Assisting learning and collaboration.
-
+name: tech_world
+description: Adventures In Tech World, for fun and profit.
 publish_to: 'none' 
-
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
+  flutter: ">=2.2.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  dio:
-  firebase_core:
   
+  redfire:
+    # git: https://github.com/enspyrco/redfire.git
+    path: /Users/nick/git/orgs/enspyrco/redfire
+  freezed_annotation:
+  json_annotation:
+  redux:
+  flutter_redux:
+  fast_immutable_collections:
+
+  # dio:
+  googleapis: 
+  googleapis_auth: 
   
   # auth 
   oauth2:
-  firebase_auth:
-  google_sign_in:
-  sign_in_with_apple:
-
-  # database 
-  cloud_firestore:
 
   # github
   github_graphql_client:
     git: https://github.com/Adventures-In/github_graphql_client.git
-
-  # google 
-  googleapis:
-  googleapis_auth:
-
-  # platform tools 
-  url_launcher:
-  shared_preferences:
-
-  # redux 
-  built_value:
-  built_collection:
-  redux:
-  flutter_redux:
-  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  redfire_test:
+    # git: https://github.com/enspyrco/redfire_test.git
+    path: /Users/nick/git/orgs/enspyrco/redfire_test
   build_runner:
-  built_value_generator:
-  redux_remote_devtools:
-  pedantic:
+  freezed:
+  json_serializable:
   test:
   mockito:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/
-  fonts:
-   - family:  OctoIcons
-     fonts:
-      - asset: fonts/OctoIcons.ttf

@@ -1,11 +1,11 @@
-import 'package:adventures_in_tech_world/actions/auth/store_auth_user_data.dart';
-import 'package:adventures_in_tech_world/actions/profile/link_provider.dart';
-import 'package:adventures_in_tech_world/actions/profile/update_profile.dart';
-import 'package:adventures_in_tech_world/enums/auth/linking_step.dart';
-import 'package:adventures_in_tech_world/enums/auth/provider.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/auth_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/store_auth_user_data.dart';
+import 'package:tech_world/actions/profile/link_provider.dart';
+import 'package:tech_world/actions/profile/update_profile.dart';
+import 'package:tech_world/enums/auth/linking_step.dart';
+import 'package:tech_world/enums/auth/provider.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/auth_service.dart';
 
 class LinkGoogleMiddleware extends TypedMiddleware<AppState, LinkProvider> {
   LinkGoogleMiddleware(AuthService authService)

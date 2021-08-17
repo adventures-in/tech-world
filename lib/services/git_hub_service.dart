@@ -1,11 +1,11 @@
-import 'package:adventures_in_tech_world/extensions/gql_extensions.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_issue.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_pull_request.dart';
-import 'package:adventures_in_tech_world/models/git_hub/git_hub_repository.dart';
-import 'package:adventures_in_tech_world/models/problems/git_hub_exceptions.dart';
-import 'package:adventures_in_tech_world/utils/apis/authenticated_http.dart';
 import 'package:github_graphql_client/github_graphql_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:tech_world/extensions/gql_extensions.dart';
+import 'package:tech_world/models/git_hub/git_hub_issue.dart';
+import 'package:tech_world/models/git_hub/git_hub_pull_request.dart';
+import 'package:tech_world/models/git_hub/git_hub_repository.dart';
+import 'package:tech_world/models/problems/git_hub_exceptions.dart';
+import 'package:tech_world/utils/apis/authenticated_http.dart';
 
 class GitHubService {
   String _token;

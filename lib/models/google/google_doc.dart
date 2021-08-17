@@ -4,7 +4,7 @@ class GoogleDoc {
   // Body body;
 
   /// Output only. The ID of the document.
-  String documentId;
+  String? documentId;
 
   /// Output only. The style of the document.
   // DocumentStyle documentStyle;
@@ -44,7 +44,7 @@ class GoogleDoc {
   /// Conversely, a changed ID (for the same document and user) usually means
   /// the document has been updated; however, a changed ID can also be due to
   /// internal factors such as ID format changes.
-  String revisionId;
+  String? revisionId;
 
   /// Output only. The suggested changes to the style of the document, keyed by
   /// suggestion ID.
@@ -73,10 +73,10 @@ class GoogleDoc {
   /// - "PREVIEW_WITHOUT_SUGGESTIONS" : The returned document is a preview with
   /// all suggested changes rejected if there are any suggestions in the
   /// document.
-  String suggestionsViewMode;
+  String? suggestionsViewMode;
 
   /// The title of the document.
-  String title;
+  String? title;
 
   GoogleDoc(
       {this.documentId, this.revisionId, this.suggestionsViewMode, this.title});

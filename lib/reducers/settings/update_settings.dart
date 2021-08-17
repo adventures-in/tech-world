@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/actions/settings/update_settings.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/settings/update_settings.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class UpdateSettingsReducer extends TypedReducer<AppState, UpdateSettings> {
   UpdateSettingsReducer()

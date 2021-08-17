@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/auth/store_git_hub_token.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 class StoreGitHubTokenReducer extends TypedReducer<AppState, StoreGitHubToken> {
   StoreGitHubTokenReducer()

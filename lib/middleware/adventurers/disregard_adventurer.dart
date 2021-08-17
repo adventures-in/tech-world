@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/actions/adventurers/disregard_adventurer.dart';
-import 'package:adventures_in_tech_world/enums/app/database_section.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
-import 'package:adventures_in_tech_world/services/database_service.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/adventurers/tap_adventurer.dart';
+import 'package:tech_world/enums/app/database_section.dart';
+import 'package:tech_world/models/app/app_state.dart';
+import 'package:tech_world/services/database_service.dart';
 
 class DisregardAdventurerMiddleware
     extends TypedMiddleware<AppState, DisregardAdventurer> {

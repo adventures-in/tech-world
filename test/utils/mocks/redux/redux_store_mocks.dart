@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/models/app/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:tech_world/actions/redux_action.dart';
+import 'package:tech_world/models/app/app_state.dart';
 
 /// A [Store] with no reducers that takes an optional [AppState] and
 /// keeps a list of dispatched actions that can be queried.

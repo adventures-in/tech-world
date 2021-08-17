@@ -1,39 +1,12 @@
 import 'dart:async';
 
-import 'package:adventures_in_tech_world/actions/adventurers/store_adventurer.dart';
-import 'package:adventures_in_tech_world/actions/auth/store_git_hub_token.dart';
-import 'package:adventures_in_tech_world/actions/redux_action.dart';
-import 'package:adventures_in_tech_world/enums/app/database_section.dart';
-import 'package:adventures_in_tech_world/enums/auth/provider.dart';
-import 'package:adventures_in_tech_world/extensions/document_snapshot_extensions.dart';
-import 'package:adventures_in_tech_world/models/auth/auth_user_data.dart';
-import 'package:adventures_in_tech_world/utils/problems_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:redfire/types.dart';
+import 'package:tech_world/actions/adventurers/store_adventurer.dart';
+import 'package:tech_world/actions/auth/store_git_hub_token.dart';
 
 class DatabaseService {
-  /// The [FirebaseFirestore] instance
-  final FirebaseFirestore _firestore;
-
-  /// The stream of the [_storeController] is used just once on app load, to
-  /// connect the [_storeController] to the redux [Store]
-  /// Functions that observe parts of the database thus don't return anything,
-  /// they just connect the store to the database and keep the subscription so
-  /// functions that disregard (stop observing) that part of the database just
-  /// cancel the subscription.
-  Stream<ReduxAction> get storeStream => _storeController.stream;
-
-  /// Keep track of the subscriptions so we can cancel them later.
-  Map<DatabaseSection, StreamSubscription> subscriptions = {};
-
-  /// The [_storeController] is connected to the redux [Store] via [storeStrea]
-  /// and is used by the [DatabaseService] to add actions to the stream where
-  /// they will be dispatched by the store.
-  final StreamController<ReduxAction> _storeController =
-      StreamController<ReduxAction>();
-
-  DatabaseService(FirebaseFirestore firestore) : _firestore = firestore;
-
   Future<void> updateUserInfo(AuthUserData authUserData, String token) {
     return _firestore.doc('/users/${authUserData.uid}').set(<String, dynamic>{
       'gitHubToken': token,

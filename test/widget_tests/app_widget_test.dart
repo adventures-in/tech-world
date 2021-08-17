@@ -5,8 +5,8 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:adventures_in_tech_world/widgets/app/initializing_indicator.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tech_world/widgets/app/initializing_indicator.dart';
 
 import '../utils/completable_app_harness.dart';
 

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:adventures_in_tech_world/enums/platform/platform_enum.dart';
-import 'package:adventures_in_tech_world/utils/apis/git_hub_redirect.dart'
-    as git_hub_redirect;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:tech_world/enums/platform/platform_enum.dart';
+import 'package:tech_world/utils/apis/git_hub_redirect.dart'
+    as git_hub_redirect;
 import 'package:url_launcher/url_launcher.dart';
 
 class PlatformService {

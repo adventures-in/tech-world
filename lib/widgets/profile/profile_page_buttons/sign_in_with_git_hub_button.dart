@@ -1,6 +1,6 @@
-import 'package:adventures_in_tech_world/actions/auth/request_git_hub_auth.dart';
-import 'package:adventures_in_tech_world/extensions/build_context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_world/actions/auth/request_git_hub_auth.dart';
+import 'package:tech_world/extensions/build_context_extensions.dart';
 
 class SignInWithGitHubButton extends StatelessWidget {
   const SignInWithGitHubButton({

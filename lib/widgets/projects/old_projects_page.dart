@@ -1,9 +1,9 @@
-import 'package:adventures_in_tech_world/enums/projects/projects_tab_selection.dart';
-import 'package:adventures_in_tech_world/utils/icons/octo_icons_icons.dart';
-import 'package:adventures_in_tech_world/widgets/projects/tab_views/assigned_issues_list.dart';
-import 'package:adventures_in_tech_world/widgets/projects/tab_views/pull_requests_list.dart';
-import 'package:adventures_in_tech_world/widgets/projects/tab_views/repositories_list.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_world/enums/projects_enum.dart';
+import 'package:tech_world/utils/icons/octo_icons_icons.dart';
+import 'package:tech_world/widgets/projects/tab_views/assigned_issues_list.dart';
+import 'package:tech_world/widgets/projects/tab_views/pull_requests_list.dart';
+import 'package:tech_world/widgets/projects/tab_views/repositories_list.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage();
@@ -11,7 +11,7 @@ class ProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: DefaultTabController(
-            length: ProjectsTabSelection.values.length,
+            length: ProjectsEnum.values.length,
             child: Column(
               children: [
                 TabBar(

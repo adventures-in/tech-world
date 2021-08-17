@@ -1,8 +1,8 @@
-import 'package:adventures_in_tech_world/widgets/app/app_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
+import 'package:tech_world/widgets/app/app_widget.dart';
 
 void main() async {
   const rdtMode = bool.fromEnvironment('RDT');
