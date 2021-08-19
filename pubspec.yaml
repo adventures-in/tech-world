@@ -27,10 +27,6 @@ dependencies:
   # auth 
   oauth2:
 
-  # github
-  github_graphql_client:
-    git: https://github.com/Adventures-In/github_graphql_client.git
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,3 +43,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family:  OctoIcons
+      fonts:
+        - asset: fonts/OctoIcons.ttf

@@ -1,25 +1,25 @@
-import 'package:built_collection/built_collection.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:redfire/extensions.dart';
 import 'package:redux/redux.dart';
 import 'package:tech_world/actions/git_hub/retrieve_git_hub_pull_requests.dart';
 import 'package:tech_world/actions/git_hub/store_git_hub_pull_requests.dart';
-import 'package:tech_world/models/app/app_state.dart';
-import 'package:tech_world/services/git_hub_service.dart';
-import 'package:tech_world/utils/problems_utils.dart';
+import 'package:tech_world/utils/locator.dart';
+
+import '../../main.dart';
 
 class RetrieveGitHubPullRequestsMiddleware
     extends TypedMiddleware<AppState, RetrieveGitHubPullRequests> {
-  RetrieveGitHubPullRequestsMiddleware(GitHubService githubService)
+  RetrieveGitHubPullRequestsMiddleware()
       : super((store, action, next) async {
           next(action);
 
-          final handleProblem = generateProblemHandler(
-              store.dispatch, 'RetrieveGitHubPullRequestsMiddleware');
+          final gitHubService = Locator.getGitHubService();
 
           try {
-            final prs = await githubService.retrievePullRequests();
-            store.dispatch(StoreGitHubPullRequests(prs: BuiltList(prs)));
+            final prs = await gitHubService.retrievePullRequests();
+            store.dispatch(StoreGitHubPullRequests(IList(prs)));
           } catch (error, trace) {
-            handleProblem(error, trace);
+            store.dispatchProblem(error, trace);
           }
         });
 }

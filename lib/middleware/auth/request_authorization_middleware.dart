@@ -1,3 +1,4 @@
+import 'package:redfire/extensions.dart';
 import 'package:redfire/services.dart';
 import 'package:redfire/types.dart';
 import 'package:redux/redux.dart';
@@ -11,14 +12,20 @@ class RequestAuthorizationMiddleware
       : super((store, action, next) async {
           next(action);
 
-          final authService = RedFireLocator.getAuthService();
-          final databaseService = RedFireLocator.getDatabaseService();
+          try {
+            final authService = RedFireLocator.getAuthService();
+            final databaseService = RedFireLocator.getDatabaseService();
 
-          if (action.provider == ProvidersEnum.google) {
-            final token = await authService.getTokenFromGoogle();
+            if (action.provider == ProvidersEnum.google) {
+              final token = await authService.getTokenForGoogle(['email']);
 
-            await databaseService.updateAuthToken(
-                action.provider, store.state.authUserData.uid, token);
+              await databaseService.setDocument(
+                  at: '/adventurers/${store.state.auth.userData!.uid}',
+                  to: {'googleToken': token},
+                  merge: true);
+            }
+          } catch (error, trace) {
+            store.dispatchProblem(error, trace);
           }
         });
 }

@@ -1,3 +1,4 @@
+import 'package:redfire/extensions.dart';
 import 'package:redfire/services.dart';
 import 'package:redux/redux.dart';
 import 'package:tech_world/actions/auth/request_git_hub_auth.dart';
@@ -21,7 +22,7 @@ class RequestGitHubAuthMiddleware
                 .toString();
             await platformService.launchUrl(url);
           } catch (error, trace) {
-            handleProblem(error, trace);
+            store.dispatchProblem(error, trace);
           }
         });
 }
