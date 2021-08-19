@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../enspyrco/redfire"
+		},
+		{
+			"path": "../../enspyrco/redfire_test"
+		}
+	],
+	"settings": {}
+}
