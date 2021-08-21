@@ -516,16 +516,20 @@ packages:
   redfire:
     dependency: "direct main"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "051015c08de3ffd2e2c772b5261f093f699d10bc"
+      url: "https://github.com/enspyrco/redfire.git"
+    source: git
     version: "0.0.1"
   redfire_test:
     dependency: "direct dev"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire_test"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "473aaf67d75d0890fdddf09b1c5790607a07aba2"
+      url: "https://github.com/enspyrco/redfire_test.git"
+    source: git
     version: "0.0.1"
   redux:
     dependency: "direct main"
