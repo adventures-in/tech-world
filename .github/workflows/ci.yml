@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    - name: Output Run Info
+      run: echo "build-number=$GITHUB_RUN_NUMBER, event = ${{ github.event_name }}, branch = ${{ github.ref }}, target = ${{ github.base_ref }}"
+
+    - name: Install checkout
+      uses: actions/checkout@v2
+    
+    ##############################################
+    # setup flutter-action
+    ##############################################
+    - name: Install Java for Flutter tool
+      uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - name: Install Flutter tool
+      uses: subosito/flutter-action@v1
+      with:
+        channel: 'dev'
+
+    ############################################
+    # get dependencies, generate code and run tests
+    ############################################
+    - run: flutter pub get
+    - run: flutter pub run build_runner build
+    - run: flutter test --coverage
+
+    ############################################
+    # send test coverage to coveralls
+    ############################################
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    
