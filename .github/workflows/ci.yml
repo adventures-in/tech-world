@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
     
     ##############################################
-    # flutter-action
+    # setup flutter-action
     ##############################################
     - name: Install Java for Flutter tool
       uses: actions/setup-java@v1
