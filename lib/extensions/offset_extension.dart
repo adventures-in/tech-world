@@ -6,5 +6,6 @@ extension OffsetExtension on Offset {
     return Vector2(o.dx.floorToDouble(), o.dy.floorToDouble());
   }
 
-  Rect toRect64() => Rect.fromPoints((this * 64), ((this + Offset(1, 1)) * 64));
+  Rect toRect64() =>
+      Rect.fromPoints((this * 64), ((this + const Offset(1, 1)) * 64));
 }

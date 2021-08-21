@@ -5,13 +5,11 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tech_world/services/locator.dart';
 
 import 'drawing/character_component.dart';
 import 'drawing/map_components.dart';
 import 'extensions/offset_extension.dart';
-import 'extensions/raw_key_event_extension.dart';
 import 'extensions/vector2_extension.dart';
 import 'redux/state/game/game_state.dart';
 
@@ -45,10 +43,10 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
   }
 
   @override
-  void onKeyEvent(RawKeyEvent keyEvent) {
-    print(keyEvent.data);
+  void onKeyEvent(RawKeyEvent event) {
+    print(event.data);
 
-    if (keyEvent.isSpaceDown) return _togglePausedState();
+    if (event.isShiftPressed) return _togglePausedState();
 
     // otherwise we change the direction of movement
     // _character.changeDirection(keyEvent);

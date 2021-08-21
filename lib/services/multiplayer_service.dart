@@ -18,7 +18,7 @@ class MultiplayerService {
   MultiplayerService(String userId, Store<AppState> store)
       : _userId = userId,
         _reduxStore = store {
-    final uriString = constants.us_central1;
+    final uriString = constants.usCentral1;
     // Connect to the server via a websocket and announce presence.
     _webSocket = WebSocketChannel.connect(Uri.parse(uriString));
     _webSocket.sink.add(jsonEncode(AnnouncePresence(userId).toJson()));

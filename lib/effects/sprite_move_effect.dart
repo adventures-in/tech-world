@@ -26,8 +26,9 @@ class SpriteDirectionEffect
       totalPathLength += subPathVector.length;
     }
     // add a last vector so [directionVectors] has the same length as [path]
-    if (directionVectors.isNotEmpty)
+    if (directionVectors.isNotEmpty) {
       directionVectors.insert(pathPoints.length - 1, directionVectors.last);
+    }
 
     super.component?.current = directionVectors.first;
     super.peakTime = totalPathLength / speed;

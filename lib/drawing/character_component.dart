@@ -59,6 +59,8 @@ class CharacterComponent extends SpriteAnimationGroupComponent<Direction> {
     addEffect(_moveEffect!);
   }
 
+  @override
   void update(double dt) => super.update(dt);
+  @override
   void render(Canvas canvas) => super.render(canvas);
 }
