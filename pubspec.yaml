@@ -23,8 +23,8 @@ dependencies:
   freezed_annotation:
   json_annotation:
   redfire:
-    # git: https://github.com/enspyrco/redfire.git
-    path: /Users/nick/git/orgs/enspyrco/redfire
+    git: https://github.com/enspyrco/redfire.git
+    # path: /Users/nick/git/orgs/enspyrco/redfire
   redux:
   flutter_redux:
   fast_immutable_collections:
