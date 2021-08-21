@@ -1,66 +1,45 @@
-name: adventures_in_tech_world
-description: Assisting learning and collaboration.
-
+name: tech_world
+description: Adventures In Tech World, for fun and profit.
 publish_to: 'none' 
-
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
+  flutter: ">=2.2.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  dio:
-  firebase_core:
+  a_star_algorithm:
+  flame: ^1.0.0-releasecandidate.13
+  web_socket_game_server_types:
+    git: https://github.com/Adventures-In/web_socket_game_server_types.git
+  web_socket_channel:
   
-  
-  # auth 
-  oauth2:
-  firebase_auth:
-  google_sign_in:
-  sign_in_with_apple:
-
-  # database 
-  cloud_firestore:
-
-  # github
-  github_graphql_client:
-    git: https://github.com/Adventures-In/github_graphql_client.git
-
-  # google 
-  googleapis:
-  googleapis_auth:
-
-  # platform tools 
-  url_launcher:
-  shared_preferences:
-
-  # redux 
-  built_value:
-  built_collection:
+  #######################
+  # redfire dependencies
+  #######################
+  freezed_annotation:
+  json_annotation:
+  redfire:
+    # git: https://github.com/enspyrco/redfire.git
+    path: /Users/nick/git/orgs/enspyrco/redfire
   redux:
   flutter_redux:
-  
+  fast_immutable_collections:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
+  redfire_test:
+    # git: https://github.com/enspyrco/redfire_test.git
+    path: /Users/nick/git/orgs/enspyrco/redfire_test
+  flutter_lints:
   build_runner:
-  built_value_generator:
-  redux_remote_devtools:
-  pedantic:
-  test:
-  mockito:
+  freezed:
+  json_serializable:
 
 flutter:
-  uses-material-design: true
   assets:
-    - assets/
-  fonts:
-   - family:  OctoIcons
-     fonts:
-      - asset: fonts/OctoIcons.ttf
+    - assets/images/bald.png
