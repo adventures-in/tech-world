@@ -10,40 +10,36 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  a_star_algorithm:
+  flame: ^1.0.0-releasecandidate.13
+  web_socket_game_server_types:
+    git: https://github.com/Adventures-In/web_socket_game_server_types.git
+  web_socket_channel:
   
+  #######################
+  # redfire dependencies
+  #######################
+  freezed_annotation:
+  json_annotation:
   redfire:
     # git: https://github.com/enspyrco/redfire.git
     path: /Users/nick/git/orgs/enspyrco/redfire
-  freezed_annotation:
-  json_annotation:
   redux:
   flutter_redux:
   fast_immutable_collections:
 
-  # dio:
-  googleapis: 
-  googleapis_auth: 
-  
-  # auth 
-  oauth2:
-
 dev_dependencies:
   flutter_test:
-    sdk: flutter
-  flutter_driver:
     sdk: flutter
   redfire_test:
     # git: https://github.com/enspyrco/redfire_test.git
     path: /Users/nick/git/orgs/enspyrco/redfire_test
+  flutter_lints:
   build_runner:
   freezed:
   json_serializable:
-  test:
-  mockito:
 
 flutter:
-  uses-material-design: true
-  fonts:
-    - family:  OctoIcons
-      fonts:
-        - asset: fonts/OctoIcons.ttf
+  assets:
+    - assets/images/bald.png

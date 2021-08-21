@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tech_world">
+    package="co.enspyr.tech_world">
    <application
         android:label="tech_world"
         android:icon="@mipmap/ic_launcher">

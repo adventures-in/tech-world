@@ -1,4 +1,4 @@
-package com.example.tech_world
+package co.enspyr.tech_world
 
 import io.flutter.embedding.android.FlutterActivity
 
