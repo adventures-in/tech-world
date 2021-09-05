@@ -2,6 +2,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redfire/actions.dart';
+import 'package:redfire/extensions.dart';
 import 'package:tech_world/redux/state/game/game_state.dart';
 import 'package:tech_world/tech_world_game.dart';
 
@@ -19,7 +21,14 @@ class MainPage extends StatelessWidget {
             },
         distinct: true,
         converter: (store) => store.state.game,
-        builder: (context, gameState) =>
-            GameWidget(game: TechWorldGame(gameState)));
+        builder: (context, gameState) => Stack(
+              children: [
+                GameWidget(game: TechWorldGame(gameState)),
+                ElevatedButton(
+                  onPressed: () => context.dispatch<AppState>(SignOutAction()),
+                  child: const Text('Sign Out'),
+                ),
+              ],
+            ));
   }
 }
