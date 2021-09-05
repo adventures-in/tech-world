@@ -5,40 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tech_world",
+            "name": "mac",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "macos"
+        },
+        {
+            "name": "web",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": [
+                "--web-hostname",
+                "localhost",
+                "--web-port",
+                "5000"
+            ]
+        },
+        {
+            "name": "system (vs code)",
             "request": "launch",
             "type": "dart"
-        },
-        {
-            "name": "web_world",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "chrome",
-            "args": [
-                "--web-hostname",
-                "localhost",
-                "--web-port",
-                "5000"
-            ]
-        },
-        {
-            "name": "rdt_world",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_rdt.dart",
-        },
-        {
-            "name": "web_rdt_world",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "chrome",
-            "program": "lib/main_rdt.dart",
-            "args": [
-                "--web-hostname",
-                "localhost",
-                "--web-port",
-                "5000"
-            ]
-        },
+        }
     ]
 }
