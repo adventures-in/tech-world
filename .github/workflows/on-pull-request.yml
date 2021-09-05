@@ -1,0 +1,33 @@
+name: Deploy to Firebase Hosting on PR
+'on': pull_request
+jobs:
+  build_and_preview:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Setup flutter using the dev channel.
+      - name: Install Java for Flutter tool
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - name: Install Flutter tool
+        uses: subosito/flutter-action@v1
+        with:
+          channel: dev
+
+      # Get app dependencies, run code gen & run tests.
+      - run: flutter pub get
+      - run: flutter pub run build_runner build 
+      - run: flutter test
+
+      # Rename index.html and build for web.
+      - run: cp web/index.auto web/index.html
+      - run: flutter build web
+
+      # Deploy to Firebase hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADVENTURES_IN_ADVENTURES }}'
+          projectId: adventures-in-adventures

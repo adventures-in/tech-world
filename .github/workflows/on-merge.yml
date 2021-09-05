@@ -1,0 +1,36 @@
+name: Deploy to Firebase Hosting on merge
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Setup flutter using the dev channel.
+      - name: Install Java for Flutter tool
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - name: Install Flutter tool
+        uses: subosito/flutter-action@v1
+        with:
+          channel: dev
+
+      # Get app dependencies, run code gen & run tests (& output coverage).
+      - run: flutter pub get
+      - run: flutter pub run build_runner build 
+      - run: flutter test --coverage
+
+      # Rename index.html and build for web.
+      - run: cp web/index.auto web/index.html
+      - run: flutter build web
+
+      # Deploy to Firebase hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADVENTURES_IN_ADVENTURES }}'
+          channelId: live
+          projectId: adventures-in-adventures
