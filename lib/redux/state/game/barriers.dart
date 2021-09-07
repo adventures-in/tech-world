@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:redfire/types.dart';
 
@@ -11,7 +12,7 @@ class Barriers with _$Barriers, ReduxModel {
   Barriers._();
   factory Barriers() = _Barriers;
 
-  final List<Double2> positions = [
+  final IList<Double2> positions = [
     Double2(5, 2),
     Double2(5, 3),
     Double2(5, 4),
@@ -32,7 +33,7 @@ class Barriers with _$Barriers, ReduxModel {
     Double2(1, 6),
     Double2(1, 7),
     Double2(1, 8),
-  ];
+  ].lock;
 
   factory Barriers.fromJson(Map<String, Object?> json) =>
       _$BarriersFromJson(json);

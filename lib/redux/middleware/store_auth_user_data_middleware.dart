@@ -3,7 +3,7 @@ import 'package:redux/redux.dart';
 
 import '../../main.dart';
 import '../../services/locator.dart';
-import '../../services/multiplayer_service.dart';
+import '../../services/networking_service.dart';
 
 class StoreAuthUserDataMiddleware
     extends TypedMiddleware<AppState, StoreAuthUserDataAction> {
@@ -13,7 +13,8 @@ class StoreAuthUserDataMiddleware
 
           if (action.authUserData == null) return;
 
-          final service = MultiplayerService(action.authUserData!.uid, store);
-          MultiplayerLocator.provide(service);
+          Locator.provideNetworkingService(
+              NetworkingService(action.authUserData!.uid, store),
+              overwrite: false);
         });
 }
