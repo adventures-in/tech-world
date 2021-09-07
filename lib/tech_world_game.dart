@@ -5,41 +5,31 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_world/drawing/character_component.dart';
 import 'package:tech_world/services/locator.dart';
 
-import 'drawing/character_component.dart';
 import 'drawing/map_components.dart';
 import 'extensions/offset_extension.dart';
 import 'extensions/vector2_extension.dart';
-import 'redux/state/game/game_state.dart';
 
-CharacterComponent? _character;
-Map<String, CharacterComponent> _players = {};
 bool _paused = false;
 var _clickedUnit = Vector2(0, 0);
 List<Offset> _pathUnits = [];
+final _playersService = Locator.getPlayersService();
+final _networkingService = Locator.getNetworkingService();
+late final CharacterComponent _player1;
 
 int departureTime = 0;
 
 class TechWorldGame extends Game with KeyboardEvents, TapDetector {
-  TechWorldGame(this._gameState);
+  // TechWorldGame(this._gameState);
 
-  final GameState _gameState;
+  // final GameState _gameState;
   final MapComponents _mapComponents = MapComponents();
 
   @override
   Future<void> onLoad() async {
-    // Create a character at the origin if none exists.
-    _character ??=
-        await CharacterComponent.create('bald.png', start: Position(0, 0));
-
-    // Add a player for any new character that came through in the game state.
-    for (final playerId in _gameState.presentIds) {
-      if (!_players.containsKey(playerId)) {
-        _players[playerId] =
-            await CharacterComponent.create('bald.png', start: Position(9, 9));
-      }
-    }
+    _player1 = await _playersService.createPlayer1Avatar();
   }
 
   @override
@@ -59,8 +49,6 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
   void onTapDown(TapDownInfo info) {
     super.onTapDown(info);
 
-    if (_character == null) return;
-
     final point = info.eventPosition.game.toOffset();
     _clickedUnit = point.toUnit();
 
@@ -68,7 +56,7 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
       rows: 10,
       columns: 10,
       start: _clickedUnit.toOffset(),
-      end: _character!.position.inUnits.toOffset(),
+      end: _player1.position.inUnits.toOffset(),
       barriers: _mapComponents.barrierOffsets,
     ).findThePath()
       ..add(_clickedUnit.toOffset());
@@ -76,11 +64,10 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     final pathVectors =
         _pathUnits.map((offset) => (offset).toVector2() * 64).toList();
 
-    final multiplayerService = MultiplayerLocator.getService();
     departureTime = DateTime.now().millisecondsSinceEpoch;
-    multiplayerService.publishPath(_pathUnits);
+    _networkingService.publishPath(_pathUnits);
 
-    _character!.move(speed: 300, points: pathVectors);
+    _player1.move(speed: 300, points: pathVectors);
   }
 
   @override
@@ -88,10 +75,7 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
 
   @override
   void update(double dt) {
-    _character?.update(dt);
-    for (final player in _players.values) {
-      player.update(dt);
-    }
+    _playersService.update(dt);
   }
 
   @override
@@ -107,11 +91,6 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     canvas.drawRect(
         _clickedUnit.toRect64(), Paint()..color = Colors.lightGreen);
 
-    // Draw our character
-    _character?.render(canvas);
-
-    for (final player in _players.values) {
-      player.render(canvas);
-    }
+    _playersService.render(canvas);
   }
 }

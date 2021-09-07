@@ -14,11 +14,11 @@ import '../redux/actions/store_movement_path_action.dart';
 import '../redux/state/game/movement_path.dart';
 import '../utilities/constants.dart' as constants;
 
-class MultiplayerService {
-  MultiplayerService(String userId, Store<AppState> store)
+class NetworkingService {
+  NetworkingService(String userId, Store<AppState> store)
       : _userId = userId,
         _reduxStore = store {
-    final uriString = constants.usCentral1;
+    final uriString = constants.localhost;
     // Connect to the server via a websocket and announce presence.
     _webSocket = WebSocketChannel.connect(Uri.parse(uriString));
     _webSocket.sink.add(jsonEncode(AnnouncePresence(userId).toJson()));
@@ -28,7 +28,7 @@ class MultiplayerService {
         _webSocket.stream.listen(_handleEvent, onError: _error, onDone: _done);
 
     // For debugging.
-    print('Connected to websocket at $uriString');
+    print('$userId connected to websocket at $uriString');
   }
 
   final String _userId;
@@ -45,11 +45,6 @@ class MultiplayerService {
     _departureTime = DateTime.now().millisecondsSinceEpoch;
     final jsonString = jsonEncode(movementPath.toJson());
     _webSocket.sink.add(jsonString);
-  }
-
-  Future<dynamic> close() async {
-    await _subscription.cancel();
-    return _webSocket.sink.close();
   }
 
   // Handle each event that comes through the websocket
@@ -76,4 +71,9 @@ class MultiplayerService {
 
   void _done() =>
       '${DateTime.now()} > CONNECTION DONE! closeCode=${_webSocket.closeCode}, closeReason= ${_webSocket.closeReason}';
+
+  Future<dynamic> close() async {
+    await _subscription.cancel();
+    return _webSocket.sink.close();
+  }
 }

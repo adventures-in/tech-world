@@ -4,6 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:redfire/types.dart';
 import 'package:redfire/widgets.dart';
 import 'package:tech_world/redux/reducers/store_present_list_reducer.dart';
+import 'package:tech_world/services/locator.dart';
+import 'package:tech_world/services/players_service.dart';
 
 import 'main_page.dart';
 import 'redux/middleware/store_auth_user_data_middleware.dart';
@@ -41,12 +43,16 @@ class AppState with _$AppState, RedFireState {
       _$AppStateFromJson(json);
 }
 
-void main() => runApp(AppWidget<AppState>(
-      initialState: AppState.init(),
-      initialActions: const [],
-      middlewares: [StoreAuthUserDataMiddleware()],
-      reducers: [StorePresentListReducer()],
-      pageTransforms: const [],
-      title: 'Tech World', // optional, defaults to 'Title Note Set'
-      mainPage: const MainPage(),
-    ));
+void main() {
+  Locator.providePlayersService(PlayersService(), overwrite: false);
+
+  runApp(AppWidget<AppState>(
+    initialState: AppState.init(),
+    initialActions: const [],
+    middlewares: [StoreAuthUserDataMiddleware()],
+    reducers: [StorePresentListReducer()],
+    pageTransforms: const [],
+    title: 'Tech World', // optional, defaults to 'Title Note Set'
+    mainPage: const MainPage(),
+  ));
+}
