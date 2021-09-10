@@ -1,6 +1,7 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/rendering.dart';
 import 'package:tech_world/drawing/character_component.dart';
+// import 'package:web_socket_game_server_types/'
 
 class PlayersService {
   late final CharacterComponent? _player1;
@@ -22,14 +23,16 @@ class PlayersService {
     }
   }
 
-  Future<void> createNewAvatars(ISet<String> presentSet) async {
+  Future<void> createNewAvatars(ISet<String> presentIds) async {
     // Add a player for any new character that came through in the game state.
-    for (final playerId in presentSet) {
+    print('there were ${_otherPlayers.length} other players...');
+    for (final playerId in presentIds) {
       if (!_otherPlayers.containsKey(playerId)) {
         _otherPlayers[playerId] =
             await CharacterComponent.create('bald.png', start: Position(9, 9));
       }
     }
+    print('now there are ${_otherPlayers.length}.');
   }
 
   // Create a character at the origin for player1.

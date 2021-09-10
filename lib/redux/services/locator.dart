@@ -1,5 +1,5 @@
-import 'package:tech_world/services/networking_service.dart';
-import 'package:tech_world/services/players_service.dart';
+import 'package:tech_world/redux/services/networking_service.dart';
+import 'package:tech_world/redux/services/players_service.dart';
 
 /// Services are nullable so that we can only provide a service if none exists,
 /// allowing for mocks to be set in tests.
@@ -7,8 +7,8 @@ import 'package:tech_world/services/players_service.dart';
 /// All get_Service functions return non-nullable types. Ensuring the
 /// services are not null when they are accessed is up to the developer.
 class Locator {
-  static NetworkingService getNetworkingService() => _networkingService!;
-  static PlayersService getPlayersService() => _playersService!;
+  static NetworkingService get networkingService => _networkingService!;
+  static PlayersService get playersService => _playersService!;
 
   static void provideNetworkingService(NetworkingService service,
       {bool overwrite = true}) {

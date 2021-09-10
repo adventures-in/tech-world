@@ -6,7 +6,8 @@ import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_world/drawing/character_component.dart';
-import 'package:tech_world/services/locator.dart';
+import 'package:tech_world/main.dart';
+import 'package:tech_world/redux/services/locator.dart';
 
 import 'drawing/map_components.dart';
 import 'extensions/offset_extension.dart';
@@ -15,14 +16,16 @@ import 'extensions/vector2_extension.dart';
 bool _paused = false;
 var _clickedUnit = Vector2(0, 0);
 List<Offset> _pathUnits = [];
-final _playersService = Locator.getPlayersService();
-final _networkingService = Locator.getNetworkingService();
+final _playersService = Locator.playersService;
+final _networkingService = Locator.networkingService;
 late final CharacterComponent _player1;
 
 int departureTime = 0;
 
 class TechWorldGame extends Game with KeyboardEvents, TapDetector {
-  // TechWorldGame(this._gameState);
+  TechWorldGame({required this.appStateChanges});
+
+  Stream<AppState> appStateChanges;
 
   // final GameState _gameState;
   final MapComponents _mapComponents = MapComponents();
