@@ -15,7 +15,7 @@ dependencies:
   flame: ^1.0.0-releasecandidate.13
   web_socket_game_server_types:
     # git: https://github.com/adventures-in/web_socket_game_server_types.git
-    path: /Users/nick/git/orgs/adventures_in/microservices/web_socket_game_server_types
+    path: /Users/nick/git/orgs/adventures_in/microservices/web_socket_game_server/web_socket_game_server_types
   web_socket_channel:
   
   #######################
