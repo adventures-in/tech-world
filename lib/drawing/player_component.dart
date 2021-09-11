@@ -6,10 +6,9 @@ import 'package:tech_world/enums/direction.dart';
 
 typedef Position = Vector2;
 
-class CharacterComponent extends SpriteAnimationGroupComponent<Direction> {
+class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
   // Private constructor - the async create method is how an object is created.
-  CharacterComponent._(
-      Map<Direction, SpriteAnimation> animations, Position start)
+  PlayerComponent._(Map<Direction, SpriteAnimation> animations, Position start)
       : super(
             size: Vector2(64, 64),
             position: start,
@@ -20,7 +19,7 @@ class CharacterComponent extends SpriteAnimationGroupComponent<Direction> {
   MoveEffect? _moveEffect;
 
   // Static async create method so we can load sprite animations.
-  static Future<CharacterComponent> create(String path,
+  static Future<PlayerComponent> create(String path,
       {required Position start}) async {
     final animations = <Direction, SpriteAnimation>{};
 
@@ -37,7 +36,7 @@ class CharacterComponent extends SpriteAnimationGroupComponent<Direction> {
               texturePosition: Vector2(spriteX[direction.index], 0)));
     }
 
-    return CharacterComponent._(animations, start);
+    return PlayerComponent._(animations, start);
   }
 
   // void changeDirection(RawKeyEvent event) {

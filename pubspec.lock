@@ -516,14 +516,14 @@ packages:
   redfire:
     dependency: "direct main"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire"
+      path: "/Users/nick/git/orgs/enspyrco/redfire/redfire"
       relative: false
     source: path
     version: "0.0.1"
   redfire_test:
     dependency: "direct dev"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire_test"
+      path: "/Users/nick/git/orgs/enspyrco/redfire/redfire_test"
       relative: false
     source: path
     version: "0.0.1"

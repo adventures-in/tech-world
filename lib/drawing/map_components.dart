@@ -31,6 +31,7 @@ class MapComponents {
   List<Rect> get barrierRects => _barrierRects;
 
   void render(Canvas canvas) {
+    // draw the grid
     for (double i = 0; i <= gridHeight; i += squareSize) {
       canvas.drawLine(Offset(0, i), Offset(gridWidth, i), _linePaint);
     }
@@ -38,6 +39,7 @@ class MapComponents {
       canvas.drawLine(Offset(i, 0), Offset(i, gridHeight), _linePaint);
     }
 
+    // draw the barrier squares
     for (final barrierRect in barrierRects) {
       canvas.drawRect(barrierRect, Paint()..color = Colors.red);
     }

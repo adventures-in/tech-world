@@ -5,7 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_world/drawing/character_component.dart';
+import 'package:tech_world/drawing/player_component.dart';
 import 'package:tech_world/main.dart';
 import 'package:tech_world/redux/services/locator.dart';
 
@@ -15,10 +15,10 @@ import 'extensions/vector2_extension.dart';
 
 bool _paused = false;
 var _clickedUnit = Vector2(0, 0);
-List<Offset> _pathUnits = [];
+List<Offset> _pathLocations = [];
 final _playersService = Locator.playersService;
 final _networkingService = Locator.networkingService;
-late final CharacterComponent _player1;
+late final PlayerComponent _player1;
 
 int departureTime = 0;
 
@@ -55,7 +55,7 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     final point = info.eventPosition.game.toOffset();
     _clickedUnit = point.toUnit();
 
-    _pathUnits = AStar(
+    _pathLocations = AStar(
       rows: 10,
       columns: 10,
       start: _clickedUnit.toOffset(),
@@ -64,13 +64,13 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     ).findThePath()
       ..add(_clickedUnit.toOffset());
 
-    final pathVectors =
-        _pathUnits.map((offset) => (offset).toVector2() * 64).toList();
+    final bigPathLocations =
+        _pathLocations.map((offset) => (offset).toVector2() * 64).toList();
 
     departureTime = DateTime.now().millisecondsSinceEpoch;
-    _networkingService.publishPath(_pathUnits);
+    _networkingService.publishPath(_pathLocations);
 
-    _player1.move(speed: 300, points: pathVectors);
+    _player1.move(speed: 300, points: bigPathLocations);
   }
 
   @override
@@ -81,13 +81,15 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     _playersService.update(dt);
   }
 
+  // remember - order matters!
   @override
   void render(Canvas canvas) {
     // Draw the grid.
     _mapComponents.render(canvas);
 
-    for (final pathUnit in _pathUnits) {
-      canvas.drawRect(pathUnit.toRect64(), Paint()..color = Colors.blue);
+    // draw the path squares
+    for (final location in _pathLocations) {
+      canvas.drawRect(location.toRect64(), Paint()..color = Colors.blue);
     }
 
     // Draw the selected square.
