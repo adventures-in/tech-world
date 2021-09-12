@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flame/extensions.dart';
 import 'package:redfire/types.dart';
-import 'package:tech_world/redux/actions/set_movement_path_action.dart';
-import 'package:tech_world/redux/actions/set_present_ids_action.dart';
-import 'package:tech_world/redux/state/game/movement_path.dart';
+import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
+import 'package:tech_world/redux/actions/set_player_path_action.dart';
+import 'package:tech_world/redux/state/game/player_path.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
@@ -53,27 +53,27 @@ class NetworkingService {
       _webSocket.sink.add(jsonEncode(AnnouncePresence(_userId!).toJson()));
 
   void publishPath(List<Offset> pathUnits) {
-    final movementPath =
-        MovementPath(userId: _userId!, points: pathUnits.toValues());
+    final playerPath =
+        PlayerPath(userId: _userId!, points: pathUnits.toValues());
 
     // record time and send data via websocket
     _departureTime = DateTime.now().millisecondsSinceEpoch;
-    final jsonString = jsonEncode(movementPath.toJson());
+    final jsonString = jsonEncode(playerPath.toJson());
     _webSocket.sink.add(jsonString);
   }
 
   ReduxAction _identify(JsonMap json) {
     print('identifying: $json');
     // Check the type of data in the event and respond appropriately.
-    if (json['type'] == 'present_set') {
-      final present = PresentSet.fromJson(json);
-      return SetPresentIdsAction(present.ids);
+    if (json['type'] == 'other_player_ids') {
+      final otherPlayers = OtherPlayerIds.fromJson(json);
+      return SetOtherPlayerIdsAction(otherPlayers.ids);
     } else {
-      final pathData = MovementPath.fromJson(json);
+      final pathData = PlayerPath.fromJson(json);
       if (pathData.userId == _userId) {
         print('ws: ${DateTime.now().millisecondsSinceEpoch - _departureTime}');
       }
-      return SetMovementPathAction(pathData);
+      return SetPlayerPathAction(pathData);
     }
   }
 

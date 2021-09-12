@@ -6,8 +6,8 @@ import 'package:redfire/redfire.dart';
 import 'package:redfire/types.dart';
 import 'package:redfire/widgets.dart';
 import 'package:redux/redux.dart';
-import 'package:tech_world/redux/middleware/set_present_ids_middleware.dart';
-import 'package:tech_world/redux/reducers/set_present_ids_reducer.dart';
+import 'package:tech_world/redux/reducers/set_other_player_ids_reducer.dart';
+import 'package:tech_world/redux/reducers/set_player_path_reducer.dart';
 import 'package:tech_world/redux/services/locator.dart';
 import 'package:tech_world/redux/services/networking_service.dart';
 import 'package:tech_world/redux/services/players_service.dart';
@@ -53,11 +53,13 @@ void main() {
   // We create the store separately so we can pass the onChange stream into
   // the TechWorldGame object.
   final store = Store<AppState>(
-    (redfireReducers<AppState>() + [SetPresentIdsReducer()]).combine(),
+    (redfireReducers<AppState>() +
+            [SetOtherPlayerIdsReducer(), SetPlayerPathReducer()])
+        .combine(),
     initialState: AppState.init(),
     middleware: [
       ...redfireMiddleware(),
-      ...[SetPresentIdsMiddleware(), SetAuthUserDataMiddleware()]
+      ...[SetAuthUserDataMiddleware()]
     ],
   );
 

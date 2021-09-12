@@ -33,6 +33,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test:
   redfire_test:
     # git: https://github.com/enspyrco/redfire_test.git
     path: /Users/nick/git/orgs/enspyrco/redfire/redfire_test
