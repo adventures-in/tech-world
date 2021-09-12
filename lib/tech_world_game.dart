@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_star_algorithm/a_star_algorithm.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
@@ -5,9 +7,11 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_world/drawing/other_players_component.dart';
 import 'package:tech_world/drawing/player_component.dart';
+import 'package:tech_world/extensions/offsets_list_extension.dart';
 import 'package:tech_world/main.dart';
-import 'package:tech_world/redux/services/locator.dart';
+import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
 import 'drawing/map_components.dart';
 import 'extensions/offset_extension.dart';
@@ -16,23 +20,40 @@ import 'extensions/vector2_extension.dart';
 bool _paused = false;
 var _clickedUnit = Vector2(0, 0);
 List<Offset> _pathLocations = [];
-final _playersService = Locator.playersService;
-final _networkingService = Locator.networkingService;
-late final PlayerComponent _player1;
-
 int departureTime = 0;
 
 class TechWorldGame extends Game with KeyboardEvents, TapDetector {
-  TechWorldGame({required this.appStateChanges});
+  TechWorldGame(
+      {required Stream<AppState> appStateChanges,
+      required Sink<GameServerMessage> serverSink})
+      : _appStateChanges = appStateChanges,
+        _serverSink = serverSink;
 
-  Stream<AppState> appStateChanges;
+  // We listen to each state change & check the parts we care about.
+  final Stream<AppState> _appStateChanges;
+  var _oldState = AppState.init();
 
-  // final GameState _gameState;
-  final MapComponents _mapComponents = MapComponents();
+  // A sink is passed in that we can use to send messages to the server.
+  final Sink<GameServerMessage> _serverSink;
+
+  // Components that are used to draw the scene.
+  late final PlayerComponent _player;
+  final _otherPlayers = OtherPlayersComponent();
+  final _mapComponents = MapComponents();
 
   @override
   Future<void> onLoad() async {
-    _player1 = await _playersService.createPlayer1Avatar();
+    // Create a character at the origin for player1.
+    _player = await PlayerComponent.create('bald.png', start: Position(0, 0));
+
+    // TODO: add try/catch blocks and onError callback
+    _appStateChanges.listen((state) {
+      if (_oldState.game.otherPlayerIds != state.game.otherPlayerIds) {
+        _otherPlayers.setIdsAndCreateNewPlayers(state.game.otherPlayerIds);
+      }
+
+      _oldState = state;
+    });
   }
 
   @override
@@ -59,7 +80,7 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
       rows: 10,
       columns: 10,
       start: _clickedUnit.toOffset(),
-      end: _player1.position.inUnits.toOffset(),
+      end: _player.position.inUnits.toOffset(),
       barriers: _mapComponents.barrierOffsets,
     ).findThePath()
       ..add(_clickedUnit.toOffset());
@@ -68,9 +89,11 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
         _pathLocations.map((offset) => (offset).toVector2() * 64).toList();
 
     departureTime = DateTime.now().millisecondsSinceEpoch;
-    _networkingService.publishPath(_pathLocations);
+    _serverSink.add(PlayerPathMessage(
+        userId: _oldState.auth.userData!.uid,
+        points: _pathLocations.toValues()));
 
-    _player1.move(speed: 300, points: bigPathLocations);
+    _player.move(speed: 300, points: bigPathLocations);
   }
 
   @override
@@ -78,7 +101,8 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
 
   @override
   void update(double dt) {
-    _playersService.update(dt);
+    _player.update(dt);
+    _otherPlayers.update(dt);
   }
 
   // remember - order matters!
@@ -96,6 +120,7 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
     canvas.drawRect(
         _clickedUnit.toRect64(), Paint()..color = Colors.lightGreen);
 
-    _playersService.render(canvas);
+    _player.render(canvas);
+    _otherPlayers.render(canvas);
   }
 }

@@ -1,8 +1,7 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:redfire/types.dart';
-
-import '../../state/math/double2.dart';
+import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
 part 'barriers.freezed.dart';
 part 'barriers.g.dart';

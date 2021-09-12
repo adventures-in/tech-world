@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flame/extensions.dart';
 import 'package:redfire/types.dart';
 import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
 import 'package:tech_world/redux/actions/set_player_path_action.dart';
-import 'package:tech_world/redux/state/game/player_path.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
-import '../../extensions/offsets_list_extension.dart';
 import '../../utilities/constants.dart' as constants;
 
 final _uriString = constants.localhost;
@@ -50,15 +47,12 @@ class NetworkingService {
 
   // Announce our presence.
   void _announce() =>
-      _webSocket.sink.add(jsonEncode(AnnouncePresence(_userId!).toJson()));
+      _webSocket.sink.add(jsonEncode(PresentMessage(_userId!).toJson()));
 
-  void publishPath(List<Offset> pathUnits) {
-    final playerPath =
-        PlayerPath(userId: _userId!, points: pathUnits.toValues());
-
+  void publish(GameServerMessage message) {
     // record time and send data via websocket
     _departureTime = DateTime.now().millisecondsSinceEpoch;
-    final jsonString = jsonEncode(playerPath.toJson());
+    final jsonString = jsonEncode(message.toJson());
     _webSocket.sink.add(jsonString);
   }
 
@@ -66,14 +60,14 @@ class NetworkingService {
     print('identifying: $json');
     // Check the type of data in the event and respond appropriately.
     if (json['type'] == 'other_player_ids') {
-      final otherPlayers = OtherPlayerIds.fromJson(json);
+      final otherPlayers = OtherPlayerIdsMessage.fromJson(json);
       return SetOtherPlayerIdsAction(otherPlayers.ids);
     } else {
-      final pathData = PlayerPath.fromJson(json);
-      if (pathData.userId == _userId) {
+      final message = PlayerPathMessage.fromJson(json);
+      if (message.userId == _userId) {
         print('ws: ${DateTime.now().millisecondsSinceEpoch - _departureTime}');
       }
-      return SetPlayerPathAction(pathData);
+      return SetPlayerPathAction(message);
     }
   }
 

@@ -1,14 +1,15 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
-import '../enums/direction.dart';
-import '../extensions/vector2_extension.dart';
+import '../../enums/direction.dart';
+import '../../extensions/vector2_extension.dart';
 
 typedef Point = Vector2;
 
-class SpriteDirectionEffect
+class SpriteDirectionAnimationEffect
     extends ComponentEffect<SpriteAnimationGroupComponent<Direction>> {
-  SpriteDirectionEffect({required this.pathPoints, required this.speed})
+  SpriteDirectionAnimationEffect(
+      {required this.pathPoints, required this.speed})
       : super(false, false); // sets _initialIsInfinite & _initialIsAlternating
 
   final List<Vector2> pathPoints;

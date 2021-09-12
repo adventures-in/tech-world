@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
-import 'package:tech_world/effects/sprite_move_effect.dart';
 import 'package:tech_world/enums/direction.dart';
+import 'package:tech_world/utilities/effects/sprite_direction_animation_effect.dart';
 
 typedef Position = Vector2;
 
@@ -15,7 +15,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
             animations: animations,
             current: Direction.down);
 
-  SpriteDirectionEffect? _directionEffect;
+  SpriteDirectionAnimationEffect? _animationEffect;
   MoveEffect? _moveEffect;
 
   // Static async create method so we can load sprite animations.
@@ -48,13 +48,14 @@ class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
   // }
 
   void move({required double speed, required List<Vector2> points}) {
-    if (_directionEffect != null) removeEffect(_directionEffect!);
+    if (_animationEffect != null) removeEffect(_animationEffect!);
     if (_moveEffect != null) removeEffect(_moveEffect!);
 
-    _directionEffect = SpriteDirectionEffect(speed: speed, pathPoints: points);
+    _animationEffect =
+        SpriteDirectionAnimationEffect(speed: speed, pathPoints: points);
     _moveEffect = MoveEffect(speed: speed, path: points);
 
-    addEffect(_directionEffect!);
+    addEffect(_animationEffect!);
     addEffect(_moveEffect!);
   }
 

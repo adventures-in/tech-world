@@ -8,6 +8,6 @@ class SetPlayerPathReducer extends TypedReducer<AppState, SetPlayerPathAction> {
       : super(
           (state, action) => state.copyWith.game(
               playerPaths: (state.game.playerPaths
-                  .add(action.data.userId, action.data.points))),
+                  .add(action.message.userId, action.message.points))),
         );
 }

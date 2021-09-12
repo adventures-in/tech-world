@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:redfire/types.dart';
-
-import '../../../redux/state/math/double2.dart';
+import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
 part 'character_state.freezed.dart';
 part 'character_state.g.dart';
