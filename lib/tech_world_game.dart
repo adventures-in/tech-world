@@ -9,6 +9,7 @@ import 'package:tech_world/components/map_component.dart';
 import 'package:tech_world/components/other_players_component.dart';
 import 'package:tech_world/components/player_component.dart';
 import 'package:tech_world/main.dart';
+import 'package:tech_world/utils/extensions/i_list_of_vector2s_extension.dart';
 import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
 bool _paused = false;
@@ -44,6 +45,10 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
         _otherPlayers.setIdsAndCreateNewPlayers(state.game.otherPlayerIds);
       }
 
+      if (_oldState.game.playerPaths != state.game.playerPaths) {
+        _otherPlayers.updateMovement(state.game.playerPaths);
+      }
+
       _oldState = state;
     });
   }
@@ -66,9 +71,9 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
         _map.createPath(start: _player.position, end: info.eventPosition.game);
 
     departureTime = DateTime.now().millisecondsSinceEpoch;
-    // _serverSink.add(PlayerPathMessage(
-    //     userId: _oldState.auth.userData!.uid,
-    //     points: pathLocations.toValues()));
+    _serverSink.add(PlayerPathMessage(
+        userId: _oldState.auth.userData!.uid,
+        points: bigPathLocations.toDouble2s()));
 
     _player.moveOnPath(points: bigPathLocations, speed: 300);
   }
@@ -78,15 +83,15 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
 
   @override
   void update(double dt) {
-    _player.update(dt);
     _otherPlayers.update(dt);
+    _player.update(dt);
   }
 
   // remember - order matters!
   @override
   void render(Canvas canvas) {
     _map.render(canvas);
-    _player.render(canvas);
     _otherPlayers.render(canvas);
+    _player.render(canvas);
   }
 }

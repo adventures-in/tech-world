@@ -2,6 +2,8 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:tech_world/components/player_component.dart';
+import 'package:tech_world/utils/extensions/i_list_of_double2s_extension.dart';
+import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
 
 class OtherPlayersComponent extends Component {
   final Map<String, PlayerComponent> _otherPlayers = {};
@@ -12,10 +14,18 @@ class OtherPlayersComponent extends Component {
     for (final playerId in otherPlayerIds) {
       if (!_otherPlayers.containsKey(playerId)) {
         _otherPlayers[playerId] =
-            await PlayerComponent.create('beard.png', start: Position(50, 50));
+            await PlayerComponent.create('beard.png', start: Position(0, 0));
       }
     }
     print('now there are ${_otherPlayers.length}.');
+  }
+
+  void updateMovement(IMap<String, IList<Double2>> pathsMap) {
+    for (String userId in pathsMap.keys) {
+      //  bigPathLocations
+      _otherPlayers[userId]
+          ?.moveOnPath(points: pathsMap[userId]!.toVector2s(), speed: 300);
+    }
   }
 
   @override

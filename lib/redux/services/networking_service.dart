@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:redfire/types.dart';
+import 'package:redfire/types.dart' hide JsonMap;
 import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
 import 'package:tech_world/redux/actions/set_player_path_action.dart';
 import 'package:tech_world/shared/constants.dart' as constants;

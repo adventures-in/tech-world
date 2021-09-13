@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:tech_world/shared/direction_enum.dart';
@@ -11,7 +12,7 @@ class SpriteDirectionAnimationEffect
       {required this.pathPoints, required this.speed})
       : super(false, false); // sets _initialIsInfinite & _initialIsAlternating
 
-  final List<Vector2> pathPoints;
+  final IList<Vector2> pathPoints;
   final double speed;
   final directions = <DirectionEnum>[];
 

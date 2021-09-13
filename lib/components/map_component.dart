@@ -1,4 +1,5 @@
 import 'package:a_star_algorithm/a_star_algorithm.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class MapComponent extends Component {
   //
   // The AStar algorithm works backwards so starts at the 'end' ie the clicked
   // location.
-  List<Vector2> createPath({required Vector2 start, required Vector2 end}) {
+  IList<Vector2> createPath({required Vector2 start, required Vector2 end}) {
     _pathLocations = AStar(
       rows: 10,
       columns: 10,
@@ -49,7 +50,9 @@ class MapComponent extends Component {
       ..insert(0, start.inUnits.toOffset())
       ..add(end.inUnits.toOffset()); //
 
-    return _pathLocations.map((offset) => (offset).toVector2() * 64).toList();
+    return _pathLocations
+        .map<Vector2>((offset) => (offset).toVector2() * 64)
+        .toIList();
   }
 
   @override

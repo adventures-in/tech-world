@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
@@ -51,13 +52,13 @@ class PlayerComponent extends SpriteAnimationGroupComponent<DirectionEnum> {
     }
   }
 
-  void moveOnPath({required double speed, required List<Vector2> points}) {
+  void moveOnPath({required double speed, required IList<Vector2> points}) {
     if (_animationEffect != null) removeEffect(_animationEffect!);
     if (_moveEffect != null) removeEffect(_moveEffect!);
 
     _animationEffect =
         SpriteDirectionAnimationEffect(speed: speed, pathPoints: points);
-    _moveEffect = MoveEffect(speed: speed, path: points);
+    _moveEffect = MoveEffect(speed: speed, path: points.toList());
 
     addEffect(_animationEffect!);
     addEffect(_moveEffect!);
