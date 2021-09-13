@@ -4,10 +4,9 @@ import 'dart:convert';
 import 'package:redfire/types.dart';
 import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
 import 'package:tech_world/redux/actions/set_player_path_action.dart';
+import 'package:tech_world/shared/constants.dart' as constants;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
-
-import '../../utilities/constants.dart' as constants;
 
 final _uriString = constants.localhost;
 

@@ -1,7 +1,7 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tech_world/drawing/player_component.dart';
+import 'package:tech_world/components/player_component.dart';
 
 class OtherPlayersComponent extends Component {
   final Map<String, PlayerComponent> _otherPlayers = {};

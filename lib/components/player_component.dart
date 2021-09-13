@@ -2,21 +2,22 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
 import 'package:flutter/services.dart';
-import 'package:tech_world/enums/direction.dart';
-import 'package:tech_world/extensions/direction_extension.dart';
-import 'package:tech_world/utilities/effects/sprite_direction_animation_effect.dart';
-import 'package:tech_world/utilities/input.dart';
+import 'package:tech_world/shared/direction_enum.dart';
+import 'package:tech_world/utils/effects/sprite_direction_animation_effect.dart';
+import 'package:tech_world/utils/extensions/direction_enum_extension.dart';
+import 'package:tech_world/utils/input.dart';
 
 typedef Position = Vector2;
 
-class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
+class PlayerComponent extends SpriteAnimationGroupComponent<DirectionEnum> {
   // Private constructor - the async create method is how an object is created.
-  PlayerComponent._(Map<Direction, SpriteAnimation> animations, Position start)
+  PlayerComponent._(
+      Map<DirectionEnum, SpriteAnimation> animations, Position start)
       : super(
             size: Vector2(64, 64),
             position: start,
             animations: animations,
-            current: Direction.down);
+            current: DirectionEnum.down);
 
   SpriteDirectionAnimationEffect? _animationEffect;
   MoveEffect? _moveEffect;
@@ -24,12 +25,12 @@ class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
   // Static async create method so we can load sprite animations.
   static Future<PlayerComponent> create(String path,
       {required Position start}) async {
-    final animations = <Direction, SpriteAnimation>{};
+    final animations = <DirectionEnum, SpriteAnimation>{};
 
     // The x position of each sprite in the sprite sheet.
     const spriteX = <double>[192, 0, 96, 288];
 
-    for (var direction in Direction.values) {
+    for (var direction in DirectionEnum.values) {
       animations[direction] = await SpriteAnimation.load(
           path,
           SpriteAnimationData.sequenced(

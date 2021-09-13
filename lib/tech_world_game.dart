@@ -5,12 +5,11 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_world/drawing/other_players_component.dart';
-import 'package:tech_world/drawing/player_component.dart';
+import 'package:tech_world/components/map_component.dart';
+import 'package:tech_world/components/other_players_component.dart';
+import 'package:tech_world/components/player_component.dart';
 import 'package:tech_world/main.dart';
 import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
-
-import 'drawing/map_component.dart';
 
 bool _paused = false;
 int departureTime = 0;

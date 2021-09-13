@@ -1,37 +1,36 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-
-import '../../enums/direction.dart';
-import '../../extensions/vector2_extension.dart';
+import 'package:tech_world/shared/direction_enum.dart';
+import 'package:tech_world/utils/extensions/vector2_extension.dart';
 
 typedef Point = Vector2;
 
 class SpriteDirectionAnimationEffect
-    extends ComponentEffect<SpriteAnimationGroupComponent<Direction>> {
+    extends ComponentEffect<SpriteAnimationGroupComponent<DirectionEnum>> {
   SpriteDirectionAnimationEffect(
       {required this.pathPoints, required this.speed})
       : super(false, false); // sets _initialIsInfinite & _initialIsAlternating
 
   final List<Vector2> pathPoints;
   final double speed;
-  final directionVectors = <Direction>[];
+  final directions = <DirectionEnum>[];
 
   @override
-  void initialize(SpriteAnimationGroupComponent<Direction> component) {
+  void initialize(SpriteAnimationGroupComponent<DirectionEnum> component) {
     super.initialize(component);
 
     var totalPathLength = 0.0;
     for (int i = 0; i < pathPoints.length - 1; i++) {
       final subPathVector = pathPoints[i + 1] - pathPoints[i];
-      directionVectors.insert(i, subPathVector.toDirection());
+      directions.insert(i, subPathVector.toDirection());
       totalPathLength += subPathVector.length;
     }
-    // add a last vector so [directionVectors] has the same length as [path]
-    if (directionVectors.isNotEmpty) {
-      directionVectors.insert(pathPoints.length - 1, directionVectors.last);
+    // add a last vector so [directions] has the same length as [path]
+    if (directions.isNotEmpty) {
+      directions.insert(pathPoints.length - 1, directions.last);
     }
 
-    super.component?.current = directionVectors.first;
+    super.component?.current = directions.first;
     super.peakTime = totalPathLength / speed;
   }
 
@@ -39,8 +38,8 @@ class SpriteDirectionAnimationEffect
   void update(double dt) {
     super.update(dt);
 
-    final index = (curveProgress * (directionVectors.length - 1)).floor();
-    component?.current = directionVectors[(index - 1).abs()];
+    final index = (curveProgress * (directions.length - 1)).floor();
+    component?.current = directions[(index - 1).abs()];
   }
 
   @override

@@ -3,12 +3,11 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:tech_world/extensions/offset_extension.dart';
-import 'package:tech_world/extensions/vector2_extension.dart';
-
-import '../extensions/barriers_extension.dart';
-import '../redux/state/game/barriers.dart';
-import '../utilities/constants.dart';
+import 'package:tech_world/redux/state/game/barriers.dart';
+import 'package:tech_world/shared/constants.dart' as constants;
+import 'package:tech_world/utils/extensions/barriers_extension.dart';
+import 'package:tech_world/utils/extensions/offset_extension.dart';
+import 'package:tech_world/utils/extensions/vector2_extension.dart';
 
 class MapComponent extends Component {
   MapComponent({Barriers? barriers}) : _barriers = barriers ?? Barriers() {
@@ -16,9 +15,10 @@ class MapComponent extends Component {
     // Convert the unit sized barriers to Rects of size 64
     _barrierRects = _barriers.positions
         .map((position) => Rect.fromPoints(
-            Offset(position.x * squareSize, position.y * squareSize),
-            Offset(
-                (position.x + 1) * squareSize, (position.y + 1) * squareSize)))
+            Offset(position.x * constants.squareSize,
+                position.y * constants.squareSize),
+            Offset((position.x + 1) * constants.squareSize,
+                (position.y + 1) * constants.squareSize)))
         .toList();
   }
 
@@ -68,11 +68,11 @@ class MapComponent extends Component {
     }
 
     // draw the grid
-    for (double i = 0; i <= gridHeight; i += squareSize) {
-      c.drawLine(Offset(0, i), Offset(gridWidth, i), _linePaint);
+    for (double i = 0; i <= constants.gridHeight; i += constants.squareSize) {
+      c.drawLine(Offset(0, i), Offset(constants.gridWidth, i), _linePaint);
     }
-    for (double i = 0; i <= gridWidth; i += squareSize) {
-      c.drawLine(Offset(i, 0), Offset(i, gridHeight), _linePaint);
+    for (double i = 0; i <= constants.gridWidth; i += constants.squareSize) {
+      c.drawLine(Offset(i, 0), Offset(i, constants.gridHeight), _linePaint);
     }
 
     // draw the barrier squares
