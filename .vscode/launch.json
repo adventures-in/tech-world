@@ -21,11 +21,6 @@
                 "--web-port",
                 "5000"
             ]
-        },
-        {
-            "name": "system (vs code)",
-            "request": "launch",
-            "type": "dart"
         }
     ]
 }
