@@ -12,7 +12,7 @@ import 'package:tech_world/redux/reducers/set_other_player_ids_reducer.dart';
 import 'package:tech_world/redux/reducers/set_player_path_reducer.dart';
 import 'package:tech_world/redux/services/locator.dart';
 import 'package:tech_world/tech_world_game.dart';
-import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
+import 'package:ws_game_server_types/ws_game_server_types.dart';
 
 import 'main_page.dart';
 import 'redux/middleware/set_auth_user_data_middleware.dart';

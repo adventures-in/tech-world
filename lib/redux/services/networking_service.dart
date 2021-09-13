@@ -6,9 +6,9 @@ import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
 import 'package:tech_world/redux/actions/set_player_path_action.dart';
 import 'package:tech_world/shared/constants.dart' as constants;
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
+import 'package:ws_game_server_types/ws_game_server_types.dart';
 
-final _uriString = constants.localhost;
+const _uriString = constants.usCentral1;
 
 /// The core of th [NetworkingService] is a websocket connected to a CloudRun
 /// instance.

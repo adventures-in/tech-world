@@ -10,12 +10,12 @@ import 'package:tech_world/components/other_players_component.dart';
 import 'package:tech_world/components/player_component.dart';
 import 'package:tech_world/main.dart';
 import 'package:tech_world/utils/extensions/i_list_of_vector2s_extension.dart';
-import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
+import 'package:ws_game_server_types/ws_game_server_types.dart';
 
 bool _paused = false;
 int departureTime = 0;
 
-class TechWorldGame extends Game with KeyboardEvents, TapDetector {
+class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
   TechWorldGame(
       {required Stream<AppState> appStateChanges,
       required Sink<GameServerMessage> serverSink})
@@ -51,6 +51,10 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
 
       _oldState = state;
     });
+
+    add(_map);
+    add(_player);
+    add(_otherPlayers);
   }
 
   @override
@@ -81,17 +85,19 @@ class TechWorldGame extends Game with KeyboardEvents, TapDetector {
   @override
   Color backgroundColor() => const Color(0xFF222222);
 
-  @override
-  void update(double dt) {
-    _otherPlayers.update(dt);
-    _player.update(dt);
-  }
+  // @override
+  // void update(double dt) {
+  //   super.update(dt);
+  //   _otherPlayers.update(dt);
+  //   _player.update(dt);
+  // }
 
-  // remember - order matters!
-  @override
-  void render(Canvas canvas) {
-    _map.render(canvas);
-    _otherPlayers.render(canvas);
-    _player.render(canvas);
-  }
+  // // remember - order matters!
+  // @override
+  // void render(Canvas canvas) {
+  //   super.render(canvas);
+  //   _map.render(canvas);
+  //   _otherPlayers.render(canvas);
+  //   _player.render(canvas);
+  // }
 }

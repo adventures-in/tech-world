@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:tech_world/components/player_component.dart';
 import 'package:tech_world/utils/extensions/i_list_of_double2s_extension.dart';
-import 'package:web_socket_game_server_types/web_socket_game_server_types.dart';
+import 'package:ws_game_server_types/ws_game_server_types.dart';
 
 class OtherPlayersComponent extends Component {
   final Map<String, PlayerComponent> _otherPlayers = {};
