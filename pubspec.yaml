@@ -45,3 +45,4 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/bald.png
+    - assets/images/beard.png

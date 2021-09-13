@@ -1,8 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
+import 'package:flutter/services.dart';
 import 'package:tech_world/enums/direction.dart';
+import 'package:tech_world/extensions/direction_extension.dart';
 import 'package:tech_world/utilities/effects/sprite_direction_animation_effect.dart';
+import 'package:tech_world/utilities/input.dart';
 
 typedef Position = Vector2;
 
@@ -39,15 +42,15 @@ class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
     return PlayerComponent._(animations, start);
   }
 
-  // void changeDirection(RawKeyEvent event) {
-  //   if (event is RawKeyDownEvent) {
-  //     current = Input.directionFrom(event);
-  //     addEffect(
-  //         MoveEffect(path: [current.vector], speed: 200.0, isRelative: true));
-  //   }
-  // }
+  void moveInDirection(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      current = Input.directionFrom(event);
+      addEffect(
+          MoveEffect(path: [current.vector], speed: 200.0, isRelative: true));
+    }
+  }
 
-  void move({required double speed, required List<Vector2> points}) {
+  void moveOnPath({required double speed, required List<Vector2> points}) {
     if (_animationEffect != null) removeEffect(_animationEffect!);
     if (_moveEffect != null) removeEffect(_moveEffect!);
 
@@ -61,6 +64,7 @@ class PlayerComponent extends SpriteAnimationGroupComponent<Direction> {
 
   @override
   void update(double dt) => super.update(dt);
+
   @override
   void render(Canvas canvas) => super.render(canvas);
 }
