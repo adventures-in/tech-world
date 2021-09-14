@@ -1,7 +1,6 @@
 // servers
 const australiaSoutheast1 = 'wss://websocket-server-cg5i52v35q-ts.a.run.app';
-const usCentral1 = 'wss://websocket-server-cg5i52v35q-uc.a.run.app';
-const localhost = 'ws://localhost:8080';
+const usCentral1 = 'wss://ws-game-server-yuzabgzs5a-uc.a.run.app';
 
 // Grid constants.
 const int gridRows = 10;

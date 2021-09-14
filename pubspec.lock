@@ -28,7 +28,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   async:
     dependency: transitive
     description:
@@ -358,7 +358,7 @@ packages:
       name: graphs
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   http:
     dependency: transitive
     description:
@@ -477,7 +477,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.2"
   path:
     dependency: transitive
     description:
@@ -530,16 +530,20 @@ packages:
   redfire:
     dependency: "direct main"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire/redfire"
-      relative: false
-    source: path
+      path: redfire
+      ref: HEAD
+      resolved-ref: "258331d7fbafaae19ab171756d4009ae9c8bc747"
+      url: "https://github.com/enspyrco/redfire.git"
+    source: git
     version: "0.0.1"
   redfire_test:
     dependency: "direct dev"
     description:
-      path: "/Users/nick/git/orgs/enspyrco/redfire/redfire_test"
-      relative: false
-    source: path
+      path: redfire_test
+      ref: HEAD
+      resolved-ref: "258331d7fbafaae19ab171756d4009ae9c8bc747"
+      url: "https://github.com/enspyrco/redfire.git"
+    source: git
     version: "0.0.1"
   redux:
     dependency: "direct main"
@@ -763,13 +767,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  web_socket_game_server_types:
-    dependency: "direct main"
-    description:
-      path: "/Users/nick/git/orgs/adventures_in/microservices/web_socket_game_server/web_socket_game_server_types"
-      relative: false
-    source: path
-    version: "0.0.1"
   webkit_inspection_protocol:
     dependency: transitive
     description:
@@ -777,6 +774,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  ws_game_server_types:
+    dependency: "direct main"
+    description:
+      path: ws_game_server_types
+      ref: HEAD
+      resolved-ref: b937c0561a5a75798c2304fa7ad5fbb391778e1f
+      url: "https://github.com/adventures-in/ws_game_server_repo.git"
+    source: git
+    version: "0.0.1"
   yaml:
     dependency: transitive
     description:
