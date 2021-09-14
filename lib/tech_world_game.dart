@@ -18,7 +18,7 @@ int departureTime = 0;
 class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
   TechWorldGame(
       {required Stream<AppState> appStateChanges,
-      required Sink<GameServerMessage> serverSink})
+      required Sink<ServerMessage> serverSink})
       : _appStateChanges = appStateChanges,
         _serverSink = serverSink;
 
@@ -27,7 +27,7 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
   var _oldState = AppState.init();
 
   // A sink is passed in that we can use to send messages to the server.
-  final Sink<GameServerMessage> _serverSink;
+  final Sink<ServerMessage> _serverSink;
 
   // Components that are used to draw the scene.
   // final String _userId;
@@ -73,13 +73,14 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
 
       if (_oldState.game.playerPaths != state.game.playerPaths) {
         // get the set of ids corresponding to new player paths
-        var idsOfNewPaths = state.game.playerPaths
-            .toKeyISet()
-            .difference(_oldState.game.playerPaths.toKeyISet());
+        var newPaths = state.game.playerPaths
+            .toEntryISet()
+            .difference(_oldState.game.playerPaths.toEntryISet());
         // add movement effects to all relevant player components
-        for (var id in idsOfNewPaths) {
-          _otherPlayers[id]!.moveOnPath(
-              points: state.game.playerPaths[id]!.toVector2s(), speed: 300);
+        for (var path in newPaths) {
+          _otherPlayers[path.key]!.moveOnPath(
+              points: state.game.playerPaths[path.key]!.toVector2s(),
+              speed: 300);
         }
       }
 

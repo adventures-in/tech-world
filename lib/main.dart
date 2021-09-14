@@ -65,15 +65,15 @@ void main() {
   );
 
   final _networkingService = Locator.provideDefaultNetworkingService();
-  final _gameServerController = StreamController<GameServerMessage>();
+  final _serverController = StreamController<ServerMessage>();
   // TODO: add try/catch blocks and onError callback
-  _gameServerController.stream.listen((message) {
+  _serverController.stream.listen((message) {
     // print(message);
     _networkingService.publish(message);
   });
 
   final game = TechWorldGame(
-      appStateChanges: store.onChange, serverSink: _gameServerController.sink);
+      appStateChanges: store.onChange, serverSink: _serverController.sink);
 
   runApp(AppWidget<AppState>.fromStore(
       initializedStore: store,

@@ -48,7 +48,7 @@ class NetworkingService {
   void _announce() =>
       _webSocket.sink.add(jsonEncode(PresentMessage(_userId!).toJson()));
 
-  void publish(GameServerMessage message) {
+  void publish(ServerMessage message) {
     // record time and send data via websocket
     _departureTime = DateTime.now().millisecondsSinceEpoch;
     final jsonString = jsonEncode(message.toJson());

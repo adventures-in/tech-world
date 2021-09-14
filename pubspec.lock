@@ -28,7 +28,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   async:
     dependency: transitive
     description:
@@ -358,7 +358,7 @@ packages:
       name: graphs
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   http:
     dependency: transitive
     description:
@@ -477,7 +477,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.2"
   path:
     dependency: transitive
     description:
@@ -779,7 +779,7 @@ packages:
     description:
       path: ws_game_server_types
       ref: HEAD
-      resolved-ref: "48504f304d249962e34fcfabd5eec1f515760a96"
+      resolved-ref: b937c0561a5a75798c2304fa7ad5fbb391778e1f
       url: "https://github.com/adventures-in/ws_game_server_repo.git"
     source: git
     version: "0.0.1"
