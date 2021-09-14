@@ -10,6 +10,6 @@ class SetAuthUserDataMiddleware
       : super((store, action, next) async {
           next(action);
           Locator.networkingService.actionsStream.listen(store.dispatch);
-          Locator.networkingService.connect(action.authUserData!.uid);
+          Locator.networkingService.connect(action.authUserData?.uid);
         });
 }

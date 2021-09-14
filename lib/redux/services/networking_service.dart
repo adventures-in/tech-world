@@ -26,7 +26,7 @@ class NetworkingService {
   Stream<ReduxAction> get actionsStream => _actionsStreamController.stream;
 
   // Create a websocket connected to the server and attach callbacks.
-  void connect(String uid) {
+  void connect(String? uid) {
     _userId = uid;
     print('$_userId connecting to $_uriString');
     _webSocket = WebSocketChannel.connect(Uri.parse(_uriString));
