@@ -64,18 +64,19 @@ void main() {
     ],
   );
 
-  var networkingService = Locator.provideDefaultNetworkingService();
-  var controller = StreamController<GameServerMessage>();
+  final _networkingService = Locator.provideDefaultNetworkingService();
+  final _gameServerController = StreamController<GameServerMessage>();
   // TODO: add try/catch blocks and onError callback
-  controller.stream.listen((message) {
+  _gameServerController.stream.listen((message) {
     // print(message);
-    networkingService.publish(message);
+    _networkingService.publish(message);
   });
+
+  final game = TechWorldGame(
+      appStateChanges: store.onChange, serverSink: _gameServerController.sink);
 
   runApp(AppWidget<AppState>.fromStore(
       initializedStore: store,
       title: 'Tech World',
-      mainPage: MainPage(
-          game: TechWorldGame(
-              appStateChanges: store.onChange, serverSink: controller.sink))));
+      mainPage: MainPage(game: game)));
 }
