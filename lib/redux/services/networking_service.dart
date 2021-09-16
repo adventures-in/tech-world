@@ -17,14 +17,19 @@ const _uriString = constants.usCentral1;
 /// stream controlled by [_actionsStreamController].  A middleware ensures the
 /// actions are dispatched to the [Store].
 class NetworkingService {
-  late final String _userId;
+  /// The userId is set in [connect]
+  String? _userId;
   int _departureTime = 0;
   WebSocketChannel? _webSocket;
   StreamSubscription? _serverSubscription;
+
   late Stream<dynamic> _serverStream;
   late Sink<dynamic> _serverSink;
 
-  final _actionsStreamController = StreamController<ReduxAction>();
+  /// Controls the stream that is used
+  final StreamController<ReduxAction> _actionsStreamController =
+      StreamController<ReduxAction>.broadcast();
+
   Stream<ReduxAction> get actionsStream => _actionsStreamController.stream;
 
   // Create a websocket connected to the server and attach callbacks.
@@ -48,17 +53,9 @@ class NetworkingService {
     _announce();
   }
 
-  Future<void> disconnect() async {
-    await _serverSubscription?.cancel();
-    if (_webSocket != null) {
-      _serverSink.close();
-      _webSocket = null;
-    }
-  }
-
   // Announce our presence.
   void _announce() =>
-      _serverSink.add(jsonEncode(PresentMessage(_userId).toJson()));
+      _serverSink.add(jsonEncode(PresentMessage(_userId!).toJson()));
 
   void publish(ServerMessage message) {
     // record time and send data via websocket
@@ -79,6 +76,15 @@ class NetworkingService {
         print('ws: ${DateTime.now().millisecondsSinceEpoch - _departureTime}');
       }
       return SetPlayerPathAction(message);
+    }
+  }
+
+  Future<void> disconnect() async {
+    // await _actionsStreamController.close();
+    await _serverSubscription?.cancel();
+    if (_webSocket != null) {
+      _serverSink.close();
+      _webSocket = null;
     }
   }
 }

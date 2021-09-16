@@ -30,8 +30,7 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
   final Sink<ServerMessage> _serverSink;
 
   // Components that are used to draw the scene.
-  // final String _userId;
-  late final PlayerComponent _player;
+  PlayerComponent? _player;
   String? _userId;
   final Map<String, PlayerComponent> _otherPlayers = {};
   final _map = MapComponent();
@@ -42,7 +41,7 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
 
     // Create a character at the origin for player1.
     _player = await PlayerComponent.create('bald.png', start: Position(0, 0));
-    add(_player);
+    add(_player!);
 
     // TODO: add try/catch blocks and onError callback
     _appStateChanges.listen((state) {
@@ -92,7 +91,7 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
   void onKeyEvent(RawKeyEvent event) {
     print(event.data);
     if (event.isShiftPressed) return _togglePausedState();
-    _player.moveInDirection(event);
+    _player!.moveInDirection(event);
   }
 
   void _togglePausedState() =>
@@ -106,13 +105,13 @@ class TechWorldGame extends BaseGame with KeyboardEvents, TapDetector {
     if (_userId == null) return;
 
     var bigPathLocations =
-        _map.createPath(start: _player.position, end: info.eventPosition.game);
+        _map.createPath(start: _player!.position, end: info.eventPosition.game);
 
     departureTime = DateTime.now().millisecondsSinceEpoch;
     _serverSink.add(PlayerPathMessage(
         userId: _userId!, points: bigPathLocations.toDouble2s()));
 
-    _player.moveOnPath(points: bigPathLocations, speed: 300);
+    _player!.moveOnPath(points: bigPathLocations, speed: 300);
   }
 
   @override

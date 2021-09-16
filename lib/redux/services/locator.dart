@@ -8,11 +8,11 @@ import 'package:tech_world/redux/services/networking_service.dart';
 class Locator {
   static NetworkingService get networkingService => _networkingService!;
 
-  static void provideNetworkingService(NetworkingService service,
-      {bool overwrite = true}) {
-    if (overwrite == false && _networkingService != null) return;
-    _networkingService = service;
-  }
+  // static void provideNetworkingService(NetworkingService service,
+  //     {bool overwrite = true}) {
+  //   if (overwrite == false && _networkingService != null) return;
+  //   _networkingService = service;
+  // }
 
   static NetworkingService provideDefaultNetworkingService() {
     _networkingService ??= NetworkingService();
