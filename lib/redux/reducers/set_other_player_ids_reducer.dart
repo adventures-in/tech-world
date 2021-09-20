@@ -1,7 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:tech_world/redux/actions/set_other_player_ids_action.dart';
-
-import '../../main.dart';
+import 'package:tech_world/redux/app_state.dart';
 
 class SetOtherPlayerIdsReducer
     extends TypedReducer<AppState, SetOtherPlayerIdsAction> {
