@@ -140,7 +140,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.2"
+    version: "2.5.3"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -210,7 +210,7 @@ packages:
       name: fast_immutable_collections
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.0"
+    version: "7.0.3"
   file:
     dependency: transitive
     description:
@@ -351,7 +351,7 @@ packages:
       name: google_sign_in_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+2"
+    version: "0.10.0+3"
   graphs:
     dependency: transitive
     description:
@@ -532,7 +532,7 @@ packages:
     description:
       path: redfire
       ref: HEAD
-      resolved-ref: a24075ff89bf072ff66c124e97c20845441b15e9
+      resolved-ref: "6ed3b8828e56a9e070d1eef8d565780bfe46c5a4"
       url: "https://github.com/enspyrco/redfire.git"
     source: git
     version: "0.0.1"
@@ -541,7 +541,7 @@ packages:
     description:
       path: redfire_test
       ref: HEAD
-      resolved-ref: a24075ff89bf072ff66c124e97c20845441b15e9
+      resolved-ref: "6ed3b8828e56a9e070d1eef8d565780bfe46c5a4"
       url: "https://github.com/enspyrco/redfire.git"
     source: git
     version: "0.0.1"
@@ -703,7 +703,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.10"
+    version: "6.0.11"
   url_launcher_linux:
     dependency: transitive
     description:

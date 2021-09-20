@@ -7,12 +7,18 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
   flutter: ">=2.2.0"
 
+# dependency_overrides: 
+#   redfire:
+#     path: /Users/nick/git/orgs/enspyrco/redfire_repo/redfire
+#   redfire_test:
+#     path: /Users/nick/git/orgs/enspyrco/redfire_repo/redfire_test
+
 dependencies:
   flutter:
     sdk: flutter
 
   a_star_algorithm:
-  flame: ^1.0.0-releasecandidate.13
+  flame: 1.0.0-releasecandidate.13
   vector_math: 
   ws_game_server_types:
     git: 
@@ -30,7 +36,6 @@ dependencies:
     git: 
       url: https://github.com/enspyrco/redfire.git
       path: redfire
-    # path: /Users/nick/git/orgs/enspyrco/redfire/redfire
   redux:
   flutter_redux:
   fast_immutable_collections:
@@ -43,7 +48,6 @@ dev_dependencies:
     git: 
       url: https://github.com/enspyrco/redfire.git
       path: redfire_test
-    # path: /Users/nick/git/orgs/enspyrco/redfire/redfire_test
   flutter_lints:
   build_runner:
   freezed:
