@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Thanks!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Setup Screen -->
+    <div id="setup-screen" class="screen">
+      <h1>No Thanks!</h1>
+      <p class="subtitle">The card game of clever refusals</p>
+      <div class="setup-form">
+        <label for="player-name">Your Name</label>
+        <input type="text" id="player-name" value="You" maxlength="12">
+        <label for="num-players">Number of Players</label>
+        <select id="num-players">
+          <option value="3">3 Players</option>
+          <option value="4" selected>4 Players</option>
+          <option value="5">5 Players</option>
+        </select>
+        <div class="rules-summary">
+          <h3>How to Play</h3>
+          <ul>
+            <li>Cards numbered 3&ndash;35 are shuffled; 9 are removed unseen.</li>
+            <li>On your turn, either <strong>take the card</strong> (and all chips on it) or <strong>pay 1 chip</strong> to pass.</li>
+            <li>If you have no chips, you must take the card.</li>
+            <li>Runs of consecutive cards only count the lowest value.</li>
+            <li>Each chip is worth &minus;1 point. <strong>Lowest score wins!</strong></li>
+          </ul>
+        </div>
+        <button id="start-btn" class="btn-primary">Start Game</button>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+      <header>
+        <h2>No Thanks!</h2>
+        <div id="deck-count" class="badge">Cards left: 24</div>
+      </header>
+
+      <div id="center-area">
+        <div id="current-card">
+          <span id="card-value"></span>
+        </div>
+        <div id="chips-on-card">
+          <span id="chip-count">0</span> chip(s) on card
+        </div>
+      </div>
+
+      <div id="players-area"></div>
+
+      <div id="action-area" class="hidden">
+        <button id="take-btn" class="btn-take">Take Card</button>
+        <button id="pass-btn" class="btn-pass">No Thanks!</button>
+      </div>
+
+      <div id="message-bar"></div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen hidden">
+      <h1>Game Over!</h1>
+      <div id="final-scores"></div>
+      <button id="replay-btn" class="btn-primary">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
